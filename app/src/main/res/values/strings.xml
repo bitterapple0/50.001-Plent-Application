@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PLENT</string>
+    <string name="sign_up_now">Sign Up Now</string>
+    <string name="join_telegram_group">Join Telegram Group</string>
+    <string name="fifth_row_activities">Fifth Row Activities</string>
+    <string name="search_hint">Search for Events and Activities</string>
+    <string name="success_toast">You have successfully signed up for the event</string>
+    <string name="default_telegram_group">https://t.me/addstickers/rissaartt</string>
+    <string name="find_events_activity">Find Events and Activity</string>
+    <string name="see_all">See All</string>
+</resources>
