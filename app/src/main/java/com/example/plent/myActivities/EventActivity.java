@@ -28,6 +28,7 @@ public class EventActivity extends AppCompatActivity {
     TextView eventHeader;
     ImageView eventPoster;
     TextView mainHeader;
+    int permission = 0;
 
 
 
@@ -90,6 +91,22 @@ public class EventActivity extends AppCompatActivity {
         return true;
 
         // Add back button on top?
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem create_event = menu.findItem(R.id.create_event);
+
+        Log.i("Message", "Create Event Clicked");
+        if (permission == 0) {
+            create_event.setEnabled(false);
+            Log.i("Message", "No permission");
+        } else {
+            Log.i("Message", "success");
+            create_event.setEnabled(true);
+
+        }
+        return true;
     }
 
     @Override
