@@ -55,8 +55,6 @@ public class FindEventsActivity extends AppCompatActivity {
         CardView fifth_row_events_card_view = findViewById(R.id.fifth_row_events_card_view);
         TextView header = fifth_row_events_card_view.findViewById(R.id.cluster_header);
         header.setText("Fifth Row Activities");
-//        TextView cluster_header = findViewById(R.id.cluster_header);
-//        cluster_header.setText(R.string.fifth_row_activities);
 
         CardView industry_talks_card_view = findViewById(R.id.industry_talks_card_view);
         TextView header1 = industry_talks_card_view.findViewById(R.id.cluster_header);
@@ -65,6 +63,9 @@ public class FindEventsActivity extends AppCompatActivity {
         CardView upcoming_events_card_view = findViewById(R.id.upcoming_events_card_view);
         TextView header2 = upcoming_events_card_view.findViewById(R.id.cluster_header);
         header2.setText("Upcoming Events");
+    }
+
+    public void addImages() {
     }
 
     @Override
