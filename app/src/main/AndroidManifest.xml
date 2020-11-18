@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.plent">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -9,12 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".myActivities.EventActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".myActivities.EventActivity"
+            android:label="Event Description"
+            android:parentActivityName=".myActivities.SignUpActivity">
         </activity>
         <activity android:name=".myActivities.FindEventsActivity"
             android:parentActivityName=".myActivities.EventActivity"
@@ -23,6 +21,15 @@
         <activity android:name=".myActivities.CalendarActivity"
             android:parentActivityName=".myActivities.EventActivity"
             android:label="Calendar" >
+        </activity>
+        <activity android:name=".myActivities.SignUpActivity"
+
+            android:label="Sign Up" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

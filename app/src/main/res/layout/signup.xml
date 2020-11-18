@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".myActivities.SignUpActivity"
+    android:paddingBottom="15dp" >
+
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/Login_Header"
+        android:id="@+id/myDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Details"
+        android:paddingTop="30dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F3F3F3"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="24dp" />
+
+    <TextView
+        style="@style/Login_Label"
+        android:id="@+id/nameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Full Name"
+        android:layout_marginBottom="5dp" />
+
+
+    <EditText
+        style="@style/Login_Edittext"
+        android:id="@+id/nameInput"
+        android:hint="e.g John Tan"
+        android:background="@drawable/edit_text_style_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:inputType="text"
+        android:maxHeight="?actionBarSize"
+        android:maxLines="1"
+        android:minHeight="?actionBarSize" />
+
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </Space>
+
+    <TextView
+        style="@style/Login_Edittext"
+        android:id="@+id/emailText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email Address"
+        android:layout_marginBottom="5dp" />
+
+    <EditText
+        style="@style/Login_Edittext"
+        android:id="@+id/emailInput"
+        android:background="@drawable/edit_text_style_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="e.g john_tan@sutd.edu.sg"
+        android:inputType="text"
+        android:maxHeight="?actionBarSize"
+        android:maxLines="1"
+        android:minHeight="?actionBarSize" />
+
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </Space>
+
+    <TextView
+        style="@style/Login_Label"
+        android:id="@+id/idText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Student ID"
+        android:layout_marginBottom="5dp"/>
+
+    <EditText
+        style="@style/Login_Edittext"
+        android:id="@+id/idInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_style_selector"
+        android:autofillHints=""
+        android:hint="e.g 1004001"
+        android:inputType="text"
+        android:maxHeight="?actionBarSize"
+        android:maxLines="1"
+        android:minHeight="?actionBarSize" />
+
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </Space>
+
+    <TextView
+        style="@style/Login_Label"
+        android:id="@+id/passwordText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:layout_marginBottom="5dp"/>
+
+    <EditText
+        style="@style/Login_Edittext"
+        android:id="@+id/passwordInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_style_selector"
+        android:autofillHints=""
+        android:hint=""
+        android:inputType="textPassword"
+        android:maxHeight="?actionBarSize"
+        android:maxLines="1"
+        android:minHeight="?actionBarSize" />
+
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </Space>
+
+    <CheckBox
+        style="@style/Login_CheckboxText"
+        android:theme="@style/Login_Checkbox"
+        android:id="@+id/pdpa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="I agree that the organising committee may collect, use and disclose the information above, for planning purposes." />
+
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </Space>
+
+    <Button
+        style="@style/Primary_Button"
+        android:id="@+id/submit"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Sign Up Now"
+        android:gravity="center" />
+
+</LinearLayout>
