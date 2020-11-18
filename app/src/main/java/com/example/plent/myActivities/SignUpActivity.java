@@ -55,7 +55,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     boolean completed = false;
     boolean disabled = true;
-    boolean skipBackend = true;
+    // TODO: IF NO BACKEND RUNNING LOCALLY, SET SKIPBACKEND TO TRUE
+    boolean skipBackend = false;
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -96,9 +97,11 @@ public class SignUpActivity extends AppCompatActivity {
         if (json == null) {
             Log.i(TAG, "is null");
         } else {
+            // TODO: IF YOU WANT TO SKIP THE SIGN UP PAGE, YOU CAN COMMENT OUT THIS SHARED PREF REMOVE
             SharedPreferences.Editor preferencesEditor = mPreferences.edit();
             preferencesEditor.remove(USER_KEY);
             preferencesEditor.apply();
+            // TODO: COMMENT OUT TILL HERE
             Log.i(TAG, json);
             user = gson.fromJson(json, User.class);
             Intent intent = new Intent(SignUpActivity.this, FindEventsActivity.class);
