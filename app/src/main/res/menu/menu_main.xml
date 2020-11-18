@@ -21,4 +21,12 @@
         android:orderInCategory="100"
         android:title="Find Events and Activities"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/create_event"
+        android:orderInCategory="100"
+        android:title="Create Event"
+        app:showAsAction="never" />
+
+
 </menu>
