@@ -1,13 +1,17 @@
 package com.example.plent.myActivities;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +37,7 @@ public class CalendarActivity extends AppCompatActivity {
     TextView textview;
     ViewGroup.LayoutParams layoutparams;
     RelativeLayout relativeLayout;
+    String eventType;
 
 
     CalendarEvent c1 = new CalendarEvent(Color.parseColor("#EAD620"), "event");
@@ -99,9 +104,16 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        relativeLayout = findViewById(R.id.day_events);
-
+        /*relativeLayout = findViewById(R.id.day_events); now is calendar_events
         CreateCardViewProgrammatically();
+
+        relativeLayout = findViewById(R.id.calendar_events);
+        addCalendarCard(); */
+
+        relativeLayout = findViewById(R.id.calendar_events);
+        addCalendarEvent("Fifth Row Activities");
+        addCalendarEvent("Industry Talks");
+        addCalendarEvent("Student Life");
 
     }
 
@@ -129,44 +141,33 @@ public class CalendarActivity extends AppCompatActivity {
         Log.i("ALC", "RESTART");
     }
 
-    public void CreateCardViewProgrammatically(){
+    public void addCalendarEvent(String eventType) {
+        View calendar_card =  View.inflate(this, R.layout.calendar_card, null);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        calendar_card.setLayoutParams(lp);
 
-        cardview = new CardView(getApplicationContext());
+        if (eventType == "Fifth Row Activities") {
+            calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_fr_yellow_dark));
+            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_fr_yellow_bg));
+            TextView header = calendar_card.findViewById(R.id.calendar_title);
+            header.setText("Fifth Row Activities Title");
+        } else if (eventType == "Industry Talks") {
+            calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_it_green_dark));
+            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_it_green_bg));
+            TextView header = calendar_card.findViewById(R.id.calendar_title);
+            header.setText("Industry Talks Title");
+        } else if (eventType == "Student Life") {
+            calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_sl_blue_dark));
+            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_sl_blue_bg));
+            TextView header = calendar_card.findViewById(R.id.calendar_title);
+            header.setText("House Guardians Games Night");
+            TextView body = calendar_card.findViewById(R.id.calendar_time);
+            body.setText("9pm - 11pm, BLK 59 Level 10");
+        } else {
+            calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        }
 
-        layoutparams = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-
-        cardview.setLayoutParams(layoutparams);
-
-        cardview.setRadius(15);
-
-        cardview.setPadding(25, 25, 25, 25);
-
-        cardview.setCardBackgroundColor(Color.MAGENTA);
-
-        cardview.setMaxCardElevation(30);
-
-        cardview.setMaxCardElevation(6);
-
-        textview = new TextView(getApplicationContext());
-
-        textview.setLayoutParams(layoutparams);
-
-        textview.setText("CardView Programmatically");
-
-        textview.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
-
-        textview.setTextColor(Color.WHITE);
-
-        textview.setPadding(25,25,25,25);
-
-        textview.setGravity(Gravity.CENTER);
-
-        cardview.addView(textview);
-
-        relativeLayout.addView(cardview);
+        relativeLayout.addView(calendar_card);
 
     }
 }
