@@ -5,14 +5,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/plent_logo_v2"
+        android:icon="@drawable/plent_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
         <activity android:name=".myActivities.EventActivity"
             android:label="Event Description"
-            android:parentActivityName=".myActivities.SignUpActivity">
+            android:parentActivityName=".myActivities.EventActivity">
+            <!-- <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
         </activity>
         <activity android:name=".myActivities.FindEventsActivity"
             android:parentActivityName=".myActivities.EventActivity"
@@ -31,6 +36,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".myActivities.ManageEventsActivity" />
+
     </application>
 
 </manifest>

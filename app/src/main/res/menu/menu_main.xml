@@ -23,9 +23,9 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/create_event"
+        android:id="@+id/manage_events"
         android:orderInCategory="100"
-        android:title="Create Event"
+        android:title="Manage Events"
         app:showAsAction="never" />
 
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -14,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.util.DisplayMetrics;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -35,10 +36,12 @@ public class CalendarActivity extends AppCompatActivity {
 
     CardView cardview;
     TextView textview;
-    ViewGroup.LayoutParams layoutparams;
     RelativeLayout relativeLayout;
+    LinearLayout linearLayout;
     String eventType;
 
+    String[] eventsName = new String[]{"Industry Talks", "Fifth Row Activities", "Industry Talks", "Student Life"};
+    // Retrieve events (Need date, event type, title, location and time)
 
     CalendarEvent c1 = new CalendarEvent(Color.parseColor("#EAD620"), "event");
     CalendarEvent c2 = new CalendarEvent(Color.parseColor("#81D2AC"), "event");
@@ -73,12 +76,15 @@ public class CalendarActivity extends AppCompatActivity {
                         // for loop to run through dates of events
 
                         if (date.get(Calendar.DAY_OF_YEAR) == defaultSelectedDate.get(Calendar.DAY_OF_YEAR)){
-                            events.add(c1);
-                            events.add(c2);
-                            events.add(c3);
-                            events.add(c1);
-                            events.add(c2);
-                            events.add(c3);
+                            for (String eventType:eventsName){
+                                if (eventType == "Fifth Row Activities") {
+                                    events.add(c1);
+                                } else if (eventType == "Industry Talks") {
+                                    events.add(c2);
+                                } else if (eventType == "Student Life") {
+                                    events.add(c3);
+                                }
+                            }
                         }
 
 
@@ -104,18 +110,15 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        /*relativeLayout = findViewById(R.id.day_events); now is calendar_events
-        CreateCardViewProgrammatically();
+        linearLayout = findViewById(R.id.calendar_events);
 
-        relativeLayout = findViewById(R.id.calendar_events);
-        addCalendarCard(); */
-
-        relativeLayout = findViewById(R.id.calendar_events);
-        addCalendarEvent("Fifth Row Activities");
-        addCalendarEvent("Industry Talks");
-        addCalendarEvent("Student Life");
+        for (String event:eventsName){
+            addCalendarEvent(event);
+        }
 
     }
+
+
 
     @Override
     protected void onStart() {
@@ -143,19 +146,19 @@ public class CalendarActivity extends AppCompatActivity {
 
     public void addCalendarEvent(String eventType) {
         View calendar_card =  View.inflate(this, R.layout.calendar_card, null);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        calendar_card.setLayoutParams(lp);
 
         if (eventType == "Fifth Row Activities") {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_fr_yellow_dark));
             calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_fr_yellow_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
             header.setText("Fifth Row Activities Title");
+
         } else if (eventType == "Industry Talks") {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_it_green_dark));
             calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_it_green_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
             header.setText("Industry Talks Title");
+
         } else if (eventType == "Student Life") {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_sl_blue_dark));
             calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_sl_blue_bg));
@@ -167,7 +170,9 @@ public class CalendarActivity extends AppCompatActivity {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         }
 
-        relativeLayout.addView(calendar_card);
+        Log.i("Message", String.valueOf(linearLayout.getChildCount()));
+
+        linearLayout.addView(calendar_card, linearLayout.getChildCount());
 
     }
 }

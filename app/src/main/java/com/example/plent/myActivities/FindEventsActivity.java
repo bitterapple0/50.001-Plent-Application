@@ -2,6 +2,7 @@ package com.example.plent.myActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ public class FindEventsActivity extends AppCompatActivity {
 
     ArrayList<Integer> images = new ArrayList<>();
     ArrayList<Object> imagesId = new ArrayList<>();
+    int permission = 1; // We need to replace this with the user's permission field
 
 
     @Override
@@ -76,6 +78,22 @@ public class FindEventsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem create_event = menu.findItem(R.id.manage_events);
+
+        Log.i("Message", "Create Event Clicked");
+        if (permission == 0) {
+            create_event.setEnabled(false);
+            Log.i("Message", "No permission");
+        } else {
+            Log.i("Message", "success");
+            create_event.setEnabled(true);
+
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -93,7 +111,12 @@ public class FindEventsActivity extends AppCompatActivity {
         }
 
         if (id == R.id.find_events_and_activities) {
-            Intent intent = new Intent(FindEventsActivity.this, EventActivity.class);
+            Intent intent = new Intent(FindEventsActivity.this, FindEventsActivity.class);
+            startActivity(intent);
+        }
+
+        if (id == R.id.manage_events) {
+            Intent intent = new Intent (FindEventsActivity.this, ManageEventsActivity.class);
             startActivity(intent);
         }
 
@@ -103,7 +126,6 @@ public class FindEventsActivity extends AppCompatActivity {
     public void redirectToEventsPage(View view){
         Intent intent = new Intent(FindEventsActivity.this, EventActivity.class);
         startActivity(intent);
-
     }
 
 }

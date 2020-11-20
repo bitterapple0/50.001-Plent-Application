@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/calendar_card_linear_layout"
+    android:id="@+id/event_card_linear_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,40 +10,34 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/calendar_card"
+        android:id="@+id/event_card"
         android:layout_gravity="left"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/indicator"
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary"/>
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/calendar_title"
+                    android:id="@+id/event_title"
                     style="@style/Calendar_Title"
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:text="Athletics Introduction Session"/>
 
                 <TextView
-                    android:id="@+id/calendar_time"
+                    android:id="@+id/event_time"
                     style="@style/Calendar_body"
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="12dp"
@@ -54,8 +48,25 @@
                     android:text="6.30pm - 8.30pm, SUTD Track"/>
 
             </LinearLayout>
-        </LinearLayout>
+
+            <Button
+                android:id="@+id/right_arrow_button"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:background="@drawable/right_arrow_red"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <!-- <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_height="1dp"
+        android:background="#E8E8E8"/> -->
 
 </LinearLayout>

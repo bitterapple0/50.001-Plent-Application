@@ -28,7 +28,7 @@ public class EventActivity extends AppCompatActivity {
     TextView eventHeader;
     ImageView eventPoster;
     TextView mainHeader;
-    int permission = 0;
+    int permission = 1; // We need to replace this with the user's permission field
 
 
 
@@ -95,7 +95,7 @@ public class EventActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
-        MenuItem create_event = menu.findItem(R.id.create_event);
+        MenuItem create_event = menu.findItem(R.id.manage_events);
 
         Log.i("Message", "Create Event Clicked");
         if (permission == 0) {
@@ -128,6 +128,11 @@ public class EventActivity extends AppCompatActivity {
 
         if (id == R.id.find_events_and_activities) {
             Intent intent = new Intent(EventActivity.this, FindEventsActivity.class);
+            startActivity(intent);
+        }
+
+        if (id == R.id.manage_events) {
+            Intent intent = new Intent (EventActivity.this, ManageEventsActivity.class);
             startActivity(intent);
         }
 
