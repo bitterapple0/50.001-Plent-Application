@@ -24,8 +24,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.plent.R;
-import com.example.plent.models.Api;
+import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
+import com.example.plent.utils.Api;
 import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
@@ -33,14 +34,14 @@ import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private static String TAG = "Logcat";
+    private static final String TAG = "Logcat";
     public static String USER_KEY = "user";
     public static int FIELDS = 4;
 
     private SharedPreferences mPreferences;
-    private String sharedPrefFile = "com.example.android.mainsharedprefs";
+    private static final String sharedPrefFile = "com.example.android.mainsharedprefs";
 
-    Api api;
+    ApiModel api = Api.getInstance().apiModel;
     User user;
 
     int[] fieldIds;
@@ -98,9 +99,9 @@ public class SignUpActivity extends AppCompatActivity {
             Log.i(TAG, "is null");
         } else {
             // TODO: IF YOU WANT TO SKIP THE SIGN UP PAGE, YOU CAN COMMENT OUT THIS SHARED PREF REMOVE
-//            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-//            preferencesEditor.remove(USER_KEY);
-//            preferencesEditor.apply();
+            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+            preferencesEditor.remove(USER_KEY);
+            preferencesEditor.apply();
             // TODO: COMMENT OUT TILL HERE
             Log.i(TAG, json);
             user = gson.fromJson(json, User.class);
@@ -121,7 +122,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        api = retrofit.create(Api.class);
+        api = retrofit.create(ApiModel.class);
 
 
         for (int i=0; i<FIELDS; i++) {

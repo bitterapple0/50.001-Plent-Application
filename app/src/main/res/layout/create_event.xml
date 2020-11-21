@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".myActivities.CreateEvent"
-<<<<<<< HEAD
-    android:paddingBottom="15dp" >
-=======
     android:paddingBottom="15dp">
->>>>>>> 03ef97fdc964428905916e342b5950d64a98f28a
 
         <RelativeLayout
             layout="@layout/toolbar"
