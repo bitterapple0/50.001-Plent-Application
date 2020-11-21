@@ -45,4 +45,7 @@ public class User {
         this.password = "";
     }
 
+    public String getPassword() {
+        return password;
+    }
 }
