@@ -38,13 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     Button createAcc;
     Api api;
 
-    ArrayList<User> userList;
+    User userCred;
     boolean emailInList = false;
-    String TAG = "Logcat";
 
-    int FIELDS = 2;
-    int[] fieldIds;
-    EditText[] inputFields = new EditText[FIELDS];
     boolean completed = false;
     boolean disabled = true;
 
@@ -122,20 +118,25 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                 }
                 else {
-                    for (User u: userList){
-                        if (u.getEmail().toString() == email.getText().toString()) {
-                            emailInList = true;
-                            if (u.getPassword() == password.getText().toString()) {
-                                Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
-                                startActivity(intent);
+                    userCred();
+//                    for (User u: userList){
+//                        if (u.getEmail().toString() == email.getText().toString()) {
+//                            emailInList = true;
+//                            if (u.getPassword() == password.getText().toString()) {
+//                                Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+//                                startActivity(intent);
+//                            }
+//                            else {
+//                                Toast.makeText(LoginActivity.this, "One or more of the entered credentials are incorrect. Please try again",
+//                                        Toast.LENGTH_SHORT).show();
+//                                email.setText(null);
+//                                password.setText(null);
+//                            }
+//                        }
+                    if (userCred.getPassword() == password.getText().toString()) {
+                        Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+                        startActivity(intent);
                             }
-                            else {
-                                Toast.makeText(LoginActivity.this, "One or more of the entered credentials are incorrect. Please try again",
-                                        Toast.LENGTH_SHORT).show();
-                                email.setText(null);
-                                password.setText(null);
-                            }
-                        }
                     }
                     if (emailInList == false) {
                         Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. \n" +
@@ -143,9 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
 
-            }
-
-        });
+            });
 
         createAcc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,21 +155,21 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void userList(){
-        Call<ArrayList<User>> call = api.getUserList();
-        call.enqueue(new Callback<ArrayList<User>>() {
+    public void userCred(){
+        Call<User> call = api.getUserCred(email.getText().toString());
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "[1] An error occurred, please try again!", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    userList = response.body();
+                    userCred = response.body();
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(LoginActivity.this, "[2] An error occurred, please try again!", Toast.LENGTH_LONG).show();
             }

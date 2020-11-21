@@ -13,6 +13,6 @@ public interface Api {
     @POST("user")
     Call<User> createUser(@Body User user);
 
-    @GET("userlist")
-    Call<ArrayList<User>> getUserList();
+    @GET("cred")
+    Call<User> getUserCred(@Body String email );
     }
