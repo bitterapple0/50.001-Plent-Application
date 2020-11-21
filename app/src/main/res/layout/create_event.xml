@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".myActivities.CreateEvent"
-    android:paddingBottom="15dp">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:paddingBottom="15dp" >
 
         <RelativeLayout
             layout="@layout/toolbar"
@@ -17,12 +13,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <ImageView
                 android:id="@+id/exit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✖"
-                android:background="#ffffff"
+                android:layout_margin="16dp"
+                android:background="@drawable/close_icon"
                 android:layout_alignParentLeft="true" />
 
             <TextView
@@ -39,7 +35,7 @@
                 android:id="@+id/next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="> Next"
+                android:text="Next"
                 android:textColor="#1B223C"
                 style="@style/Main_Header"
                 android:background="#ffffff"
@@ -284,6 +280,5 @@
             android:maxLines="1"
             android:minHeight="?actionBarSize" />
 
-    </ScrollView>
 
 </LinearLayout>
