@@ -55,8 +55,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     boolean completed = false;
     boolean disabled = true;
-    // TODO: IF NO BACKEND RUNNING LOCALLY, SET SKIPBACKEND TO TRUE
-    boolean skipBackend = false;
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -92,39 +90,12 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup);
         api = Api.getInstance().apiModel;
 
-        // TODO: move this to the login page instead
-        Gson gson = new Gson();
-        mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
-        String json = mPreferences.getString(Constants.USER_KEY, null);
-        if (json == null) {
-            Log.i(TAG, "is null");
-        } else {
-            // TODO: IF YOU WANT TO SKIP THE SIGN UP PAGE, YOU CAN COMMENT OUT THIS SHARED PREF REMOVE
-//            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-//            preferencesEditor.remove(USER_KEY);
-//            preferencesEditor.apply();
-            // TODO: COMMENT OUT TILL HERE
-            Log.i(TAG, json);
-            user = gson.fromJson(json, User.class);
-            Intent intent = new Intent(SignUpActivity.this, FindEventsActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
         fieldIds = new int[]{R.id.nameInput, R.id.emailInput, R.id.idInput, R.id.passwordInput};
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:5000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        api = retrofit.create(ApiModel.class);
-
 
         for (int i=0; i<FIELDS; i++) {
             inputFields[i] = findViewById(fieldIds[i]);
@@ -210,7 +181,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!disabled) {
                     if (validateEmail(email.toString())) {
-                        if (skipBackend) {
+                        if (Constants.SKIP_BACKEND) {
                             user = new User(name.toString(), email.toString(), studentId.toString(), "");
                             user.setId("dummy_id");
                             user.setPermission(0);

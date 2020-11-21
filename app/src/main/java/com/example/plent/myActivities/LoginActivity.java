@@ -9,6 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -25,6 +26,8 @@ import com.example.plent.R;
 import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
+import com.example.plent.utils.Constants;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,8 @@ import java.util.List;
 // TODO: EDIT AP CALL
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "LOGIN";
+    private SharedPreferences mPreferences;
 
     private EditText email;
     private EditText password;
@@ -42,13 +47,9 @@ public class LoginActivity extends AppCompatActivity {
     Button createAcc;
     ApiModel api;
 
-    ArrayList<User> userList;
+    User userCred;
     boolean emailInList = false;
-    String TAG = "Logcat";
 
-    int FIELDS = 2;
-    int[] fieldIds;
-    EditText[] inputFields = new EditText[FIELDS];
     boolean completed = false;
     boolean disabled = true;
 
@@ -74,6 +75,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         api = Api.getInstance().apiModel;
+
+        // SKIPS LOGIN IF USER INFO IS ALR SAVED IN SHARED PREF
+        Gson gson = new Gson();
+        mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
+        String json = mPreferences.getString(Constants.USER_KEY, null);
+        if (json == null) {
+            Log.i(TAG, "is null");
+        } else {
+            // TODO: UNCOMMENT THIS IF YOU DO NOT WANT TO SKIP LOGIN PAGE
+//            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+//            preferencesEditor.remove(Constants.USER_KEY);
+//            preferencesEditor.apply();
+            Log.i(TAG, json);
+            userCred = gson.fromJson(json, User.class);
+            Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         email = findViewById(R.id.emailInput);
         password =  findViewById(R.id.passwordInput);
@@ -118,30 +137,23 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                 }
                 else {
-                    for (User u: userList){
-                        if (u.getEmail().toString() == email.getText().toString()) {
-                            emailInList = true;
-                            if (u.getPassword() == password.getText().toString()) {
-                                Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
-                                startActivity(intent);
-                            }
-                            else {
-                                Toast.makeText(LoginActivity.this, "One or more of the entered credentials are incorrect. Please try again",
-                                        Toast.LENGTH_SHORT).show();
-                                email.setText(null);
-                                password.setText(null);
-                            }
-                        }
-                    }
-                    if (emailInList == false) {
-                        Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. \n" +
-                                "Try using another email address or Create a new account", Toast.LENGTH_SHORT).show();
+                    if (Constants.SKIP_BACKEND) {
+                        userCred = new User("Test User", email.getText().toString(), "1001234", password.getText().toString());
+                        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+                        Gson gson = new Gson();
+                        preferencesEditor.putString(Constants.USER_KEY, gson.toJson(userCred));
+                        preferencesEditor.apply();
+
+                        Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        authenticateAndFetchUser();
                     }
                 }
-
             }
 
-        });
+            });
 
         createAcc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,21 +164,37 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void userList(){
-        Call<ArrayList<User>> call = api.getUserList();
-        call.enqueue(new Callback<ArrayList<User>>() {
+    public void authenticateAndFetchUser(){
+        Call<User> call = api.getUserCred(email.getText().toString());
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "[1] An error occurred, please try again!", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    userList = response.body();
+                    userCred = response.body();
+
+                    if (userCred == null) {
+                        Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. \\n\" +\n" +
+                                "                                \"Try using another email address or Create a new account", Toast.LENGTH_LONG).show();
+                    } else {
+                        if (userCred.getPassword().equals(password.getText().toString())) {
+                            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+                            Gson gson = new Gson();
+                            preferencesEditor.putString(Constants.USER_KEY, gson.toJson(userCred));
+                            preferencesEditor.apply();
+
+                            Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(LoginActivity.this, "[2] An error occurred, please try again!", Toast.LENGTH_LONG).show();
             }

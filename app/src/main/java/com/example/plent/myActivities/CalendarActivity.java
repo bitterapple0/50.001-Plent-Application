@@ -13,12 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.plent.R;
+import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
@@ -32,13 +35,13 @@ public class CalendarActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     String eventType;
     ArrayList<Event> userEvents= new ArrayList<Event>();
-    Event e1 = new Event("My first Event", "20102020" , "1000", "1200", "STUD","YAY number 1", "@nil","Industry Talks" );
-    Event e2 = new Event("My second Event", "21102020" , "1100", "1300", "NUS","Yay number 2", "@nil","Industry Talks" );
-    Event e3 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Fifth Row Activities" );
-    Event e4 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Fifth Row Activities" );
-    Event e5 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Fifth Row Activities" );
-    Event e6 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Student Life");
-    Event e7 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Student Life" );
+    Event e1 = new Event("My first Event", "20102020" , "1000", "1200", "STUD","YAY number 1", "@nil", ActivityType.INDUSTRY_TALK, "" );
+    Event e2 = new Event("My second Event", "21102020" , "1100", "1300", "NUS","Yay number 2", "@nil",ActivityType.INDUSTRY_TALK, "" );
+    Event e3 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil", ActivityType.FIFTH_ROW, "" );
+    Event e4 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
+    Event e5 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
+    Event e6 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "");
+    Event e7 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" );
 
     String[] eventsName = new String[]{"Industry Talks", "Fifth Row Activities", "Industry Talks", "Student Life"};
     // Retrieve events (Need date, event type, title, location and time)
@@ -78,16 +81,20 @@ public class CalendarActivity extends AppCompatActivity {
                         // for loop to run through dates of events
                         for(Event e: userEvents){
                             if(e.getDate().equals(toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)))){
-                                if (e.getType().equals("Fifth Row Activities") ) {
+                                if (e.getType() == ActivityType.FIFTH_ROW) {
+
                                     events.add(c1);
-                                } else if (e.getType().equals( "Industry Talks")) {
+                                } else if (e.getType() == ActivityType.STUDENT_LIFE) {
+
                                     events.add(c2);
-                                } else if (e.getType().equals("Student Life")) {
+                                } else if (e.getType() == ActivityType.INDUSTRY_TALK) {
+
                                     events.add(c3);
                                 }
 
                             }
                         }
+                        Log.i("CALENDAR", ""+events);
                         return events;
                     }
                 })
@@ -147,27 +154,30 @@ public class CalendarActivity extends AppCompatActivity {
     public void addCalendarEvent(Event e) {
         View calendar_card =  View.inflate(this, R.layout.calendar_card, null);
 
-        if( e.getType().equals( "Fifth Row Activities")) {
-            calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_fr_yellow_dark));
-            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_fr_yellow_bg));
+        if(e.getType() == ActivityType.FIFTH_ROW) {
+            Log.i("CALENDAR", e.getTitle() + " is a fifth row");
+            calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_fr_yellow_dark));
+            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_fr_yellow_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
             header.setText(e.getTitle());
 
-        } else if (e.getType().equals( "Industry Talks")) {
-            calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_it_green_dark));
-            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_it_green_bg));
+        } else if (e.getType() == ActivityType.STUDENT_LIFE) {
+            Log.i("CALENDAR", e.getTitle() + " is a student life event");
+            calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_it_green_dark));
+            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_it_green_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
             header.setText(e.getTitle());
 
-        } else if (e.getType().equals( "Student Life")) {
-            calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_sl_blue_dark));
-            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_sl_blue_bg));
+        } else if (e.getType() == ActivityType.INDUSTRY_TALK) {
+            Log.i("CALENDAR", e.getTitle() + " is an industry talk");
+            calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_sl_blue_dark));
+            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_sl_blue_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
             header.setText(e.getTitle());
             TextView body = calendar_card.findViewById(R.id.calendar_time);
             body.setText("this is the text body");
         } else {
-            calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
         Log.i("Message", String.valueOf(linearLayout.getChildCount()));

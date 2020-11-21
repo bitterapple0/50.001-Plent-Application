@@ -158,7 +158,7 @@ public class FindEventsActivity extends AppCompatActivity {
 
     public void redirectToEventsPage(View view){
         Intent intent = new Intent(FindEventsActivity.this, EventActivity.class);
-        intent.putExtra(Constants.SELECTED_EVENT_KEY, "5fb96424fe88a67bb74b4289");  // dummy id
+        intent.putExtra(Constants.SELECTED_EVENT_KEY, Constants.SKIP_BACKEND ? "5fb96424fe88a67bb74b4289" : "5fb937bce230d0e3a9e2f912"); // 5fb937bce230d0e3a9e2f912 - actual id in db  // 5fb96424fe88a67bb74b4289 - dummy id
         startActivity(intent);
     }
 

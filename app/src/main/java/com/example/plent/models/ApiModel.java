@@ -16,8 +16,8 @@ public interface ApiModel {
     @POST("user")
     Call<User> createUser(@Body User user);
 
-    @GET("userlist")
-    Call<ArrayList<User>> getUserList();
+    @GET("user")
+    Call<User> getUserCred(@Query("email") String email );
 
     @GET("event")
     Call<Event> getEvent(@Query("event_id") String eventId, @Query("user_id") String userId);

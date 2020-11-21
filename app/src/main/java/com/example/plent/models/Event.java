@@ -18,9 +18,9 @@ public class Event {
     private String telegram;
     private String clashString;
     private ArrayList attendees;
-    private String type;
+    private ActivityType type;
 
-    public Event(String title, String date, String start_time, String end_time, String location, String description, String telegram, String type) {
+    public Event(String title, String date, String start_time, String end_time, String location, String description, String telegram, ActivityType type, String imageUrl) {
         this.title = title;
         this.date = date;
         this.start_time = start_time;
@@ -53,7 +53,7 @@ public class Event {
     public void removeAttendee(String userId) {
         this.attendees.remove(userId);
     }
-    public String getType() { return type; }
+    public ActivityType getType() { return type; }
 
     public boolean compareDate(int date, int month, int year){
         String date_string = Integer.toString(date) + Integer.toString(month) + Integer.toString(year);

@@ -21,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.example.plent.R;
+import com.example.plent.models.ActivityType;
 import com.example.plent.models.ApiModel;
 import com.example.plent.models.Event;
 import com.example.plent.models.User;
@@ -54,7 +55,9 @@ public class EventActivity extends AppCompatActivity {
 
     int permission = 1; // We need to replace this with the user's permission field
 
-    boolean skipBackend = true;
+    // NOTE: IF YOU SET SKIPBACKEND TO TRUE, USE ACTUAL DB ID IN FINDEVENTSACTIVITY
+    // IF YOU SET SKIPBACKEND TO FALSE, USE DUMMY ID IN FINDEVENTSACTIVITY
+    // CHANGE THIS VALUE IN REDIRECTTOEVENTSPAGE
 
     void backToFindEvents() {
         Toast.makeText(this, "Oops, this event could not be fetched!", Toast.LENGTH_LONG).show();
@@ -101,8 +104,8 @@ public class EventActivity extends AppCompatActivity {
             user = gson.fromJson(json, User.class);
 
             // fetch event info from db and check for clashes with user's events
-            if (skipBackend) {
-                event = new Event("Athletics Freshmore Intro Session", "Monday, Oct 12th, 6.30pm - 8.30pm", "", "", "SUTD Stadium", "Always had a passion for running or just want to maintain your fitness goals? Athletics club is here for you! Come down to experience what our training would be like and join us for a run to Simpang afterwards for supper after burning those calories!", "https://t.me/sutdathletics2020", "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1605984445/athleticsposter_lhtcqv.png");
+            if (Constants.SKIP_BACKEND) {
+                event = new Event("Athletics Freshmore Intro Session", "Monday, Oct 12th, 6.30pm - 8.30pm", "", "", "SUTD Stadium", "Always had a passion for running or just want to maintain your fitness goals? Athletics club is here for you! Come down to experience what our training would be like and join us for a run to Simpang afterwards for supper after burning those calories!", "https://t.me/sutdathletics2020", ActivityType.FIFTH_ROW, "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1605984445/athleticsposter_lhtcqv.png");
 
                 eventHeader.setText(event.getTitle());
                 location.setText(event.getLocation());
@@ -162,7 +165,7 @@ public class EventActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (skipBackend) {
+                if (Constants.SKIP_BACKEND) {
                     final boolean alreadyGoing = user.getEvents().contains(eventId);
                     Toast toast_success = Toast.makeText(EventActivity.this, alreadyGoing ? R.string.remove_attendance_success_toast : R.string.sign_up_success_toast, Toast.LENGTH_LONG);
                     toast_success.setGravity(Gravity.CENTER_VERTICAL, 0,0 );
