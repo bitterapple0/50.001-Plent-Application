@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".myActivities.CreateEvent"
+<<<<<<< HEAD
+    android:paddingBottom="15dp" >
+=======
     android:paddingBottom="15dp">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+>>>>>>> 03ef97fdc964428905916e342b5950d64a98f28a
 
         <RelativeLayout
             layout="@layout/toolbar"
@@ -17,12 +17,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <ImageView
                 android:id="@+id/exit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✖"
-                android:background="#ffffff"
+                android:layout_margin="16dp"
+                android:background="@drawable/close_icon"
                 android:layout_alignParentLeft="true" />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:id="@+id/next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="> Next"
+                android:text="Next"
                 android:textColor="#1B223C"
                 style="@style/Main_Header"
                 android:background="#ffffff"
@@ -111,17 +111,15 @@
             android:text="Date"
             android:layout_marginBottom="5dp"/>
 
-        <EditText
-            style="@style/Login_Edittext"
+        <DatePicker
             android:id="@+id/enter_date"
-            android:layout_width="match_parent"
+            style="@style/Login_Edittext"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_style_selector"
-            android:autofillHints=""
-            android:hint="DD/MM/YY"
-            android:maxHeight="?actionBarSize"
-            android:maxLines="1"
-            android:minHeight="?actionBarSize" />
+            android:datePickerMode="spinner"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:calendarViewShown="false" />
 
         <Space
             android:layout_width="1dp"
@@ -134,43 +132,42 @@
             android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Time"
-            android:layout_marginBottom="5dp"/>
+            android:text="Time" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                style="@style/Login_Edittext"
+            <TimePicker
                 android:id="@+id/start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:hint="Start Time"
-                />
+                style="@style/Login_Edittext"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:timePickerMode="spinner" />
 
             <TextView
                 android:id="@+id/to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_toRightOf="@+id/start_time"
+                android:layout_centerInParent="true"
                 android:text="to"
                 style="@style/Sub_Header"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"/>
 
-            <EditText
-                style="@style/Login_Edittext"
+            <TimePicker
                 android:id="@+id/end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/to"
-                android:hint="End Time" />
-
+                style="@style/Login_Edittext"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_toRightOf="@id/to"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:timePickerMode="spinner" />
         </RelativeLayout>
 
         <Space
@@ -284,6 +281,5 @@
             android:maxLines="1"
             android:minHeight="?actionBarSize" />
 
-    </ScrollView>
 
 </LinearLayout>
