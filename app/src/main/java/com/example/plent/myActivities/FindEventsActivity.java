@@ -65,6 +65,8 @@ public class FindEventsActivity extends AppCompatActivity {
         CardView upcoming_events_card_view = findViewById(R.id.upcoming_events_card_view);
         TextView header2 = upcoming_events_card_view.findViewById(R.id.cluster_header);
         header2.setText("Upcoming Events");
+
+        
     }
 
     public void addImages() {

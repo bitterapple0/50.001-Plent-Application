@@ -98,9 +98,9 @@ public class SignUpActivity extends AppCompatActivity {
             Log.i(TAG, "is null");
         } else {
             // TODO: IF YOU WANT TO SKIP THE SIGN UP PAGE, YOU CAN COMMENT OUT THIS SHARED PREF REMOVE
-            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-            preferencesEditor.remove(USER_KEY);
-            preferencesEditor.apply();
+//            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+//            preferencesEditor.remove(USER_KEY);
+//            preferencesEditor.apply();
             // TODO: COMMENT OUT TILL HERE
             Log.i(TAG, json);
             user = gson.fromJson(json, User.class);
