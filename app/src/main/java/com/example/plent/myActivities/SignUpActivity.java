@@ -27,6 +27,7 @@ import com.example.plent.R;
 import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
+import com.example.plent.utils.Constants;
 import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
@@ -34,14 +35,12 @@ import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private static final String TAG = "Logcat";
-    public static String USER_KEY = "user";
+    private static final String TAG = "SIGN UP";
     public static int FIELDS = 4;
 
     private SharedPreferences mPreferences;
-    private static final String sharedPrefFile = "com.example.android.mainsharedprefs";
 
-    ApiModel api = Api.getInstance().apiModel;
+    ApiModel api;
     User user;
 
     int[] fieldIds;
@@ -57,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
     boolean completed = false;
     boolean disabled = true;
     // TODO: IF NO BACKEND RUNNING LOCALLY, SET SKIPBACKEND TO TRUE
-    boolean skipBackend = true;
+    boolean skipBackend = false;
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -91,17 +90,19 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
+        api = Api.getInstance().apiModel;
 
+        // TODO: move this to the login page instead
         Gson gson = new Gson();
-        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        String json = mPreferences.getString(USER_KEY, null);
+        mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
+        String json = mPreferences.getString(Constants.USER_KEY, null);
         if (json == null) {
             Log.i(TAG, "is null");
         } else {
             // TODO: IF YOU WANT TO SKIP THE SIGN UP PAGE, YOU CAN COMMENT OUT THIS SHARED PREF REMOVE
-            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-            preferencesEditor.remove(USER_KEY);
-            preferencesEditor.apply();
+//            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+//            preferencesEditor.remove(USER_KEY);
+//            preferencesEditor.apply();
             // TODO: COMMENT OUT TILL HERE
             Log.i(TAG, json);
             user = gson.fromJson(json, User.class);
@@ -260,7 +261,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void onSubmitSuccess() {
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         Gson gson = new Gson();
-        preferencesEditor.putString(USER_KEY, gson.toJson(user));
+        preferencesEditor.putString(Constants.USER_KEY, gson.toJson(user));
         preferencesEditor.apply();
 
         Intent intent = new Intent(SignUpActivity.this, FindEventsActivity.class);

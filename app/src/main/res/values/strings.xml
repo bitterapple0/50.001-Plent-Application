@@ -6,7 +6,8 @@
     <string name="industry_talks">Industry Talks</string>
     <string name="student_life">Student Life</string>
     <string name="search_hint">Search for Events and Activities</string>
-    <string name="success_toast">You have successfully signed up for the event</string>
+    <string name="sign_up_success_toast">You have successfully signed up for the event</string>
+    <string name="remove_attendance_success_toast">You are no longer attending this event</string>
     <string name="default_telegram_group">https://t.me/addstickers/rissaartt</string>
     <string name="find_events_activity">Find Events and Activity</string>
     <string name="see_all">See All</string>

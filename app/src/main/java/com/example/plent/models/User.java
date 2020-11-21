@@ -1,5 +1,7 @@
 package com.example.plent.models;
 
+import java.util.ArrayList;
+
 public class User {
     private String name;
     private String email;
@@ -7,6 +9,7 @@ public class User {
     private String password;
     private String id;
     private int permission; // 0 normal, 1 creator
+    private ArrayList events;
 
     public int getPermission() {
         return permission;
@@ -19,6 +22,7 @@ public class User {
         this.email = email;
         this.studentId = studentId;
         this.password = password;
+        this.events = new ArrayList();
     }
 
     public String getId() {
@@ -41,8 +45,17 @@ public class User {
         return studentId;
     }
 
+    public ArrayList getEvents() { return events; }
+
     public void removePassword() {
         this.password = "";
     }
 
+    public void signUp(String eventId) {
+        this.events.add(eventId);
+    }
+
+    public void cancelAttendance(String eventId) {
+        this.events.remove(eventId);
+    }
 }
