@@ -1,28 +1,20 @@
 package com.example.plent.myActivities;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.util.DisplayMetrics;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.plent.R;
+import com.example.plent.models.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +31,14 @@ public class CalendarActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     LinearLayout linearLayout;
     String eventType;
+    ArrayList<Event> userEvents= new ArrayList<Event>();
+    Event e1 = new Event("My first Event", "20102020" , "1000", "1200", "STUD","YAY number 1", "@nil","Industry Talks" );
+    Event e2 = new Event("My second Event", "21102020" , "1100", "1300", "NUS","Yay number 2", "@nil","Industry Talks" );
+    Event e3 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Fifth Row Activities" );
+    Event e4 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Fifth Row Activities" );
+    Event e5 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Fifth Row Activities" );
+    Event e6 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Student Life");
+    Event e7 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil","Student Life" );
 
     String[] eventsName = new String[]{"Industry Talks", "Fifth Row Activities", "Industry Talks", "Student Life"};
     // Retrieve events (Need date, event type, title, location and time)
@@ -52,8 +52,10 @@ public class CalendarActivity extends AppCompatActivity {
         Log.i("ALC", "CREATE");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
-
         /* starts before 1 month from now */
+        userEvents.add(e1);
+        userEvents.add(e2);
+        userEvents.add(e3);
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
 
@@ -70,24 +72,22 @@ public class CalendarActivity extends AppCompatActivity {
                     @Override
                     public List<CalendarEvent> events(Calendar date) {
                         List<CalendarEvent> events = new ArrayList<>();
-                        Log.i("Date", date.toString());
-                        Log.i("DefaultDate", defaultSelectedDate.toString());
+                        Log.i("Date", toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
+                        Log.i("DefaultDate", toDateString(defaultSelectedDate.get(Calendar.DATE), defaultSelectedDate.get(Calendar.MONTH), defaultSelectedDate.get(Calendar.YEAR)));
 
                         // for loop to run through dates of events
-
-                        if (date.get(Calendar.DAY_OF_YEAR) == defaultSelectedDate.get(Calendar.DAY_OF_YEAR)){
-                            for (String eventType:eventsName){
-                                if (eventType == "Fifth Row Activities") {
+                        for(Event e: userEvents){
+                            if(e.getDate().equals(toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)))){
+                                if (e.getType().equals("Fifth Row Activities") ) {
                                     events.add(c1);
-                                } else if (eventType == "Industry Talks") {
+                                } else if (e.getType().equals( "Industry Talks")) {
                                     events.add(c2);
-                                } else if (eventType == "Student Life") {
+                                } else if (e.getType().equals("Student Life")) {
                                     events.add(c3);
                                 }
+
                             }
                         }
-
-
                         return events;
                     }
                 })
@@ -97,7 +97,9 @@ public class CalendarActivity extends AppCompatActivity {
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
-                Log.i("Message", "Date Selected");
+                Log.i("Message", toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
+                linearLayout.removeAllViews();
+                filterCalenderEvents(userEvents, date);
             }
         });
 
@@ -112,9 +114,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.calendar_events);
 
-        for (String event:eventsName){
-            addCalendarEvent(event);
-        }
+        filterCalenderEvents(userEvents, defaultSelectedDate);
 
     }
 
@@ -144,28 +144,28 @@ public class CalendarActivity extends AppCompatActivity {
         Log.i("ALC", "RESTART");
     }
 
-    public void addCalendarEvent(String eventType) {
+    public void addCalendarEvent(Event e) {
         View calendar_card =  View.inflate(this, R.layout.calendar_card, null);
 
-        if (eventType == "Fifth Row Activities") {
+        if( e.getType().equals( "Fifth Row Activities")) {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_fr_yellow_dark));
             calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_fr_yellow_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
-            header.setText("Fifth Row Activities Title");
+            header.setText(e.getTitle());
 
-        } else if (eventType == "Industry Talks") {
+        } else if (e.getType().equals( "Industry Talks")) {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_it_green_dark));
             calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_it_green_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
-            header.setText("Industry Talks Title");
+            header.setText(e.getTitle());
 
-        } else if (eventType == "Student Life") {
+        } else if (e.getType().equals( "Student Life")) {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.calendar_sl_blue_dark));
             calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(getResources().getColor(R.color.calendar_sl_blue_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
-            header.setText("House Guardians Games Night");
+            header.setText(e.getTitle());
             TextView body = calendar_card.findViewById(R.id.calendar_time);
-            body.setText("9pm - 11pm, BLK 59 Level 10");
+            body.setText("this is the text body");
         } else {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         }
@@ -174,5 +174,18 @@ public class CalendarActivity extends AppCompatActivity {
 
         linearLayout.addView(calendar_card, linearLayout.getChildCount());
 
+    }
+
+
+    public void filterCalenderEvents(ArrayList<Event> events, Calendar date){
+        for (Event e : events) {
+            if (e.compareDate(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR))){
+                addCalendarEvent(e);
+            }
+        }
+    }
+
+    public String toDateString(int date, int month, int year){
+        return Integer.toString(date) + Integer.toString(month) +Integer.toString((year));
     }
 }

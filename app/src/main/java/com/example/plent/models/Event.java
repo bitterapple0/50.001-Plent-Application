@@ -12,8 +12,9 @@ public class Event {
     private String description;
     // private Bitmap poster
     private String telegram;
+    private String type;
 
-    public Event(String title, String date, String start_time, String end_time, String location, String description, String telegram) {
+    public Event(String title, String date, String start_time, String end_time, String location, String description, String telegram, String type) {
         this.title = title;
         this.date = date;
         this.start_time = start_time;
@@ -21,6 +22,7 @@ public class Event {
         this.location = location;
         this.description = description;
         this.telegram = telegram;
+        this.type = type;
     }
 
     public String getTitle() { return title; }
@@ -30,6 +32,10 @@ public class Event {
     public String getLocation() { return location; }
     public String getDescription() { return description; }
     public String getTelegram() { return telegram; }
+    public String getType() { return type; }
 
-
+    public boolean compareDate(int date, int month, int year){
+        String date_string = Integer.toString(date) + Integer.toString(month) + Integer.toString(year);
+        return date_string.equals(this.date);
+    }
 }
