@@ -4,9 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".myActivities.CreateEvent"
     android:paddingBottom="15dp">
-
+    <!--
+    commented out to test the app,  copy and paste the below line in the above tag to go back to the previous setup
+    tools:context=".myActivities.CreateEvent"
+    -->
         <RelativeLayout
             layout="@layout/toolbar"
             android:layout_width="match_parent"

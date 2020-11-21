@@ -1,6 +1,7 @@
 package com.example.plent.models;
 import com.example.plent.models.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -14,6 +15,9 @@ public interface ApiModel {
 
     @POST("user")
     Call<User> createUser(@Body User user);
+
+    @GET("userlist")
+    Call<ArrayList<User>> getUserList();
 
     @GET("event")
     Call<Event> getEvent(@Query("event_id") String eventId, @Query("user_id") String userId);

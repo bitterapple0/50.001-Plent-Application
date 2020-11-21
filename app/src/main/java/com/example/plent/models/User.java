@@ -58,4 +58,7 @@ public class User {
     public void cancelAttendance(String eventId) {
         this.events.remove(eventId);
     }
+    public String getPassword() {
+        return password;
+    }
 }
