@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".myActivities.CreateEvent"
+<<<<<<< HEAD
+    android:paddingBottom="15dp" >
+=======
+    android:paddingBottom="15dp">
+>>>>>>> 03ef97fdc964428905916e342b5950d64a98f28a
+
+        <RelativeLayout
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/exit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/close_icon"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/create_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Event"
+                android:textColor="#1B223C"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                style="@style/Toolbar_Title"/>
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:textColor="#1B223C"
+                style="@style/Main_Header"
+                android:background="#ffffff"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="false" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            style="@style/Login_Label"
+            android:id="@+id/event_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event Title"
+            android:paddingTop="30dp"
+            android:layout_marginBottom="10dp" />
+
+        <EditText
+            style="@style/Login_Edittext"
+            android:id="@+id/title_input"
+            android:background="@drawable/edit_text_style_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:inputType="text"
+            android:maxHeight="?actionBarSize"
+            android:maxLines="1"
+            android:minHeight="?actionBarSize" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <TextView
+            style="@style/Login_Label"
+            android:id="@+id/event_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event Type"
+            android:layout_marginBottom="5dp" />
+
+        <Spinner
+            style="@style/Login_Edittext"
+            android:id="@+id/types"
+            android:background="@drawable/edit_text_style_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:inputType="text"
+            android:maxHeight="?actionBarSize"
+            android:maxLines="1"
+            android:minHeight="?actionBarSize"
+             />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <TextView
+            style="@style/Login_Label"
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:layout_marginBottom="5dp"/>
+
+        <DatePicker
+            android:id="@+id/enter_date"
+            style="@style/Login_Edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:calendarViewShown="false" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <TextView
+            style="@style/Login_Label"
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TimePicker
+                android:id="@+id/start_time"
+                style="@style/Login_Edittext"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:timePickerMode="spinner" />
+
+            <TextView
+                android:id="@+id/to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:text="to"
+                style="@style/Sub_Header"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <TimePicker
+                android:id="@+id/end_time"
+                style="@style/Login_Edittext"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_toRightOf="@id/to"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:timePickerMode="spinner" />
+        </RelativeLayout>
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <TextView
+            style="@style/Login_Label"
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:layout_marginBottom="5dp"/>
+
+        <EditText
+            style="@style/Login_Edittext"
+            android:id="@+id/location_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_style_selector"
+            android:autofillHints=""
+            android:inputType="textPassword"
+            android:maxHeight="?actionBarSize"
+            android:maxLines="1"
+            android:minHeight="?actionBarSize" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <TextView
+            style="@style/Login_Label"
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:layout_marginBottom="5dp"/>
+
+        <EditText
+            style="@style/Login_Edittext"
+            android:id="@+id/description_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_style_selector"
+            android:autofillHints=""
+            android:inputType="textPassword"
+            android:maxHeight="?actionBarSize"
+            android:maxLines="1"
+            android:minHeight="?actionBarSize" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/poster"
+                style="@style/Login_Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Upload an image" />
+
+            <Button
+                android:id="@+id/upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/poster"
+                android:text="Browse"
+                style="@style/Secondary_Button"/>
+
+        </RelativeLayout>
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <TextView
+            style="@style/Login_Label"
+            android:id="@+id/telegram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telegram Group Link (Optional)"
+            android:layout_marginBottom="5dp"/>
+
+        <EditText
+            style="@style/Login_Edittext"
+            android:id="@+id/telegram_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_style_selector"
+            android:autofillHints=""
+            android:inputType="textPassword"
+            android:maxHeight="?actionBarSize"
+            android:maxLines="1"
+            android:minHeight="?actionBarSize" />
+
+
+</LinearLayout>
