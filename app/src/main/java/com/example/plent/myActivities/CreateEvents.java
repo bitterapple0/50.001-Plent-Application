@@ -49,7 +49,7 @@ public class CreateEvents extends AppCompatActivity {
 
     // local variables
     String title1;
-    String type1;
+    ActivityType type1;
     int month1;
     int day1;
     int year1;
@@ -141,7 +141,7 @@ public class CreateEvents extends AppCompatActivity {
         telegram_input = findViewById(R.id.telegram_input);
 
         title1 = title_input.getText().toString();
-        type1 = types.getSelectedItem().toString(); // not sure how to change string to activityType (asking xinyi)
+        type1 = ActivityType.valueOf(types.getSelectedItem().toString()); // not sure how to change string to activityType (asking xinyi)
         month1 = enter_date.getMonth();
         day1 = enter_date.getDayOfMonth();
         year1 = enter_date.getYear();
