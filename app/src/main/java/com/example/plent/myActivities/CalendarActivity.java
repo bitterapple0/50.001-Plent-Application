@@ -43,9 +43,6 @@ public class CalendarActivity extends AppCompatActivity {
     Event e6 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "");
     Event e7 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" );
 
-    String[] eventsName = new String[]{"Industry Talks", "Fifth Row Activities", "Industry Talks", "Student Life"};
-    // Retrieve events (Need date, event type, title, location and time)
-
     CalendarEvent c1 = new CalendarEvent(Color.parseColor("#EAD620"), "event");
     CalendarEvent c2 = new CalendarEvent(Color.parseColor("#81D2AC"), "event");
     CalendarEvent c3 = new CalendarEvent(Color.parseColor("#81C3D2"), "event");
@@ -55,10 +52,12 @@ public class CalendarActivity extends AppCompatActivity {
         Log.i("ALC", "CREATE");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
-        /* starts before 1 month from now */
+
         userEvents.add(e1);
         userEvents.add(e2);
         userEvents.add(e3);
+
+        /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
 
@@ -82,13 +81,10 @@ public class CalendarActivity extends AppCompatActivity {
                         for(Event e: userEvents){
                             if(e.getDate().equals(toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)))){
                                 if (e.getType() == ActivityType.FIFTH_ROW) {
-
                                     events.add(c1);
                                 } else if (e.getType() == ActivityType.STUDENT_LIFE) {
-
                                     events.add(c2);
                                 } else if (e.getType() == ActivityType.INDUSTRY_TALK) {
-
                                     events.add(c3);
                                 }
 
@@ -160,6 +156,8 @@ public class CalendarActivity extends AppCompatActivity {
             calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_fr_yellow_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
             header.setText(e.getTitle());
+            TextView body = calendar_card.findViewById(R.id.calendar_time);
+            body.setText(e.getDescription());
 
         } else if (e.getType() == ActivityType.STUDENT_LIFE) {
             Log.i("CALENDAR", e.getTitle() + " is a student life event");
@@ -167,6 +165,8 @@ public class CalendarActivity extends AppCompatActivity {
             calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_it_green_bg));
             TextView header = calendar_card.findViewById(R.id.calendar_title);
             header.setText(e.getTitle());
+            TextView body = calendar_card.findViewById(R.id.calendar_time);
+            body.setText(e.getDescription());
 
         } else if (e.getType() == ActivityType.INDUSTRY_TALK) {
             Log.i("CALENDAR", e.getTitle() + " is an industry talk");
@@ -175,7 +175,7 @@ public class CalendarActivity extends AppCompatActivity {
             TextView header = calendar_card.findViewById(R.id.calendar_title);
             header.setText(e.getTitle());
             TextView body = calendar_card.findViewById(R.id.calendar_time);
-            body.setText("this is the text body");
+            body.setText(e.getDescription());
         } else {
             calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }

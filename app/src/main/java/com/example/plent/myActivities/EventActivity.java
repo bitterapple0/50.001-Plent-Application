@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -52,6 +53,7 @@ public class EventActivity extends AppCompatActivity {
     TextView mainHeader;
     TextView description;
     TextView clashText;
+    LinearLayout event_activity_linear_layout;
 
     int permission = 1; // We need to replace this with the user's permission field
 
@@ -89,6 +91,7 @@ public class EventActivity extends AppCompatActivity {
         eventPoster = findViewById(R.id.athletics_poster);
         description = findViewById(R.id.post_body);
         clashText = findViewById(R.id.warning1);
+        event_activity_linear_layout = findViewById(R.id.event_activity_linear_layout);
 
         Gson gson = new Gson();
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
@@ -247,12 +250,18 @@ public class EventActivity extends AppCompatActivity {
                     });
                 }
 
+
+
             }
         });
 
-
-
         joinTelegramGroupButton = findViewById(R.id.join_telegram_group_button);
+
+        if (event.getTelegram().isEmpty()) {
+            // if there is no telegram link provided, no Join Telegram Group Button will be shown
+            joinTelegramGroupButton.setVisibility(View.GONE);
+        }
+
         joinTelegramGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,10 +270,6 @@ public class EventActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
-
-
-                /*Intent intent = new Intent(MainActivity.this, FindEventsActivity.class);
-                startActivity(intent);*/
 
             }
         });
@@ -290,7 +295,6 @@ public class EventActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
 
-        // Add back button on top?
     }
 
     @Override

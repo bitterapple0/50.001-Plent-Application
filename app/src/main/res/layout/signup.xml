@@ -29,7 +29,8 @@
         android:layout_marginHorizontal="24dp" />
 
     <TextView
-        style="@style/Login_Label"
+        style="@style/Sub_Header"
+        android:layout_marginHorizontal="24dp"
         android:id="@+id/nameText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +39,7 @@
 
 
     <EditText
-        style="@style/Login_Edittext"
+        style="@style/Login_Light"
         android:id="@+id/nameInput"
         android:hint="e.g John Tan"
         android:background="@drawable/edit_text_style_selector"
@@ -48,7 +49,8 @@
         android:inputType="text"
         android:maxHeight="?actionBarSize"
         android:maxLines="1"
-        android:minHeight="?actionBarSize" />
+        android:minHeight="?actionBarSize"
+        android:padding="12dp"/>
 
     <Space
         android:layout_width="wrap_content"
@@ -56,7 +58,8 @@
         android:layout_weight="1"></Space>
 
     <TextView
-        style="@style/Login_Edittext"
+        style="@style/Sub_Header"
+        android:layout_marginHorizontal="24dp"
         android:id="@+id/emailText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,6 +75,7 @@
         android:autofillHints=""
         android:hint="e.g john_tan@sutd.edu.sg"
         android:inputType="text"
+        android:padding="12dp"
         android:maxHeight="?actionBarSize"
         android:maxLines="1"
         android:minHeight="?actionBarSize" />
@@ -83,7 +87,8 @@
     </Space>
 
     <TextView
-        style="@style/Login_Label"
+        style="@style/Sub_Header"
+        android:layout_marginHorizontal="24dp"
         android:id="@+id/idText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,7 +106,8 @@
         android:inputType="text"
         android:maxHeight="?actionBarSize"
         android:maxLines="1"
-        android:minHeight="?actionBarSize" />
+        android:minHeight="?actionBarSize"
+        android:padding="12dp"/>
 
     <Space
         android:layout_width="1dp"
@@ -110,7 +116,8 @@
     </Space>
 
     <TextView
-        style="@style/Login_Label"
+        style="@style/Sub_Header"
+        android:layout_marginHorizontal="24dp"
         android:id="@+id/passwordText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -128,7 +135,8 @@
         android:inputType="textPassword"
         android:maxHeight="?actionBarSize"
         android:maxLines="1"
-        android:minHeight="?actionBarSize" />
+        android:minHeight="?actionBarSize"
+        android:padding="12dp"/>
 
     <Space
         android:layout_width="1dp"

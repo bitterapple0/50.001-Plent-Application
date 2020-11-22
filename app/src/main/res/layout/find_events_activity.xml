@@ -58,7 +58,7 @@
                 layout="@layout/cluster_cardview" />
 
             <include
-                android:id="@+id/upcoming_events_card_view"
+                android:id="@+id/student_life_card_view"
                 layout="@layout/cluster_cardview" />
 
         </LinearLayout>
