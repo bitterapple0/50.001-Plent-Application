@@ -91,8 +91,8 @@ public class FindEventsActivity extends AppCompatActivity {
         }
 
         for (int i=0; i<6; i++){
-            createClusterCards("Industry Talk", R.drawable.poster_placeholder);
-            createClusterCards("Student Life", R.drawable.poster_placeholder);
+            createClusterCards("Industry Talk", R.drawable.poster_placeholder1);
+            createClusterCards("Student Life", R.drawable.poster_placeholder1);
         }
 
 
