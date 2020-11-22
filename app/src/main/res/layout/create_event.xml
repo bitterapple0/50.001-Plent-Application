@@ -9,6 +9,7 @@
     commented out to test the app,  copy and paste the below line in the above tag to go back to the previous setup
     tools:context=".myActivities.CreateEvent"
     -->
+
         <RelativeLayout
             layout="@layout/toolbar"
             android:layout_width="match_parent"
@@ -45,7 +46,6 @@
                 android:textAllCaps="false" />
 
         </RelativeLayout>
-
 
         <TextView
             style="@style/Login_Label"
@@ -278,6 +278,7 @@
             android:maxHeight="?actionBarSize"
             android:maxLines="1"
             android:minHeight="?actionBarSize" />
+
 
 
 </LinearLayout>
