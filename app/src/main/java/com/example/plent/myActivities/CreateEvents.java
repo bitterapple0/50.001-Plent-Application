@@ -14,12 +14,15 @@ import android.os.*;
 import android.util.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.plent.R;
+import com.example.plent.models.ActivityType;
 import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
 import com.example.plent.models.Event;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
 import com.google.gson.Gson;
+
+import retrofit2.Call;
 
 public class CreateEvents extends AppCompatActivity {
     TextView create_event;
@@ -50,14 +53,19 @@ public class CreateEvents extends AppCompatActivity {
     int month1;
     int day1;
     int year1;
+    String date1;
     int start_hour1;
     int start_minute1;
+    String start_time1;
     int end_hour1;
     int end_minute1;
+    String end_time1;
     String location1;
     String description1;
     String telegram1;
     Event event;
+    Uri posterUri;
+
 
     // exit page
     public void ClosePage(View view) {
@@ -117,10 +125,14 @@ public class CreateEvents extends AppCompatActivity {
             }
             
         });
-
-       // getting all the values
-        title_input = findViewById(R.id.title_input);
+        // setting spinner values
         types = findViewById(R.id.types);
+        String[] items = new String[]{"Fifth Row", "Industry Talks", "Student Life"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        types.setAdapter(adapter);
+
+        // getting all the values
+        title_input = findViewById(R.id.title_input);
         enter_date = findViewById(R.id.enter_date);
         start_time = findViewById(R.id.start_time);
         end_time = findViewById(R.id.end_time);
@@ -129,7 +141,7 @@ public class CreateEvents extends AppCompatActivity {
         telegram_input = findViewById(R.id.telegram_input);
 
         title1 = title_input.getText().toString();
-        type1 = types.getSelectedItem().toString();
+        type1 = types.getSelectedItem().toString(); // not sure how to change string to activityType (asking xinyi)
         month1 = enter_date.getMonth();
         day1 = enter_date.getDayOfMonth();
         year1 = enter_date.getYear();
@@ -142,14 +154,20 @@ public class CreateEvents extends AppCompatActivity {
         telegram1 = telegram_input.getText().toString();
         // posterUri ^ as retrieved from above
 
-        String date = String.valueOf(day1) + String.valueOf(month1) + String.valueOf(year1);
-        String start_time = String.valueOf(start_hour1) + ":" + String.valueOf(start_minute1);
-        String end_time = String.valueOf(end_hour1) + ":" + String.valueOf(end_minute1);
+        String date1 = String.valueOf(day1) + String.valueOf(month1) + String.valueOf(year1);
+        String start_time1 = String.valueOf(start_hour1) + ":" + String.valueOf(start_minute1);
+        String end_time1 = String.valueOf(end_hour1) + ":" + String.valueOf(end_minute1);
 
     }
 
-    public void CreateEvent(View view) {
-        event = new Event();
+    public void createEvent(View view) {
+        event = new Event(title1, date1, start_time1, end_time1, location1, description1, telegram1,
+                type1, posterUri);
+        Call<Event> call = api.createEvent(event);
+
+        // not sure if have to do more?
     }
+
+
 
 }
