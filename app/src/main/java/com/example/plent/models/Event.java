@@ -18,6 +18,7 @@ public class Event {
     private String clashString;
     private ArrayList attendees;
     private ActivityType type;
+    // String imageUrl; // TODO: Link to backend and retrieve imageUrl
 
     public Event(String title, String date, String start_time, String end_time, String location,
                  String description, String telegram, ActivityType type, Bitmap poster) {

@@ -154,7 +154,7 @@ public class CreateEvents extends AppCompatActivity {
         location1 = location_input.getText().toString();
         description1 = description_input.getText().toString();
         telegram1 = telegram_input.getText().toString();
-        // posterUri ^ as retrieved from above
+        // posterBit ^ as retrieved from above
 
         String date1 = String.valueOf(day1) + String.valueOf(month1) + String.valueOf(year1);
         String start_time1 = String.valueOf(start_hour1) + ":" + String.valueOf(start_minute1);
