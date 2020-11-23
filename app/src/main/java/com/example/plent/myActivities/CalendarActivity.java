@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -193,6 +195,18 @@ public class CalendarActivity extends AppCompatActivity {
                 addCalendarEvent(e);
             }
         }
+
+        /* Ignore this i wanted to add a placeholder when there are no events
+        on the date but i realised my method is wrong
+            if (events.isEmpty()){
+            ImageView placeholder_calendar = new ImageView(this);
+            placeholder_calendar.setMaxWidth(224);
+            placeholder_calendar.setMaxHeight(224);
+            placeholder_calendar.setImageResource(R.drawable.placeholder_calendar);
+            placeholder_calendar.setPadding(0, 48, 0, 24);
+            linearLayout.addView(placeholder_calendar, linearLayout.getChildCount());
+            Log.i("Check", "Works");
+        }*/
     }
 
     public String toDateString(int date, int month, int year){
