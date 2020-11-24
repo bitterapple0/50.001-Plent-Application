@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.example.plent.R;
 
 public class ManageEventsActivity extends AppCompatActivity {
 
+    Button fab_add;
     LinearLayout linearLayout;
 
     @Override
@@ -32,6 +34,16 @@ public class ManageEventsActivity extends AppCompatActivity {
 
         addEvent();
         addEvent();
+
+        fab_add = findViewById(R.id.fab_add);
+        fab_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageEventsActivity.this, CreateEvents.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -80,4 +92,5 @@ public class ManageEventsActivity extends AppCompatActivity {
 
         linearLayout.addView(calendar_card, linearLayout.getChildCount());
     }
+
 }
