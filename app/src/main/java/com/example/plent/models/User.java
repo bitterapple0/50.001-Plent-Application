@@ -33,6 +33,26 @@ public class User {
         this.id = id;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEvents(ArrayList events) {
+        this.events = events;
+    }
+
     public String getName() {
         return name;
     }
@@ -58,6 +78,7 @@ public class User {
     public void cancelAttendance(String eventId) {
         this.events.remove(eventId);
     }
+
     public String getPassword() {
         return password;
     }
