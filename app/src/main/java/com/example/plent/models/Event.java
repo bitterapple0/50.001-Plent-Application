@@ -1,5 +1,6 @@
 package com.example.plent.models;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.util.ArrayList;
@@ -12,14 +13,15 @@ public class Event {
     String end_time;
     private String location;
     private String description;
-    private Uri poster;
+    private Bitmap poster;
     private String telegram;
     private String clashString;
     private ArrayList attendees;
     private ActivityType type;
+    // String imageUrl; // TODO: Link to backend and retrieve imageUrl
 
     public Event(String title, String date, String start_time, String end_time, String location,
-                 String description, String telegram, ActivityType type, Uri poster) {
+                 String description, String telegram, ActivityType type, Bitmap poster) {
         this.title = title;
         this.date = date;
         this.start_time = start_time;
@@ -40,7 +42,7 @@ public class Event {
     public String getEnd_time() { return end_time; }
     public String getLocation() { return location; }
     public String getDescription() { return description; }
-    public Uri getPoster() { return poster; }
+    public Bitmap getPoster() { return poster; }
     public String getTelegram() { return telegram; }
     public String getClashString() { return clashString; }
     public ArrayList getAttendees() { return attendees; }

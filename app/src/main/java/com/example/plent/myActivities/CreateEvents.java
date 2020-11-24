@@ -1,5 +1,6 @@
 package com.example.plent.myActivities;
 
+import java.io.IOException;
 import java.util.*;
 
 import android.app.Activity;
@@ -8,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.*;
 import android.os.*;
@@ -64,7 +66,7 @@ public class CreateEvents extends AppCompatActivity {
     String description1;
     String telegram1;
     Event event;
-    Uri posterUri;
+    Bitmap posterBit;
 
 
     // exit page
@@ -117,9 +119,9 @@ public class CreateEvents extends AppCompatActivity {
                 }
             }
 
-            public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            public void onActivityResult(int requestCode, int resultCode, Intent data) throws IOException {
                 if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
-                    Uri posterUri = data.getData();
+                    Bitmap posterBit = MediaStore.Images.Media.getBitmap(CreateEvents.this.getContentResolver(), data.getData());
                     Toast.makeText(CreateEvents.this, "Uploaded picture!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -152,7 +154,7 @@ public class CreateEvents extends AppCompatActivity {
         location1 = location_input.getText().toString();
         description1 = description_input.getText().toString();
         telegram1 = telegram_input.getText().toString();
-        // posterUri ^ as retrieved from above
+        // posterBit ^ as retrieved from above
 
         String date1 = String.valueOf(day1) + String.valueOf(month1) + String.valueOf(year1);
         String start_time1 = String.valueOf(start_hour1) + ":" + String.valueOf(start_minute1);
@@ -162,7 +164,7 @@ public class CreateEvents extends AppCompatActivity {
 
     public void createEvent(View view) {
         event = new Event(title1, date1, start_time1, end_time1, location1, description1, telegram1,
-                type1, posterUri);
+                type1, posterBit);
         Call<Event> call = api.createEvent(event);
 
         // not sure if have to do more?
