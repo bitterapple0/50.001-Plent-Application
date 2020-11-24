@@ -174,6 +174,12 @@ public class FindEventsActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        if (id == R.id.search_events){
+            Intent intent = new Intent(FindEventsActivity.this, SearchActivity.class);
+            startActivity(intent);
+        }
+
+
         return super.onOptionsItemSelected(item);
     }
 

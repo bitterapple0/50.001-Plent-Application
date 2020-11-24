@@ -12,6 +12,9 @@
         <item name="colorPrimary">#1B223C</item>
         <item name="colorPrimaryDark">#212121</item>
         <item name="colorAccent">#FF6160</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
+        <item name="android:textColorHint">#DBE0E4</item>
     </style>
 
     <style name="Main_Header" parent="TextAppearance.AppCompat">

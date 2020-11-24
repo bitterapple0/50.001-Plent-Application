@@ -5,6 +5,13 @@
     android:icon="@drawable/menu">
 
     <item
+        android:id="@+id/search_events"
+        android:orderInCategory="100"
+        android:icon="@drawable/search"
+        android:title="Search Activities"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/my_information"
         android:orderInCategory="100"
         android:title="My Information"
@@ -27,6 +34,7 @@
         android:orderInCategory="100"
         android:title="Manage Events"
         app:showAsAction="never" />
+
 
 
 </menu>

@@ -12,26 +12,54 @@ public class Event {
     String end_time;
     private String location;
     private String description;
-    private Uri poster;
+//    private Uri poster;
+    private String imageUrl;
     private String telegram;
     private String clashString;
     private ArrayList attendees;
     private ActivityType type;
 
-    public Event(String title, String date, String start_time, String end_time, String location,
-                 String description, String telegram, ActivityType type, Uri poster) {
-        this.title = title;
-        this.date = date;
-        this.start_time = start_time;
-        this.end_time = end_time;
-        this.location = location;
-        this.description = description;
-        this.telegram = telegram;
-        this.attendees = new ArrayList();
-        this.poster = poster;
-        this.clashString = "";
-        this.type = type;
-    }
+//    public Event(String title, String date, String start_time, String end_time, String location,
+//                 String description, String telegram, ActivityType type, Uri poster) {
+//
+//        this.title = title;
+//        this.date = date;
+//        this.start_time = start_time;
+//        this.end_time = end_time;
+//        this.location = location;
+//        this.description = description;
+//        this.telegram = telegram;
+//        this.attendees = new ArrayList();
+//        this.poster = poster;
+//        this.clashString = "";
+//        this.type = type;
+//    }
+//
+//    public String getId() {return id;}
+//    public String getTitle() { return title; }
+//    public String getDate() { return date; }
+//    public String getStart_time() { return start_time; }
+//    public String getEnd_time() { return end_time; }
+//    public String getLocation() { return location; }
+//    public String getDescription() { return description; }
+//    public Uri getPoster() { return poster; }
+//    public String getTelegram() { return telegram; }
+//    public String getClashString() { return clashString; }
+//    public ArrayList getAttendees() { return attendees; }
+    public Event(String title, String date, String start_time, String end_time,
+                 String location, String description, String telegram, ActivityType type, String imageUrl) {
+    this.title = title;
+    this.date = date;
+    this.start_time = start_time;
+    this.end_time = end_time;
+    this.location = location;
+    this.description = description;
+    this.telegram = telegram;
+    this.attendees = new ArrayList();
+    this.imageUrl = imageUrl;
+    this.clashString = "";
+    this.type = type;
+}
 
     public String getId() {return id;}
     public String getTitle() { return title; }
@@ -40,10 +68,11 @@ public class Event {
     public String getEnd_time() { return end_time; }
     public String getLocation() { return location; }
     public String getDescription() { return description; }
-    public Uri getPoster() { return poster; }
+    public String getImageUrl() { return imageUrl; }
     public String getTelegram() { return telegram; }
     public String getClashString() { return clashString; }
     public ArrayList getAttendees() { return attendees; }
+
 
     public void addAttendee(String userId) {
         this.attendees.add(userId);

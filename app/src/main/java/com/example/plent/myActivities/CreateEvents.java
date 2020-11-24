@@ -160,14 +160,14 @@ public class CreateEvents extends AppCompatActivity {
 
     }
 
-    public void createEvent(View view) {
-        event = new Event(title1, date1, start_time1, end_time1, location1, description1, telegram1,
-                type1, posterUri);
-        Call<Event> call = api.createEvent(event);
-
-        // not sure if have to do more?
-    }
-
+//    public void createEvent(View view) {
+//        event = new Event(title1, date1, start_time1, end_time1, location1, description1, telegram1,
+//                type1, posterUri);
+//        Call<Event> call = api.createEvent(event);
+//
+//        // not sure if have to do more?
+//    }
+//
 
 
 }
