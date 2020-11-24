@@ -69,7 +69,7 @@ public class MyInformationActivity extends AppCompatActivity {
 
         edit = findViewById(R.id.edit);
         logout = findViewById(R.id.logout);
-        nameInput = findViewById(R.id.emailInput);
+        nameInput = findViewById(R.id.nameInput);
         emailInput = findViewById(R.id.emailInput);
         idInput = findViewById(R.id.idInput);
 
@@ -86,9 +86,9 @@ public class MyInformationActivity extends AppCompatActivity {
             Log.i(TAG, "json");
             user = gson.fromJson(json, User.class);
 
-            nameInput.setHint(user.getName());
-            emailInput.setHint(user.getEmail());
             idInput.setHint(user.getStudentId());
+            emailInput.setHint(user.getEmail());
+            nameInput.setHint(user.getName());
 
             nameInput.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -176,18 +176,18 @@ public class MyInformationActivity extends AppCompatActivity {
                     Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
                             Toast.LENGTH_LONG).show();
 
-                    nameInput.setText(user.getName());
-                    idInput.setText(user.getId());
-                    emailInput.setText(user.getEmail());
+                    nameInput.setHint(user.getName());
+                    idInput.setHint(user.getId());
+                    emailInput.setHint(user.getEmail());
                 } else {
                     Gson gson = new Gson();
                     SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-                    preferencesEditor.remove(Constants.USER_KEY);
+                    // preferencesEditor.remove(Constants.USER_KEY);
                     preferencesEditor.putString(Constants.USER_KEY, gson.toJson(editedUser));
                     preferencesEditor.apply();
                     Toast.makeText(MyInformationActivity.this, "Your details have been updated !",
                             Toast.LENGTH_LONG).show();
-
+                    finish();
                 }
             }
 
