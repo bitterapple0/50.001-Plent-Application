@@ -88,7 +88,8 @@ public class ManageEventsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
         }
-
+    // Made a few changes to the ManageEventsActivity as it was throwing errors
+    // TODO Check changes
     public void addEvent() {
         View calendar_card = View.inflate(this, R.layout.manage_event_card, null);
 
