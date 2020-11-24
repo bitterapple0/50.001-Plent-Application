@@ -1,5 +1,6 @@
 package com.example.plent.models;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.util.ArrayList;
@@ -12,13 +13,19 @@ public class Event {
     String end_time;
     private String location;
     private String description;
+<<<<<<< HEAD
 //    private Uri poster;
     private String imageUrl;
+=======
+    private Bitmap poster;
+>>>>>>> master
     private String telegram;
     private String clashString;
     private ArrayList attendees;
     private ActivityType type;
+    // String imageUrl; // TODO: Link to backend and retrieve imageUrl
 
+<<<<<<< HEAD
 //    public Event(String title, String date, String start_time, String end_time, String location,
 //                 String description, String telegram, ActivityType type, Uri poster) {
 //
@@ -60,6 +67,22 @@ public class Event {
     this.clashString = "";
     this.type = type;
 }
+=======
+    public Event(String title, String date, String start_time, String end_time, String location,
+                 String description, String telegram, ActivityType type, Bitmap poster) {
+        this.title = title;
+        this.date = date;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.location = location;
+        this.description = description;
+        this.telegram = telegram;
+        this.attendees = new ArrayList();
+        this.poster = poster;
+        this.clashString = "";
+        this.type = type;
+    }
+>>>>>>> master
 
     public String getId() {return id;}
     public String getTitle() { return title; }
@@ -68,7 +91,11 @@ public class Event {
     public String getEnd_time() { return end_time; }
     public String getLocation() { return location; }
     public String getDescription() { return description; }
+<<<<<<< HEAD
     public String getImageUrl() { return imageUrl; }
+=======
+    public Bitmap getPoster() { return poster; }
+>>>>>>> master
     public String getTelegram() { return telegram; }
     public String getClashString() { return clashString; }
     public ArrayList getAttendees() { return attendees; }
