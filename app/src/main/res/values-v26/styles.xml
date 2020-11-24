@@ -118,6 +118,16 @@
         <item name="android:background">@drawable/secondary_button_stroke</item>
     </style>
 
+    <style name="Browse_Button" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:textColor">#1B223C</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:fontFamily">@font/avenirnextcyr_medium</item>
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/browse_button</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
     <style name="Cancel_Button" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:textColor">#FF6160</item>
         <item name="android:textSize">16dp</item>

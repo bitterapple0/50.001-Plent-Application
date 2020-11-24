@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".myActivities.SearchActivity"></activity>
+        <activity android:name=".myActivities.SearchActivity"/>
         <activity android:name=".myActivities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,6 +53,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".myActivities.ManageEventsActivity" />
+        <activity android:name=".myActivities.CreateEvents"/>
     </application>
 
 </manifest>

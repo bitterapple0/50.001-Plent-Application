@@ -15,10 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.plent.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ManageEventsActivity extends AppCompatActivity {
 
-    Button fab_add;
+    FloatingActionButton fab_add;
     LinearLayout linearLayout;
 
     @Override

@@ -43,7 +43,7 @@ public class CalendarActivity extends AppCompatActivity {
     Event e4 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
     Event e5 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
     Event e6 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "");
-    Event e7 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" );
+    Event e7 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" ); 
 
     CalendarEvent c1 = new CalendarEvent(Color.parseColor("#EAD620"), "event");
     CalendarEvent c2 = new CalendarEvent(Color.parseColor("#81D2AC"), "event");
@@ -55,9 +55,9 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
 
-        userEvents.add(e1);
+        /* userEvents.add(e1);
         userEvents.add(e2);
-        userEvents.add(e3);
+        userEvents.add(e3); */
 
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
