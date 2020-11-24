@@ -45,22 +45,6 @@ public class MyInformationActivity extends AppCompatActivity {
     private final String TAG = "MyInformation";
     ApiModel api;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void buttonStateChange() {
-        changed = (name_CS != user.getName() && !name_CS.toString().isEmpty()
-                && email_CS != user.getEmail() && !email_CS.toString().isEmpty())
-                && id_CS != user.getId() && !id_CS.toString().isEmpty();
-        if (changed) {
-            disabled = false;
-            edit.setTextAppearance(R.style.Primary_Button);
-            edit.setBackgroundResource(R.drawable.primary_button);
-        } else {
-            // else if (!completed){
-            disabled = true;
-            edit.setTextAppearance(R.style.Disabled_Button);
-            edit.setBackgroundResource(R.drawable.disabled_button);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +86,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     name_CS = s;
-                    buttonStateChange();
+                    // buttonStateChange();
                 }
             });
 
@@ -118,7 +102,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     email_CS = s;
-                    buttonStateChange();
+                    // buttonStateChange();
                 }
             });
 
@@ -134,7 +118,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     id_CS = s;
-                    buttonStateChange();
+                    // buttonStateChange();
                 }
             });
         }
@@ -198,6 +182,23 @@ public class MyInformationActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void buttonStateChange() {
+        changed = (name_CS != user.getName() && !name_CS.toString().isEmpty()
+                && email_CS != user.getEmail() && !email_CS.toString().isEmpty())
+                && id_CS != user.getId() && !id_CS.toString().isEmpty();
+        if (changed) {
+            disabled = false;
+            edit.setTextAppearance(R.style.Primary_Button);
+            edit.setBackgroundResource(R.drawable.primary_button);
+        } else {
+            // else if (!completed){
+            disabled = true;
+            edit.setTextAppearance(R.style.Disabled_Button);
+            edit.setBackgroundResource(R.drawable.disabled_button);
+        }
     }
 
 }
