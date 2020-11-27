@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
         android:text="Oops, looks like that event doesn't exist!"
-        android:textAppearance="@style/Login_Edittext" />
+        android:textAppearance="@style/Placeholder_Title" />
     <ImageView
         android:id="@+id/placeholder_search_imageView"
         android:layout_width="308dp"
