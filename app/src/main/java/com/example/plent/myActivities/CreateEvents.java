@@ -103,6 +103,8 @@ public class CreateEvents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
 
+
+
         api =  Api.getInstance().apiModel;
 
         // calling textView objects
@@ -119,6 +121,11 @@ public class CreateEvents extends AppCompatActivity {
         uploaded_image = findViewById(R.id.uploaded_image);
         date_picker = findViewById(R.id.date_picker);
         date_picker.setInputType(InputType.TYPE_NULL);
+        start_time = findViewById(R.id.start_time);
+        end_time = findViewById(R.id.end_time);
+
+        start_time.setIs24HourView(true);
+        end_time.setIs24HourView(true);
 
         // create close function (set intent)
 

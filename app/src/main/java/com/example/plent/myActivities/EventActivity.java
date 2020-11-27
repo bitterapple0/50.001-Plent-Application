@@ -91,6 +91,9 @@ public class EventActivity extends AppCompatActivity {
 
         joinTelegramGroupButton = findViewById(R.id.join_telegram_group_button);
 
+        joinTelegramGroupButton.setVisibility(View.INVISIBLE);
+
+
         Gson gson = new Gson();
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
         String json = mPreferences.getString(Constants.USER_KEY, null);
@@ -155,6 +158,11 @@ public class EventActivity extends AppCompatActivity {
                                 }
                             }
                             Log.i(TAG, "Retrieved event id: " + event.getId());
+
+                            if (!event.getTelegram().isEmpty()) {
+                                // if there is no telegram link provided, no Join Telegram Group Button will be shown
+                                joinTelegramGroupButton.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
 

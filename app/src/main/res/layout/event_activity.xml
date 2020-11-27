@@ -109,7 +109,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/join_telegram_group"
-                android:visibility="invisible"
                 android:layout_alignParentBottom="true"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
