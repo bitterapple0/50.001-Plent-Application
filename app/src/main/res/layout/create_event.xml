@@ -247,6 +247,13 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/uploaded_image"
+                android:layout_margin="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="210dp"
+                android:layout_gravity="center_horizontal"/>
+
 
             <TextView
                 style="@style/Sub_Header"

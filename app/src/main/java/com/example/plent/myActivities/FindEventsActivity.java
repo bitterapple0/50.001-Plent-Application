@@ -94,31 +94,6 @@ public class FindEventsActivity extends AppCompatActivity {
             createClusterCards("Industry Talk", R.drawable.poster_placeholder1);
             createClusterCards("Student Life", R.drawable.poster_placeholder1);
         }
-
-
-
-        // TODO: MOVE TO CREATE EVENT ACTIVITY ONCE THAT CLASS IS ADDED
-//        Event event = new Event("Test event", "211120", "1900", "2100", "Zoom", "lorem impsum blah blah", "https://t.me/kiasufoodies");
-//        Call call = api.createEvent(event);
-//
-//        call.enqueue(new Callback<Event>() {
-//            @Override
-//            public void onResponse(Call<Event> call, Response<Event> response) {
-//                if (!response.isSuccessful()) {
-//                    Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Log.i("FIND EVENTS", "retrieved event id: " + response.body().getId());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Event> call, Throwable t) {
-//
-//                t.printStackTrace();
-//
-//                Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
 
     public void addImages() {
