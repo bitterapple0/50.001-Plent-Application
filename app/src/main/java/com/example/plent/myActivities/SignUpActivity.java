@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
     boolean disabled = true;
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^[0-9?A-z0-9?]+(\\.)?[0-9?A-z0-9?]+@[A-z]+\\.[A-z]{3}.?[A-z]{0,3}$", Pattern.CASE_INSENSITIVE);
 
     private static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validatePassword(String passStr) {
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)";
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(passStr);
         if (m.matches() && passStr.length() > 6) {
@@ -77,6 +77,18 @@ public class SignUpActivity extends AppCompatActivity {
             return(false);
         }
 
+    }
+
+    private boolean validateStudentId(String studentIdStr) {
+        String regex = "^(100\\d\\d\\d\\d)$";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(studentIdStr);
+        if (m.matches()) {
+            return(true);
+        }
+        else {
+            return(false);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -197,19 +209,23 @@ public class SignUpActivity extends AppCompatActivity {
                 if (!disabled) {
                     if (validateEmail(email.toString())) {
                         if (validatePassword(password.toString())) {
-                            if (Constants.SKIP_BACKEND) {
-                                user = new User(name.toString(), email.toString(), studentId.toString(), "");
-                                user.setId("dummy_id");
-                                user.setPermission(0);
-                                onSubmitSuccess();
-                            } else {
-                                createUser();
+                            if (validateStudentId(studentId.toString()))
+                                if (Constants.SKIP_BACKEND) {
+                                    user = new User(name.toString(), email.toString(), studentId.toString(), "");
+                                    user.setId("dummy_id");
+                                    user.setPermission(0);
+                                    onSubmitSuccess();
+                                } else {
+                                    createUser();
+                                }
+                            else {
+                                Toast.makeText(SignUpActivity.this, "Oops, this is not a valid student id",
+                                        Toast.LENGTH_LONG).show();
                             }
                         }
                         else {
-                            Toast.makeText(SignUpActivity.this, "Oops, your password doesn't meet the requirements \n" +
-                                    "Requirements: A min of 6 characters \n" +
-                                    "Atleast an upper case and lower case letter along with a digit", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUpActivity.this, "Oops, your password doesn't meet the requirements",
+                                    Toast.LENGTH_LONG).show();
                         }
 
                     } else {

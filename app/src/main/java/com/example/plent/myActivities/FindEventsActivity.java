@@ -1,5 +1,6 @@
 package com.example.plent.myActivities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -38,8 +39,11 @@ import java.util.ArrayList;
 
 public class FindEventsActivity extends AppCompatActivity {
 
+    final static String TAG = "FIND EVENTS";
+
     ArrayList<Integer> images = new ArrayList<>();
     ArrayList<Object> imagesId = new ArrayList<>();
+    ArrayList<Event> events = new ArrayList<>();
     int permission = 1; // We need to replace this with the user's permission field
     ApiModel api;
     CardView fifth_row_events_card_view;
@@ -54,6 +58,27 @@ public class FindEventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_events_activity);
         api = Api.getInstance().apiModel;
+
+        Call<ArrayList<Event>> call = api.getAllEvents();
+        call.enqueue(new Callback<ArrayList<Event>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                } else {
+                    events = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
+
+                t.printStackTrace();
+
+                Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,38 +112,13 @@ public class FindEventsActivity extends AppCompatActivity {
         //getImage.execute();
 
         for (Integer image:images){
-            createClusterCards("Fifth Row", image);
+            createClusterCards(ActivityType.FIFTH_ROW, image);
         }
 
         for (int i=0; i<6; i++){
-            createClusterCards("Industry Talk", R.drawable.poster_placeholder1);
-            createClusterCards("Student Life", R.drawable.poster_placeholder1);
+            createClusterCards(ActivityType.INDUSTRY_TALK, R.drawable.poster_placeholder1);
+            createClusterCards(ActivityType.STUDENT_LIFE, R.drawable.poster_placeholder1);
         }
-
-
-
-        // TODO: MOVE TO CREATE EVENT ACTIVITY ONCE THAT CLASS IS ADDED
-//        Event event = new Event("Test event", "211120", "1900", "2100", "Zoom", "lorem impsum blah blah", "https://t.me/kiasufoodies");
-//        Call call = api.createEvent(event);
-//
-//        call.enqueue(new Callback<Event>() {
-//            @Override
-//            public void onResponse(Call<Event> call, Response<Event> response) {
-//                if (!response.isSuccessful()) {
-//                    Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Log.i("FIND EVENTS", "retrieved event id: " + response.body().getId());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Event> call, Throwable t) {
-//
-//                t.printStackTrace();
-//
-//                Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
 
     public void addImages() {
@@ -190,23 +190,21 @@ public class FindEventsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void createClusterCards(String eventType, int image){
+    public void createClusterCards(ActivityType eventType, int image){
         View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
 
         // change to e.getType() == ActivityType.FIFTH_ROW
-        if (eventType == "Fifth Row"){
+        if (eventType == ActivityType.FIFTH_ROW){
             ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
             poster.setImageResource(image);
             //change to imageURL
             fr_cluster_linear_layout.addView(poster, fr_cluster_linear_layout.getChildCount());
-
-        } else if (eventType == "Industry Talk"){
+        } else if (eventType == ActivityType.INDUSTRY_TALK){
             //change to imageURL
             ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
             poster.setImageResource(image);
             it_cluster_linear_layout.addView(find_events_poster);
-
-        } else if (eventType == "Student Life"){
+        } else if (eventType == ActivityType.STUDENT_LIFE){
             ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
             poster.setImageResource(image);
             sl_cluster_linear_layout.addView(find_events_poster, sl_cluster_linear_layout.getChildCount());

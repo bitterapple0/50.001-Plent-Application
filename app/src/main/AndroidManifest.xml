@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.plent">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
+        android:name="com.example.plent.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/plent_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="AllowBackup">
 
         <activity android:name=".myActivities.MyInformationActivity"></activity>
         <activity android:name=".myActivities.SearchActivity"/>
@@ -58,6 +62,9 @@
         <activity android:name=".myActivities.ParticipantsActivity"
             android:label="Participants Activity"
             android:parentActivityName=".myActivities.ManageEventsActivity"/>
+        <activity android:name=".myActivities.SeeAllActivity" />
+
+        <meta-data android:name="CLOUDINARY_URL" android:value="cloudinary://@dyaxu5mb4"/>
     </application>
 
 </manifest>
