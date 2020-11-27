@@ -85,6 +85,12 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+    <style name="Placeholder_Title" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#B5B5B5</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/avenirnextcyr_medium</item>
+    </style>
+
     <style name="Calendar_indicator" parent="TextAppearance.AppCompat">
         <item name="android:textColor">#212121</item>
         <item name="android:textSize">12dp</item>
