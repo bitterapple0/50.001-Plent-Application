@@ -98,7 +98,7 @@ public class ManageEventsActivity extends AppCompatActivity {
         linearLayout.addView(calendar_card, linearLayout.getChildCount());
     }
 
-    public void redirectToParticipantsActivity() {
+    public void redirectToParticipantsActivity(View view) {
         Intent intentToParticipantsActivity = new Intent(ManageEventsActivity.this, ParticipantsActivity.class);
         startActivity(intentToParticipantsActivity);
     }
