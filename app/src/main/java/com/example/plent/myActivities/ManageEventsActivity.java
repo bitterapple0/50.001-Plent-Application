@@ -17,7 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.plent.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ManageEventsActivity extends AppCompatActivity {
+public class ManageEventsActivity extends MenuActivity {
 
     FloatingActionButton fab_add;
     LinearLayout linearLayout;
@@ -47,51 +47,8 @@ public class ManageEventsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
 
-        // Add back button on top?
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.my_information) {
-            if (id == R.id.my_calender) {
-                Intent intent = new Intent(ManageEventsActivity.this, MyInformationActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            }
-
-            if (id == R.id.my_calender) {
-                Intent intent = new Intent(ManageEventsActivity.this, CalendarActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            }
-
-            if (id == R.id.find_events_and_activities) {
-                Intent intent = new Intent(ManageEventsActivity.this, FindEventsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            }
-
-            if (id == R.id.manage_events) {
-                Intent intent = new Intent(ManageEventsActivity.this, ManageEventsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
-            }
-        }
-        return super.onOptionsItemSelected(item);
-
-        }
     // Made a few changes to the ManageEventsActivity as it was throwing errors
     // TODO Check changes
     public void addEvent() {

@@ -36,4 +36,13 @@ public interface ApiModel {
     @PUT("user")
     Call<User> editUser(@Body User user);
 
+    @GET("calendar")
+    Call<ArrayList<Event>> getCalendarEvents(@Query("user_id") String userId, @Query("date") String date);
+
+    @GET("organised")
+    Call<ArrayList<Event>> getOrganisedEvents(@Query("user_id") String userId);
+
+    @GET("participants")
+    Call<ArrayList<User>> getParticipants(@Query("event_id") String eventId);
+
 }

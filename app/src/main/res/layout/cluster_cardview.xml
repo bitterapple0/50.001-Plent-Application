@@ -36,7 +36,8 @@
             android:text="@string/see_all"
             android:textAlignment="textEnd"
             android:layout_margin="14dp"
-            android:gravity="end" />
+            android:gravity="end"
+            android:onClick="redirectToSeeAll"/>
 
     </RelativeLayout>
 

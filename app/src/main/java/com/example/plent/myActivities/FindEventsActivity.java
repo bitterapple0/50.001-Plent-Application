@@ -39,7 +39,7 @@ import com.example.plent.utils.NetworkImage;
 
 import java.util.ArrayList;
 
-public class FindEventsActivity extends AppCompatActivity {
+public class FindEventsActivity extends MenuActivity {
 
     final static String TAG = "FIND EVENTS";
     final static String placeholderImageUrl = "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1606499824/plent/poster_placeholder1_jgh6vd.png";
@@ -123,73 +123,16 @@ public class FindEventsActivity extends AppCompatActivity {
         sl_cluster_linear_layout = student_life_card_view.findViewById(R.id.event_poster_linear_layout);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu){
-        MenuItem create_event = menu.findItem(R.id.manage_events);
-
-        Log.i("Message", "Create Event Clicked");
-        if (permission == 0) {
-            create_event.setEnabled(false);
-            Log.i("Message", "No permission");
-        } else {
-            Log.i("Message", "success");
-            create_event.setEnabled(true);
-
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.my_information) {
-            Intent intent = new Intent(FindEventsActivity.this, MyInformationActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-
-        if (id == R.id.my_calender) {
-            Intent intent = new Intent(FindEventsActivity.this, CalendarActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-
-        if (id == R.id.find_events_and_activities) {
-            Intent intent = new Intent(FindEventsActivity.this, FindEventsActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-
-        if (id == R.id.manage_events) {
-            Intent intent = new Intent (FindEventsActivity.this, ManageEventsActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-
-        if (id == R.id.search_events){
-            Intent intent = new Intent(FindEventsActivity.this, SearchActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void redirectToEventsPage(View view){
         Intent intent = new Intent(FindEventsActivity.this, EventActivity.class);
         intent.putExtra(Constants.SELECTED_EVENT_KEY, Constants.SKIP_BACKEND ? "5fb96424fe88a67bb74b4289" : "5fb937bce230d0e3a9e2f912"); // 5fb937bce230d0e3a9e2f912 - actual id in db  // 5fb96424fe88a67bb74b4289 - dummy id
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+    }
+    
+    public void redirectToSeeAll(View view) {
+        Intent intent = new Intent(FindEventsActivity.this, SeeAllActivity.class);
         startActivity(intent);
     }
 
