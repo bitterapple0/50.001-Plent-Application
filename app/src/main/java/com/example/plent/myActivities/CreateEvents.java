@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.view.View;
 import android.widget.*;
 import android.os.*;
@@ -67,6 +68,8 @@ public class CreateEvents extends AppCompatActivity {
     EditText telegram_input;
     ImageView uploaded_image;
     ApiModel api;
+    EditText date_picker;
+    DatePickerDialog picker;
 
     // local variables
     String title1;
@@ -95,6 +98,7 @@ public class CreateEvents extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+       setTheme(R.style.CalendarTheme);
         Log.i("Message", "Creating");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
@@ -113,6 +117,8 @@ public class CreateEvents extends AppCompatActivity {
         poster = findViewById(R.id.poster);
         telegram = findViewById(R.id.telegram);
         uploaded_image = findViewById(R.id.uploaded_image);
+        date_picker = findViewById(R.id.date_picker);
+        date_picker.setInputType(InputType.TYPE_NULL);
 
         // create close function (set intent)
 
@@ -182,13 +188,14 @@ public class CreateEvents extends AppCompatActivity {
 
         // getting all the values
         title_input = findViewById(R.id.title_input);
-        enter_date = findViewById(R.id.enter_date);
+        //enter_date = findViewById(R.id.enter_date);
         start_time = findViewById(R.id.start_time);
         end_time = findViewById(R.id.end_time);
         location_input = findViewById(R.id.location_input);
         description_input = findViewById(R.id.description_input);
         telegram_input = findViewById(R.id.telegram_input);
-        
+
+        /*
         title1 = title_input.getText().toString();
         type1 = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_")); // not sure how to change string to activityType (asking xinyi)
         month1 = enter_date.getMonth();
@@ -200,12 +207,30 @@ public class CreateEvents extends AppCompatActivity {
         end_minute1 = end_time.getMinute();
         location1 = location_input.getText().toString();
         description1 = description_input.getText().toString();
-        telegram1 = telegram_input.getText().toString();
+        telegram1 = telegram_input.getText().toString(); */
         // posterBit ^ as retrieved from above
 
         String date1 = String.valueOf(day1) + String.valueOf(month1) + String.valueOf(year1);
         String start_time1 = String.valueOf(start_hour1) + ":" + String.valueOf(start_minute1);
         String end_time1 = String.valueOf(end_hour1) + ":" + String.valueOf(end_minute1);
+
+        date_picker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(CreateEvents.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        date_picker.setText(dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
+                        }
+                    }, year, month, day);
+                picker.show();
+            }
+        });
 
     }
 
