@@ -22,19 +22,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private List<Event> eventList;
     private List<Event> eventListAll;
-<<<<<<< HEAD
-    private static final int VIEW_TYPE_EMPTY = 0;
-    private static final int VIEW_TYPE_EVENT = 1;
-    private static final int VIEW_TYPE_SPECIFIC_EVENT = 0;
-=======
     private static final int VIEW_TYPE_EMPTY = 0; // When eventlist is empty
     private static final int VIEW_TYPE_EVENT = 1; // When eventlist contains all event
     private static final int VIEW_TYPE_SPECIFIC_EVENT = 2; // When eventlist contains only 1 type of event
-    private static final int VIEW_TYPE_EMPTY = 0;
-    private static final int VIEW_TYPE_EVENT = 1;
-    private static final int VIEW_TYPE_SEE_ALL = 0;
 
->>>>>>> 95e28e85ad44412085a78cbb0b84994076676c20
 
     public SearchRecyclerAdapter(List<Event> eventList) {
         this.eventList = eventList;
@@ -110,16 +101,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-<<<<<<< HEAD
 
-=======
-    // private setters for each viewholder type, populate the view with info from event object
-    private void setEventDetails (EventViewHolder vh, int position) {
-        Event event = eventList.get(position);
-        vh.name.setText(event.getTitle());
-        vh.location.setText(event.getLocation());
-        vh.time.setText(event.getStart_time()+" to "+event.getEnd_time());
->>>>>>> 95e28e85ad44412085a78cbb0b84994076676c20
     private void setEventDetails (EventViewHolder holder, int position) {
         Event current_event = eventList.get(position);
         holder.name.setText(current_event.getTitle());
@@ -128,8 +110,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         // need to set poster image url
     }
     private void setSpecificEventDetails (SpecificEventViewHolder vh, int position) {
-        Event current_event= eventList.get(position);
+        Event current_event = eventList.get(position);
         //TODO 2 set all the attributes from the event object to the instantiated view instances
+        vh.eventTitle.setText(current_event.getTitle());
+        vh.seeAllPoster.setImageResource(Integer.parseInt(current_event.getImageUrl()));
     }
 
 
@@ -188,13 +172,14 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Toast.makeText(v.getContext(),"Hello", Toast.LENGTH_LONG ).show();
         }
     }
+
     class SpecificEventViewHolder extends RecyclerView.ViewHolder {
-        ImageView poster;
+        ImageView seeAllPoster;
         TextView eventTitle;
-        //TODO 1 create all the necessary view instances and instantiate them in constructor
         public SpecificEventViewHolder(@NonNull View itemView) {
             super(itemView);
-            poster = itemView.findViewById(R.id.see_all_image);
+
+            seeAllPoster = itemView.findViewById(R.id.see_all_image);
             eventTitle = itemView.findViewById(R.id.see_all_event_title);
         }
     }

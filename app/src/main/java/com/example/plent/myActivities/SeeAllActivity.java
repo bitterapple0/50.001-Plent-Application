@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plent.R;
+import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 import com.example.plent.utils.SearchRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.plent.models.ActivityType.FIFTH_ROW;
 
 public class SeeAllActivity extends AppCompatActivity {
 
@@ -25,10 +28,16 @@ public class SeeAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.see_all_activity);
 
+        /*Event e1 = new Event("Athletics Intro Session", new int[]{02, 10, 2020}, new int[]{12,20}, new int[]{10, 20}, "SUTD Track", "hello", "", FIFTH_ROW,"ssss");
+        Event e2 = new Event("Athletics Intro Session", new int[]{02, 10, 2020}, new int[]{12,20}, new int[]{10, 20}, "SUTD Track", "hello", "", FIFTH_ROW,"ssss");
+
+        eventList.add(e1);
+        eventList.add(e2);*/
+
         recyclerView = findViewById(R.id.see_all_recycler_view);
         seeAllAdapter = new SearchRecyclerAdapter(eventList);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        //recyclerView.setAdapter(seeAllAdapter);
+        recyclerView.setAdapter(seeAllAdapter);
 
     }
 
