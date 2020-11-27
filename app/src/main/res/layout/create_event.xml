@@ -152,8 +152,6 @@
                     android:layout_marginHorizontal="24dp"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:scaleX="0.7"
-                    android:scaleY="0.7"
                     android:timePickerMode="spinner" />
 
                 <TextView
@@ -173,8 +171,6 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_toRightOf="@id/to"
-                    android:scaleX="0.7"
-                    android:scaleY="0.7"
                     android:layout_marginHorizontal="24dp"
                     android:timePickerMode="spinner" />
 
