@@ -56,4 +56,9 @@ public class Event {
         this.attendees.remove(userId);
     }
     public ActivityType getType() { return type; }
+
+//    public String toString() {
+//        return "{}";
+//
+//    }
 }

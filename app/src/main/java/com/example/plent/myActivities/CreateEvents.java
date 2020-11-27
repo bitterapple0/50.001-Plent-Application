@@ -13,7 +13,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.*;
 import android.os.*;
@@ -74,15 +76,15 @@ public class CreateEvents extends AppCompatActivity {
     // local variables
     String title1;
     ActivityType type1;
-    int month1;
-    int day1;
-    int year1;
+    Integer month1;
+    Integer day1;
+    Integer year1;
     String date1;
-    int start_hour1;
-    int start_minute1;
+    Integer start_hour1;
+    Integer start_minute1;
     String start_time1;
-    int end_hour1;
-    int end_minute1;
+    Integer end_hour1;
+    Integer end_minute1;
     String end_time1;
     String location1;
     String description1;
@@ -91,6 +93,7 @@ public class CreateEvents extends AppCompatActivity {
     Bitmap posterBit;
     String imageFilename;
     String imageUrl;
+    boolean completed = false;
 
 
     // exit page
@@ -129,37 +132,41 @@ public class CreateEvents extends AppCompatActivity {
 
         // create close function (set intent)
 
-
         // button: next (submission of event information)
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    if (imageFilename != null && !imageFilename.isEmpty()) {
-                        MediaManager.get().upload(imageFilename).unsigned("iybnngkh").callback(new UploadCallback() {
-                            @Override
-                            public void onStart(String requestId) {}
-                            @Override
-                            public void onProgress(String requestId, long bytes, long totalBytes) {}
-                            @Override
-                            public void onSuccess(String requestId, Map resultData) {
-                                imageUrl = resultData.get("secure_url").toString();
-                                Toast.makeText(CreateEvents.this, "Creating event...", Toast.LENGTH_LONG).show();
-                                createEvent();
-                                Log.i(TAG, "create event return url: " + imageUrl);
-                            }
+                    if (isCompleted()) {
+                        if (imageFilename != null && !imageFilename.isEmpty()) {
+                            MediaManager.get().upload(imageFilename).unsigned("iybnngkh").callback(new UploadCallback() {
+                                @Override
+                                public void onStart(String requestId) {}
+                                @Override
+                                public void onProgress(String requestId, long bytes, long totalBytes) {}
+                                @Override
+                                public void onSuccess(String requestId, Map resultData) {
+                                    imageUrl = resultData.get("secure_url").toString();
+                                    Toast.makeText(CreateEvents.this, "Creating event...", Toast.LENGTH_LONG).show();
+                                    createEvent();
+                                    Log.i(TAG, "create event return url: " + imageUrl);
+                                }
 
-                            @Override
-                            public void onError(String requestId, ErrorInfo error) {
-                                Log.i(TAG,"CLOUDINARY UPLOAD ERROR: " + error.getDescription());
-                            }
-                            @Override
-                            public void onReschedule(String requestId, ErrorInfo error) {}
-                        }).dispatch();
+                                @Override
+                                public void onError(String requestId, ErrorInfo error) {
+                                    Log.i(TAG,"CLOUDINARY UPLOAD ERROR: " + error.getDescription());
+                                }
+                                @Override
+                                public void onReschedule(String requestId, ErrorInfo error) {}
+                            }).dispatch();
+                        } else {
+                            createEvent();
+                        }
                     } else {
-                        createEvent();
+                        Toast.makeText(CreateEvents.this, "Oops, the form has not been completed yet!", Toast.LENGTH_LONG).show();
                     }
+
 
                 } catch (Exception e) {
                     Toast.makeText(CreateEvents.this, "Oops, something went wrong. Please try again!", Toast.LENGTH_LONG).show();
@@ -217,7 +224,7 @@ public class CreateEvents extends AppCompatActivity {
         telegram1 = telegram_input.getText().toString(); */
         // posterBit ^ as retrieved from above
 
-        String date1 = String.valueOf(day1) + String.valueOf(month1) + String.valueOf(year1);
+        final String date1 = String.valueOf(day1) + String.valueOf(month1) + String.valueOf(year1);
         String start_time1 = String.valueOf(start_hour1) + ":" + String.valueOf(start_minute1);
         String end_time1 = String.valueOf(end_hour1) + ":" + String.valueOf(end_minute1);
 
@@ -233,12 +240,14 @@ public class CreateEvents extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         date_picker.setText(dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
+                        day1 = dayOfMonth;
+                        month1 = monthOfYear+1;
+                        year1 = year;
                         }
                     }, year, month, day);
                 picker.show();
             }
         });
-
     }
 
     @Override
@@ -260,8 +269,9 @@ public class CreateEvents extends AppCompatActivity {
        int[] date = {day1, month1, year1};
        int[] startTime = {start_hour1, start_minute1};
        int[] endTime = {end_hour1, end_minute1};
-        event = new Event(title1, date, startTime, endTime, location1, description1, telegram1,
-                type1, imageUrl);
+       ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
+        event = new Event(title_input.getText().toString().trim(), date, startTime, endTime, location_input.getText().toString().trim(), description_input.getText().toString().trim(), telegram_input.getText().toString().trim(),
+                type, imageUrl);
         Call<Event> call = api.createEvent(event);
         call.enqueue(new Callback<Event>() {
             @Override
@@ -285,6 +295,20 @@ public class CreateEvents extends AppCompatActivity {
                 Toast.makeText(CreateEvents.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public boolean editTextIsEmpty(EditText editTextField) {
+       return editTextField.getText().toString().trim().isEmpty();
+    }
+
+    public boolean isCompleted() {
+       // telegram and image are optional
+        // type always has default value
+       return !editTextIsEmpty(title_input) && !editTextIsEmpty(location_input)
+               && !editTextIsEmpty(description_input)
+               && day1 != null && month1 != null && year1 != null
+               && start_hour1 != null && start_minute1 != null
+               && end_hour1 != null && end_minute1 != null;
     }
 
 }

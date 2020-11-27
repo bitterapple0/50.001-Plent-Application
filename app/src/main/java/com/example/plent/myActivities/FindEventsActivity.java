@@ -67,6 +67,7 @@ public class FindEventsActivity extends AppCompatActivity {
                     Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     events = response.body();
+                    Log.i(TAG, events.toString());
                 }
             }
 
