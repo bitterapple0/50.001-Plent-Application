@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     if (Constants.SKIP_BACKEND) {
-                        userCred = new User("Test User", email.getText().toString(), "1001234", password.getText().toString());
+                        userCred = new User("TestUser", email.getText().toString(), "1001234", password.getText().toString());
                         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
                         Gson gson = new Gson();
                         preferencesEditor.putString(Constants.USER_KEY, gson.toJson(userCred));

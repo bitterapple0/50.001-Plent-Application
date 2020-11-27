@@ -322,7 +322,8 @@ public class EventActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.my_information) {
-            return true;
+            Intent intent = new Intent(EventActivity.this, MyInformationActivity.class);
+            startActivity(intent);
         }
 
         if (id == R.id.my_calender) {

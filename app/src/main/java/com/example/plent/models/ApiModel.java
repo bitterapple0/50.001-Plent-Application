@@ -4,9 +4,11 @@ import com.example.plent.models.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Query;
@@ -27,4 +29,8 @@ public interface ApiModel {
 
     @PUT("event")
     Call<HashMap> signUp(@Body HashMap userAndEvent);
+
+    @PUT("user")
+    Call<ResponseBody> editUser(@Body User user);
+
 }

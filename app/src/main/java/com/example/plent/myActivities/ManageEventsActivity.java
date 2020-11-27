@@ -65,29 +65,33 @@ public class ManageEventsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.my_information) {
-            return true;
-        }
+            if (id == R.id.my_calender) {
+                Intent intent = new Intent(ManageEventsActivity.this, MyInformationActivity.class);
+                startActivity(intent);
+            }
 
-        if (id == R.id.my_calender) {
-            Intent intent = new Intent(ManageEventsActivity.this, CalendarActivity.class);
-            startActivity(intent);
-        }
+            if (id == R.id.my_calender) {
+                Intent intent = new Intent(ManageEventsActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
 
-        if (id == R.id.find_events_and_activities) {
-            Intent intent = new Intent(ManageEventsActivity.this, FindEventsActivity.class);
-            startActivity(intent);
-        }
+            if (id == R.id.find_events_and_activities) {
+                Intent intent = new Intent(ManageEventsActivity.this, FindEventsActivity.class);
+                startActivity(intent);
+            }
 
-        if (id == R.id.manage_events) {
-            Intent intent = new Intent (ManageEventsActivity.this, ManageEventsActivity.class);
-            startActivity(intent);
+            if (id == R.id.manage_events) {
+                Intent intent = new Intent(ManageEventsActivity.this, ManageEventsActivity.class);
+                startActivity(intent);
+            }
         }
-
         return super.onOptionsItemSelected(item);
-    }
 
+        }
+    // Made a few changes to the ManageEventsActivity as it was throwing errors
+    // TODO Check changes
     public void addEvent() {
-        View calendar_card =  View.inflate(this, R.layout.manage_event_card, null);
+        View calendar_card = View.inflate(this, R.layout.manage_event_card, null);
 
         Log.i("Message", String.valueOf(linearLayout.getChildCount()));
 
