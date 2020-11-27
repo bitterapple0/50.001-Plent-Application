@@ -28,11 +28,23 @@ public class SeeAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.see_all_activity);
 
-        /*Event e1 = new Event("Athletics Intro Session", new int[]{02, 10, 2020}, new int[]{12,20}, new int[]{10, 20}, "SUTD Track", "hello", "", FIFTH_ROW,"ssss");
-        Event e2 = new Event("Athletics Intro Session", new int[]{02, 10, 2020}, new int[]{12,20}, new int[]{10, 20}, "SUTD Track", "hello", "", FIFTH_ROW,"ssss");
+        Event e1 = new Event("Athletics Intro Session", new int[]{02, 10, 2020}, new int[]{12,20}, new int[]{10, 20}, "SUTD Track", "hello", "", FIFTH_ROW,"");
+        Event e2 = new Event("ClImBInG INtrO seSSiOn", new int[]{02, 10, 2020}, new int[]{12,20}, new int[]{10, 20}, "SUTD Track", "hello", "", FIFTH_ROW,"");
 
         eventList.add(e1);
-        eventList.add(e2);*/
+        eventList.add(e2);
+        eventList.add(e2);
+        eventList.add(e2);
+        eventList.add(e2);
+        eventList.add(e2);
+        eventList.add(e1);
+        eventList.add(e1);
+        eventList.add(e1);
+        eventList.add(e1);
+        eventList.add(e1);
+        eventList.add(e1);
+        eventList.add(e1);
+
 
         recyclerView = findViewById(R.id.see_all_recycler_view);
         seeAllAdapter = new SearchRecyclerAdapter(eventList);
