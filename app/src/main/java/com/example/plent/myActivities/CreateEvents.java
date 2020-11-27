@@ -129,7 +129,7 @@ public class CreateEvents extends AppCompatActivity {
         });
         // setting spinner values
         types = findViewById(R.id.types);
-        String[] items = new String[]{"Fifth Row Activity", "Industry Talk", "Student Life"};
+        String[] items = new String[]{"Fifth Row", "Industry Talk", "Student Life"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text_item, items);
         types.setAdapter(adapter);
 
@@ -143,7 +143,7 @@ public class CreateEvents extends AppCompatActivity {
         telegram_input = findViewById(R.id.telegram_input);
 
         title1 = title_input.getText().toString();
-        type1 = null; //(ActivityType) types.getSelectedItem(); //ActivityType.valueOf(types.getSelectedItem().toString()); // not sure how to change string to activityType (asking xinyi)
+        type1 = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_")); // not sure how to change string to activityType (asking xinyi)
         month1 = enter_date.getMonth();
         day1 = enter_date.getDayOfMonth();
         year1 = enter_date.getYear();
