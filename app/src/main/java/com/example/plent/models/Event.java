@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Event {
     private String id;
+    private String creatorId;
     private String title;
     String date;
     String start_time;
@@ -14,12 +15,10 @@ public class Event {
     private String location;
     private String description;
     private String imageUrl;
-    private Bitmap poster;
     private String telegram;
     private String clashString;
     private ArrayList attendees;
     private ActivityType type;
-    // String imageUrl; // TODO: Link to backend and retrieve imageUrl
 
     // OLD EVENT CONSTRUCTOR SO IT DOESNT BREAK
     public Event(String title, String date, String start_time, String end_time,
@@ -33,24 +32,10 @@ public class Event {
     this.telegram = telegram;
     this.attendees = new ArrayList();
     this.imageUrl = imageUrl;
-    this.clashString = "";
+    this.clashString = "lalalala";
     this.type = type;
     }
-    // Naomi's newer constructor
-    public Event(String title, String date, String start_time, String end_time, String location,
-                 String description, String telegram, ActivityType type, Bitmap poster) {
-        this.title = title;
-        this.date = date;
-        this.start_time = start_time;
-        this.end_time = end_time;
-        this.location = location;
-        this.description = description;
-        this.telegram = telegram;
-        this.attendees = new ArrayList();
-        this.poster = poster;
-        this.clashString = "";
-        this.type = type;
-    }
+
     public String getId() {return id;}
     public String getTitle() { return title; }
     public String getDate() { return date; }
@@ -59,7 +44,6 @@ public class Event {
     public String getLocation() { return location; }
     public String getDescription() { return description; }
     public String getImageUrl() { return imageUrl; }
-    public Bitmap getPoster() { return poster; }
     public String getTelegram() { return telegram; }
     public String getClashString() { return clashString; }
     public ArrayList getAttendees() { return attendees; }
