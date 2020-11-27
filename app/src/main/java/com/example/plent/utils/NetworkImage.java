@@ -10,9 +10,17 @@ import java.io.InputStream;
 
 public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
+    Integer imageHeight;
+    Integer imageWidth;
 
     public NetworkImage(ImageView bmImage) {
         this.bmImage = bmImage;
+    }
+
+    public NetworkImage(ImageView bmImage, int imageHeight, int imageWidth) {
+        this.bmImage = bmImage;
+        this.imageWidth = imageWidth;
+        this.imageHeight = imageHeight;
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -30,6 +38,12 @@ public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
+        if (imageWidth == null || imageHeight == null) {
+            bmImage.setImageBitmap(result);
+        } else {
+            Bitmap scaledImage = Bitmap.createScaledBitmap(result, imageWidth, imageHeight, false);
+            bmImage.setImageBitmap(scaledImage);
+        }
+
     }
 }

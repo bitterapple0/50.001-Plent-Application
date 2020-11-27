@@ -267,8 +267,8 @@ public class CreateEvents extends AppCompatActivity {
 
     public void createEvent() {
        int[] date = {day1, month1, year1};
-       int[] startTime = {start_hour1, start_minute1};
-       int[] endTime = {end_hour1, end_minute1};
+       int[] startTime = {start_time.getHour(), start_time.getMinute()};
+       int[] endTime = {end_time.getHour(), end_time.getMinute()};
        ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
         event = new Event(title_input.getText().toString().trim(), date, startTime, endTime, location_input.getText().toString().trim(), description_input.getText().toString().trim(), telegram_input.getText().toString().trim(),
                 type, imageUrl);
@@ -306,9 +306,9 @@ public class CreateEvents extends AppCompatActivity {
         // type always has default value
        return !editTextIsEmpty(title_input) && !editTextIsEmpty(location_input)
                && !editTextIsEmpty(description_input)
-               && day1 != null && month1 != null && year1 != null
-               && start_hour1 != null && start_minute1 != null
-               && end_hour1 != null && end_minute1 != null;
+               && day1 != null && month1 != null && year1 != null;
+//               && start_hour1 != null && start_minute1 != null
+//               && end_hour1 != null && end_minute1 != null;
     }
 
 }

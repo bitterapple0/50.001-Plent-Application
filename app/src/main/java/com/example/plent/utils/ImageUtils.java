@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 
 public class ImageUtils {
     public static String getImageFilePath(Context context, Uri uri) {
@@ -18,5 +19,9 @@ public class ImageUtils {
         cursor.close();
 
         return path;
+    }
+
+    public static int dpToPx(int dp, double scale) {
+        return (int) Math.round(dp * scale);
     }
 }
