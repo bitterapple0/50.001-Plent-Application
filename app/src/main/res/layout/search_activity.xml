@@ -34,5 +34,18 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+    <ImageView
+        android:id="@+id/search_placeholder_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/placeholder_search"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/search_placeholder_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="Find your Activity!" />
 
 </LinearLayout>
