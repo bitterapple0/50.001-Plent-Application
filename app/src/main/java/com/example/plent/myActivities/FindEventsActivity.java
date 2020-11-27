@@ -158,26 +158,31 @@ public class FindEventsActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.my_information) {
             Intent intent = new Intent(FindEventsActivity.this, MyInformationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
         if (id == R.id.my_calender) {
             Intent intent = new Intent(FindEventsActivity.this, CalendarActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
         if (id == R.id.find_events_and_activities) {
             Intent intent = new Intent(FindEventsActivity.this, FindEventsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
         if (id == R.id.manage_events) {
             Intent intent = new Intent (FindEventsActivity.this, ManageEventsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
         if (id == R.id.search_events){
             Intent intent = new Intent(FindEventsActivity.this, SearchActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
@@ -188,6 +193,7 @@ public class FindEventsActivity extends AppCompatActivity {
     public void redirectToEventsPage(View view){
         Intent intent = new Intent(FindEventsActivity.this, EventActivity.class);
         intent.putExtra(Constants.SELECTED_EVENT_KEY, Constants.SKIP_BACKEND ? "5fb96424fe88a67bb74b4289" : "5fb937bce230d0e3a9e2f912"); // 5fb937bce230d0e3a9e2f912 - actual id in db  // 5fb96424fe88a67bb74b4289 - dummy id
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
     }
 

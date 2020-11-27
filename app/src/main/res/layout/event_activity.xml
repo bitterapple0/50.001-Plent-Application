@@ -27,7 +27,7 @@
 
             <TextView
                 style="@style/Main_Header"
-                android:id="@+id/Athletics_header"
+                android:id="@+id/event_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Athletics Freshmore Intro Session"

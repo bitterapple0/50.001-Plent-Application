@@ -4,10 +4,10 @@
     package="com.example.plent">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.example.plent.MainApplication"
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/plent_logo"
         android:label="@string/app_name"
@@ -16,10 +16,9 @@
         android:theme="@style/AppThemeNoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
-
-        <activity android:name=".myActivities.MyInformationActivity"></activity>
-        <activity android:name=".myActivities.SearchActivity"/>
-
+        <activity android:name=".myActivities.MenuActivity"></activity>
+        <activity android:name=".myActivities.MyInformationActivity" />
+        <activity android:name=".myActivities.SearchActivity" />
         <activity android:name=".myActivities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,19 +50,23 @@
         <activity
             android:name=".myActivities.SignUpActivity"
             android:label="Sign Up">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".myActivities.ManageEventsActivity" />
-        <activity android:name=".myActivities.CreateEvents"/>
-        <activity android:name=".myActivities.ParticipantsActivity"
+        <activity android:name=".myActivities.CreateEvents" />
+        <activity
+            android:name=".myActivities.ParticipantsActivity"
             android:label="Participants Activity"
-            android:parentActivityName=".myActivities.ManageEventsActivity"/>
+            android:parentActivityName=".myActivities.ManageEventsActivity" />
+        <activity android:name=".myActivities.SeeAllActivity" />
 
-        <meta-data android:name="CLOUDINARY_URL" android:value="cloudinary://@dyaxu5mb4"/>
+        <meta-data
+            android:name="CLOUDINARY_URL"
+            android:value="cloudinary://@dyaxu5mb4" />
     </application>
 
 </manifest>

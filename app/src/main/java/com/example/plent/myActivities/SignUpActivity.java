@@ -274,6 +274,7 @@ public class SignUpActivity extends AppCompatActivity {
         preferencesEditor.apply();
 
         Intent intent = new Intent(SignUpActivity.this, FindEventsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
         finish();
     }

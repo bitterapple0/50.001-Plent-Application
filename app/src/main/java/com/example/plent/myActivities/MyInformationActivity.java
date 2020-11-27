@@ -65,6 +65,7 @@ public class MyInformationActivity extends AppCompatActivity {
             Log.i(TAG, "is null");
             // redirect to login page if no user info stored
             Intent intent = new Intent(MyInformationActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         } else {
             Log.i(TAG, "json");
@@ -131,6 +132,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 preferencesEditor.apply();
 
                 Intent intent = new Intent(MyInformationActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 finish();
             }

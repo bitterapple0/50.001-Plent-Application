@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.i(TAG, json);
             userCred = gson.fromJson(json, User.class);
             Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
             finish();
         }
@@ -145,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                         preferencesEditor.apply();
 
                         Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         finish();
                     } else {
@@ -159,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         });
@@ -186,6 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                             preferencesEditor.apply();
 
                             Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                             startActivity(intent);
                             finish();
                         }
