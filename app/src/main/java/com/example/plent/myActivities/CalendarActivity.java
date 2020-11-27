@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
+import com.example.plent.utils.DateTimeUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -37,13 +38,21 @@ public class CalendarActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     String eventType;
     ArrayList<Event> userEvents= new ArrayList<Event>();
-    Event e1 = new Event("My first Event", "20102020" , "1000", "1200", "STUD","YAY number 1", "@nil", ActivityType.INDUSTRY_TALK, "" );
-    Event e2 = new Event("My second Event", "21102020" , "1100", "1300", "NUS","Yay number 2", "@nil",ActivityType.INDUSTRY_TALK, "" );
-    Event e3 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil", ActivityType.FIFTH_ROW, "" );
-    Event e4 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
-    Event e5 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
-    Event e6 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "");
-    Event e7 = new Event("My third Event", "22102020" , "0900", "1200", "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" ); 
+    int[] date1 = {20, 10, 2020};
+    int[] date2 = {21, 10, 2020};
+    int[] date3 = {22, 10, 2020};
+    int[] time1 = {9, 00};
+    int[] time2 = {10, 00};
+    int[] time3 = {11, 00};
+    int[] time4 = {12, 00};
+    int[] time5 = {13, 00};
+    Event e1 = new Event("My first Event", date1 , time2, time4, "STUD","YAY number 1", "@nil", ActivityType.INDUSTRY_TALK, "" );
+    Event e2 = new Event("My second Event", date2 , time3, time5, "NUS","Yay number 2", "@nil",ActivityType.INDUSTRY_TALK, "" );
+    Event e3 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil", ActivityType.FIFTH_ROW, "" );
+    Event e4 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
+    Event e5 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
+    Event e6 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "");
+    Event e7 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" );
 
     CalendarEvent c1 = new CalendarEvent(Color.parseColor("#EAD620"), "event");
     CalendarEvent c2 = new CalendarEvent(Color.parseColor("#81D2AC"), "event");
@@ -192,7 +201,8 @@ public class CalendarActivity extends AppCompatActivity {
 
     public void filterCalenderEvents(ArrayList<Event> events, Calendar date){
         for (Event e : events) {
-            if (e.compareDate(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR))){
+            int[] calendarDate = {date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)};
+            if (DateTimeUtils.compareDate(calendarDate, e.getDate())){
                 addCalendarEvent(e);
             }
         }

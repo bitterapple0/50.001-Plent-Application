@@ -9,9 +9,9 @@ public class Event {
     private String id;
     private String creatorId;
     private String title;
-    String date;
-    String start_time;
-    String end_time;
+    int[] date;         // size 3
+    int[] startTime;    // size 2
+    int[] endTime;      // size 2
     private String location;
     private String description;
     private String imageUrl;
@@ -20,27 +20,26 @@ public class Event {
     private ArrayList attendees;
     private ActivityType type;
 
-    // OLD EVENT CONSTRUCTOR SO IT DOESNT BREAK
-    public Event(String title, String date, String start_time, String end_time,
+    public Event(String title, int[] date, int[] startTime, int[] endTime,
                  String location, String description, String telegram, ActivityType type, String imageUrl) {
     this.title = title;
     this.date = date;
-    this.start_time = start_time;
-    this.end_time = end_time;
+    this.startTime = startTime;
+    this.endTime = endTime;
     this.location = location;
     this.description = description;
     this.telegram = telegram;
     this.attendees = new ArrayList();
     this.imageUrl = imageUrl;
-    this.clashString = "lalalala";
+    this.clashString = "";
     this.type = type;
     }
 
     public String getId() {return id;}
     public String getTitle() { return title; }
-    public String getDate() { return date; }
-    public String getStart_time() { return start_time; }
-    public String getEnd_time() { return end_time; }
+    public int[] getDate() { return date; }
+    public int[] getStartTime() { return startTime; }
+    public int[] getEndTime() { return endTime; }
     public String getLocation() { return location; }
     public String getDescription() { return description; }
     public String getImageUrl() { return imageUrl; }
@@ -57,9 +56,4 @@ public class Event {
         this.attendees.remove(userId);
     }
     public ActivityType getType() { return type; }
-
-    public boolean compareDate(int date, int month, int year){
-        String date_string = Integer.toString(date) + Integer.toString(month) + Integer.toString(year);
-        return date_string.equals(this.date);
-    }
 }

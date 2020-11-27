@@ -257,7 +257,10 @@ public class CreateEvents extends AppCompatActivity {
     }
 
     public void createEvent() {
-        event = new Event(title1, date1, start_time1, end_time1, location1, description1, telegram1,
+       int[] date = {day1, month1, year1};
+       int[] startTime = {start_hour1, start_minute1};
+       int[] endTime = {end_hour1, end_minute1};
+        event = new Event(title1, date, startTime, endTime, location1, description1, telegram1,
                 type1, imageUrl);
         Call<Event> call = api.createEvent(event);
         call.enqueue(new Callback<Event>() {

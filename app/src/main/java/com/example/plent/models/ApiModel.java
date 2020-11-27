@@ -30,6 +30,9 @@ public interface ApiModel {
     @PUT("event")
     Call<HashMap> signUp(@Body HashMap userAndEvent);
 
+    @GET("events")
+    Call<ArrayList<Event>> getAllEvents();
+
     @PUT("user")
     Call<User> editUser(@Body User user);
 
