@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.*;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -62,6 +63,20 @@ public class SignUpActivity extends AppCompatActivity {
     private static boolean validateEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
+    }
+
+    private boolean validatePassword(String passStr) {
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(passStr);
+        if (m.matches() && passStr.length() > 6) {
+            return(true);
+
+        }
+        else {
+            return(false);
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -181,15 +196,22 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!disabled) {
                     if (validateEmail(email.toString())) {
-                        if (Constants.SKIP_BACKEND) {
-                            user = new User(name.toString(), email.toString(), studentId.toString(), "");
-                            user.setId("dummy_id");
-                            user.setPermission(0);
-                            onSubmitSuccess();
-                        } else {
-                            createUser();
+                        if (validatePassword(password.toString())) {
+                            if (Constants.SKIP_BACKEND) {
+                                user = new User(name.toString(), email.toString(), studentId.toString(), "");
+                                user.setId("dummy_id");
+                                user.setPermission(0);
+                                onSubmitSuccess();
+                            } else {
+                                createUser();
+                            }
                         }
-
+                        else {
+                            Toast.makeText(SignUpActivity.this, "Oops, your password doesn't meet the requirements \n" +
+                                    "Requirements: A min of 6 characters \n" +
+                                    "Atleast an upper case and lower case letter along with a digit", Toast.LENGTH_LONG).show();
+                        }
+                        
                     } else {
                         Toast.makeText(SignUpActivity.this, "Oops, that is not a valid email", Toast.LENGTH_LONG).show();
                     }
