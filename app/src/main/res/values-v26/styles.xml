@@ -173,4 +173,12 @@
         <item name="android:textSize">12dp</item>
     </style>
 
+    <style name="timepicker_style" parent="android:Widget.Material.Light.TimePicker">
+        <item name="android:textColorPrimary">#1b223c</item>
+    </style>
+
+    <style name="datepicker_style" parent="android:Widget.Material.Light.DatePicker">
+        <item name="android:textColorPrimary">#1b223c</item>
+    </style>
+
 </resources>

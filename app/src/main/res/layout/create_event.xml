@@ -114,12 +114,13 @@
 
             <DatePicker
                 android:id="@+id/enter_date"
-                style="@style/Login_Edittext"
+                android:layout_marginHorizontal="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
+                style="@style/datepicker_style"
                 android:calendarViewShown="false" />
 
             <TextView
@@ -140,11 +141,12 @@
 
                 <TimePicker
                     android:id="@+id/start_time"
-                    style="@style/Login_Body"
+                    android:layout_marginHorizontal="24dp"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:scaleX="0.7"
                     android:scaleY="0.7"
+                    style="@style/timepicker_style"
                     android:timePickerMode="spinner" />
 
                 <TextView
@@ -160,13 +162,15 @@
 
                 <TimePicker
                     android:id="@+id/end_time"
-                    style="@style/Login_Body"
+                    style="@style/timepicker_style"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_toRightOf="@id/to"
                     android:scaleX="0.7"
                     android:scaleY="0.7"
+                    android:layout_marginHorizontal="24dp"
                     android:timePickerMode="spinner" />
+
             </RelativeLayout>
 
             <TextView
