@@ -11,24 +11,22 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/event_card"
-        android:layout_gravity="left"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/event_title"
-                    style="@style/Calendar_Title"
+                    style="@style/Sub_Header"
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="12dp"
                     android:layout_width="wrap_content"
@@ -44,7 +42,7 @@
 
                 <TextView
                     android:id="@+id/event_time"
-                    style="@style/Post_Body"
+                    style="@style/Login_Body"
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="12dp"
                     android:layout_width="match_parent"
@@ -55,7 +53,7 @@
 
                 <TextView
                     android:id="@+id/event_location"
-                    style="@style/Post_Body"
+                    style="@style/Login_Body"
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="8dp"
                     android:layout_width="match_parent"

@@ -53,15 +53,33 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:text="(0)"/>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/participants_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/participantsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+    <ImageView
+        android:id="@+id/placeholder_participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/placeholder_participants"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/placeholder_participants_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You're the only one here (for now)!"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        style="@style/Placeholder_Title"
+        android:visibility="gone" />
+
 
 </LinearLayout>
