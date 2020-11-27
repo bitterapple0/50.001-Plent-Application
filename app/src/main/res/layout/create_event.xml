@@ -216,7 +216,8 @@
                 android:autofillHints=""
                 android:inputType="textMultiLine"
                 android:maxHeight="?actionBarSize"
-                android:maxLines="5"
+                android:maxLines="10"
+                android:padding="12dp"
                 android:minHeight="?actionBarSize"
                 android:layout_marginHorizontal="24dp" />
 
