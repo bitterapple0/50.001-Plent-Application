@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="Upcoming Events"
         style="@style/Main_Header"
-        android:layout_margin="12dp"
+        android:padding="12dp"
         android:background="#FFFFFF"/>
 
     <LinearLayout

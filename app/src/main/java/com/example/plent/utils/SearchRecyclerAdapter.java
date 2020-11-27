@@ -1,7 +1,5 @@
 package com.example.plent.utils;
 
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,40 +7,81 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plent.R;
 import com.example.plent.models.Event;
-import com.example.plent.myActivities.EventActivity;
-import com.example.plent.myActivities.SearchActivity;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.MyViewHolder> implements Filterable {
+public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private List<Event> eventList;
     private List<Event> eventListAll;
-    public SearchRecyclerAdapter(List<Event> eventList) {
+    private static final int VIEW_TYPE_EMPTY = 0;
+    private static final int VIEW_TYPE_EVENT = 1;
 
+
+    public SearchRecyclerAdapter(List<Event> eventList) {
         this.eventList = eventList;
         this.eventListAll = new ArrayList<>(eventList);
+    }
+    //Number of rows in your recycler view
+    @Override
+    public int getItemCount() {
+        if (eventList.size() == 0) {
+            return 1;
+        } else {
+            return eventList.size();
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (eventList.size() == 0){
+            return VIEW_TYPE_EMPTY;
+        }else{
+            return VIEW_TYPE_EVENT;
+        }
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder viewHolder;
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.search_event_item, parent, false);
-        return new MyViewHolder(view);
+
+        switch (viewType){
+            case VIEW_TYPE_EVENT:
+                View v1 = layoutInflater.inflate(R.layout.search_event_item, parent, false);
+                viewHolder = new EventViewHolder(v1);
+                break;
+            default:
+                View v2 = layoutInflater.inflate(R.layout.search_placeholder, parent, false);
+                viewHolder = new EmptyViewHolder(v2);
+                break;
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        switch(holder.getItemViewType()){
+            case VIEW_TYPE_EVENT:
+                EventViewHolder eventViewHolder = (EventViewHolder) holder;
+                setEventDetails(eventViewHolder, position);
+            default:
+                return;
+
+        }
+    }
+
+
+    private void setEventDetails (EventViewHolder holder, int position) {
         Event current_event = eventList.get(position);
         holder.name.setText(current_event.getTitle());
         holder.location.setText(current_event.getLocation());
@@ -50,11 +89,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
         // need to set poster image url
 
     }
-    //Number of rows in your recycler view
-    @Override
-    public int getItemCount() {
-        return eventList.size();
-    }
+
+
 
     @Override
     public Filter getFilter() {
@@ -66,7 +102,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Event> filteredList = new ArrayList<>();
             if(constraint.toString().isEmpty()){
-                filteredList.addAll(eventListAll);
+                filteredList.clear();
             }else{
                 for(Event e : eventListAll){
                     if(e.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())){
@@ -87,12 +123,12 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
             notifyDataSetChanged();
         }
     };
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             ImageView poster;
             TextView name;
             TextView time;
             TextView location;
-        public MyViewHolder(@NonNull View itemView) {
+        public EventViewHolder(@NonNull View itemView) {
             super(itemView);
 
             poster = itemView.findViewById(R.id.search_event_poster);
@@ -103,9 +139,16 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), EventActivity.class);
-            intent.putExtra(Constants.SELECTED_EVENT_KEY, Constants.SKIP_BACKEND ? "5fb96424fe88a67bb74b4289" : "5fb937bce230d0e3a9e2f912"); // 5fb937bce230d0e3a9e2f912 - actual id in db  // 5fb96424fe88a67bb74b4289 - dummy id
-            v.getContext().startActivity(intent);
+//            Intent intent = new Intent(v.getContext(), EventActivity.class);
+//            intent.putExtra(Constants.SELECTED_EVENT_KEY, Constants.SKIP_BACKEND ? "5fb96424fe88a67bb74b4289" : "5fb937bce230d0e3a9e2f912"); // 5fb937bce230d0e3a9e2f912 - actual id in db  // 5fb96424fe88a67bb74b4289 - dummy id
+//            v.getContext().startActivity(intent);
+            Toast.makeText(v.getContext(),"Hello", Toast.LENGTH_LONG ).show();
+        }
+    }
+
+    class EmptyViewHolder extends RecyclerView.ViewHolder {
+        public EmptyViewHolder(@NonNull View itemView) {
+            super(itemView);
         }
     }
 }

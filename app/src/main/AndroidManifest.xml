@@ -52,15 +52,16 @@
             android:name=".myActivities.SignUpActivity"
             android:label="Sign Up">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".myActivities.ManageEventsActivity" />
         <activity android:name=".myActivities.CreateEvents"/>
+        <activity android:name=".myActivities.ParticipantsActivity"
+            android:label="Participants Activity"
+            android:parentActivityName=".myActivities.ManageEventsActivity"/>
 
         <meta-data android:name="CLOUDINARY_URL" android:value="cloudinary://@dyaxu5mb4"/>
     </application>

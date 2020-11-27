@@ -4,18 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
@@ -28,18 +24,22 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    ImageView placeholderImageView;
+    TextView placeholderTextView;
     SearchRecyclerAdapter searchRecyclerAdapter;
     List<Event> eventList = new ArrayList<Event>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.search_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         recyclerView = findViewById(R.id.recyclerView);
+        placeholderImageView = findViewById(R.id.search_placeholder_image);
+        placeholderTextView = findViewById(R.id.search_placeholder_text);
 
         Event e1 = new Event("My first Event", "20102020" , "1000", "1200", "STUD","YAY number 1", "@nil", ActivityType.INDUSTRY_TALK, "" );
         Event e2 = new Event("My second Event", "21102020" , "1100", "1300", "NUS","Yay number 2", "@nil",ActivityType.INDUSTRY_TALK, "" );
@@ -57,10 +57,19 @@ public class SearchActivity extends AppCompatActivity {
         eventList.add(e7);
 
         searchRecyclerAdapter = new SearchRecyclerAdapter(eventList);
-
         recyclerView.setAdapter(searchRecyclerAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
+
+        if(eventList.isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+            placeholderTextView.setVisibility(View.VISIBLE);
+            placeholderImageView.setVisibility(View.VISIBLE);
+        }else{
+            recyclerView.setVisibility(View.VISIBLE);
+            placeholderTextView.setVisibility(View.GONE);
+            placeholderImageView.setVisibility(View.GONE);
+        }
 
     }
 

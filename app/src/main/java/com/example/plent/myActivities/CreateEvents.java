@@ -123,30 +123,34 @@ public class CreateEvents extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    MediaManager.get().upload(imageFilename).unsigned("iybnngkh").callback(new UploadCallback() {
-                        @Override
-                        public void onStart(String requestId) {}
-                        @Override
-                        public void onProgress(String requestId, long bytes, long totalBytes) {}
-                        @Override
-                        public void onSuccess(String requestId, Map resultData) {
-                            imageUrl = resultData.get("secure_url").toString();
-                            Log.i(TAG, "create event return url: " + imageUrl);
-                        }
+                    if (imageFilename != null && !imageFilename.isEmpty()) {
+                        MediaManager.get().upload(imageFilename).unsigned("iybnngkh").callback(new UploadCallback() {
+                            @Override
+                            public void onStart(String requestId) {}
+                            @Override
+                            public void onProgress(String requestId, long bytes, long totalBytes) {}
+                            @Override
+                            public void onSuccess(String requestId, Map resultData) {
+                                imageUrl = resultData.get("secure_url").toString();
+                                Toast.makeText(CreateEvents.this, "Creating event...", Toast.LENGTH_LONG).show();
+                                createEvent();
+                                Log.i(TAG, "create event return url: " + imageUrl);
+                            }
 
-                        @Override
-                        public void onError(String requestId, ErrorInfo error) {
-                            Log.i(TAG,"CLOUDINARY UPLOAD ERROR: " + error.getDescription());
-                        }
-                        @Override
-                        public void onReschedule(String requestId, ErrorInfo error) {}
-                    }).dispatch();
-                    createEvent();
+                            @Override
+                            public void onError(String requestId, ErrorInfo error) {
+                                Log.i(TAG,"CLOUDINARY UPLOAD ERROR: " + error.getDescription());
+                            }
+                            @Override
+                            public void onReschedule(String requestId, ErrorInfo error) {}
+                        }).dispatch();
+                    } else {
+                        createEvent();
+                    }
+
                 } catch (Exception e) {
                     Toast.makeText(CreateEvents.this, "Oops, something went wrong. Please try again!", Toast.LENGTH_LONG).show();
                 }
-
-
             }
         });
 
@@ -172,7 +176,7 @@ public class CreateEvents extends AppCompatActivity {
         });
         // setting spinner values
         types = findViewById(R.id.types);
-        String[] items = new String[]{"Fifth Row Activity", "Industry Talk", "Student Life"};
+        String[] items = new String[]{"Fifth Row", "Industry Talk", "Student Life"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text_item, items);
         types.setAdapter(adapter);
 
@@ -186,7 +190,7 @@ public class CreateEvents extends AppCompatActivity {
         telegram_input = findViewById(R.id.telegram_input);
         
         title1 = title_input.getText().toString();
-        type1 = null; //(ActivityType) types.getSelectedItem(); //ActivityType.valueOf(types.getSelectedItem().toString()); // not sure how to change string to activityType (asking xinyi)
+        type1 = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_")); // not sure how to change string to activityType (asking xinyi)
         month1 = enter_date.getMonth();
         day1 = enter_date.getDayOfMonth();
         year1 = enter_date.getYear();
