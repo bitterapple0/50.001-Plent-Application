@@ -13,7 +13,7 @@
         android:id="@+id/event_card"
         android:layout_gravity="left"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="62dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary">
 
@@ -36,25 +36,45 @@
                     android:layout_gravity="start"
                     android:text="Athletics Introduction Session"/>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
                 <TextView
                     android:id="@+id/event_time"
-                    style="@style/Calendar_body"
+                    style="@style/Post_Body"
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginBottom="12dp"
-                    android:text="6.30pm - 8.30pm, SUTD Track"/>
+                    android:text="6.30pm - 8.30pm"/>
+
+                <TextView
+                    android:id="@+id/event_location"
+                    style="@style/Post_Body"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="12dp"
+                    android:text="SUTD Track"/>
+            </LinearLayout>
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/right_arrow_button"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
-                android:background="@drawable/right_arrow_red"
+                android:layout_width="53dp"
+                android:layout_height="62dp"
+                android:gravity="center_horizontal"
+                android:background="@drawable/right_arrow_stroke_62"
                 android:layout_alignParentEnd="true"
+                android:onClick="redirectToParticipantsActivity"
                 />
 
         </RelativeLayout>

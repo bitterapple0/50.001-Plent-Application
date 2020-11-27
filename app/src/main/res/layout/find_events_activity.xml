@@ -30,7 +30,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <SearchView
+    <!-- <SearchView
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         android:iconifiedByDefault="false"
         android:searchIcon="@drawable/search_pink"
         android:background="#FFFFFF"
-        android:divider="@color/colorPrimary"/>
+        android:divider="@color/colorPrimary"/> -->
 
     <ScrollView
         android:layout_width="match_parent"

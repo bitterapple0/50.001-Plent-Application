@@ -15,35 +15,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.plent.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ManageEventsActivity extends AppCompatActivity {
+public class ParticipantsActivity extends AppCompatActivity {
 
-    FloatingActionButton fab_add;
     LinearLayout linearLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.manage_event_activity);
+        setContentView(R.layout.participants_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        linearLayout = findViewById(R.id.upcoming_events);
-
-        addEvent();
-        addEvent();
-
-        fab_add = findViewById(R.id.fab_add);
-        fab_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ManageEventsActivity.this, CreateEvents.class);
-                startActivity(intent);
-            }
-        });
+        linearLayout = findViewById(R.id.participants_view);
 
     }
 
@@ -66,41 +52,36 @@ public class ManageEventsActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.my_information) {
             if (id == R.id.my_calender) {
-                Intent intent = new Intent(ManageEventsActivity.this, MyInformationActivity.class);
+                Intent intent = new Intent(ParticipantsActivity.this, MyInformationActivity.class);
                 startActivity(intent);
             }
 
             if (id == R.id.my_calender) {
-                Intent intent = new Intent(ManageEventsActivity.this, CalendarActivity.class);
+                Intent intent = new Intent(ParticipantsActivity.this, CalendarActivity.class);
                 startActivity(intent);
             }
 
             if (id == R.id.find_events_and_activities) {
-                Intent intent = new Intent(ManageEventsActivity.this, FindEventsActivity.class);
+                Intent intent = new Intent(ParticipantsActivity.this, FindEventsActivity.class);
                 startActivity(intent);
             }
 
             if (id == R.id.manage_events) {
-                Intent intent = new Intent(ManageEventsActivity.this, ManageEventsActivity.class);
+                Intent intent = new Intent(ParticipantsActivity.this, ManageEventsActivity.class);
                 startActivity(intent);
             }
         }
         return super.onOptionsItemSelected(item);
 
-        }
+    }
     // Made a few changes to the ManageEventsActivity as it was throwing errors
     // TODO Check changes
     public void addEvent() {
-        View calendar_card = View.inflate(this, R.layout.manage_event_card, null);
+        View participants_card = View.inflate(this, R.layout.pariticipants_card, null);
 
         Log.i("Message", String.valueOf(linearLayout.getChildCount()));
 
-        linearLayout.addView(calendar_card, linearLayout.getChildCount());
-    }
-
-    public void redirectToParticipantsActivity() {
-        Intent intentToParticipantsActivity = new Intent(ManageEventsActivity.this, ParticipantsActivity.class);
-        startActivity(intentToParticipantsActivity);
+        linearLayout.addView(participants_card, linearLayout.getChildCount());
     }
 
 }
