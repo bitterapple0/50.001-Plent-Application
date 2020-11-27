@@ -30,7 +30,7 @@ import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
-public class CalendarActivity extends AppCompatActivity {
+public class CalendarActivity extends MenuActivity {
 
     CardView cardview;
     TextView textview;
