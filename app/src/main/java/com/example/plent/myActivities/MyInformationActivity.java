@@ -70,9 +70,9 @@ public class MyInformationActivity extends AppCompatActivity {
             Log.i(TAG, "json");
             user = gson.fromJson(json, User.class);
 
-            idInput.setHint(user.getStudentId());
-            emailInput.setHint(user.getEmail());
-            nameInput.setHint(user.getName());
+            idInput.setText(user.getStudentId());
+            emailInput.setText(user.getEmail());
+            nameInput.setText(user.getName());
 
             nameInput.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -86,7 +86,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     name_CS = s;
-                    // buttonStateChange();
+                    buttonStateChange();
                 }
             });
 
@@ -102,7 +102,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     email_CS = s;
-                    // buttonStateChange();
+                    buttonStateChange();
                 }
             });
 
@@ -118,7 +118,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     id_CS = s;
-                    // buttonStateChange();
+                    buttonStateChange();
                 }
             });
         }
@@ -152,10 +152,10 @@ public class MyInformationActivity extends AppCompatActivity {
     }
 
     private void editUser() {
-        Call<ResponseBody> call = api.editUser(editedUser);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<User> call = api.editUser(editedUser);
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
                             Toast.LENGTH_LONG).show();
@@ -176,7 +176,7 @@ public class MyInformationActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
                         Toast.LENGTH_LONG).show();

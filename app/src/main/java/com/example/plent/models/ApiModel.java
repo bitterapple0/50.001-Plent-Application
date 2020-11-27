@@ -31,6 +31,6 @@ public interface ApiModel {
     Call<HashMap> signUp(@Body HashMap userAndEvent);
 
     @PUT("user")
-    Call<ResponseBody> editUser(@Body User user);
+    Call<User> editUser(@Body User user);
 
 }
