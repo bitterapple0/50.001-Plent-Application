@@ -103,21 +103,25 @@ public class ParticipantsActivity extends AppCompatActivity {
         if (id == R.id.my_information) {
             if (id == R.id.my_calender) {
                 Intent intent = new Intent(ParticipantsActivity.this, MyInformationActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
 
             if (id == R.id.my_calender) {
                 Intent intent = new Intent(ParticipantsActivity.this, CalendarActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
 
             if (id == R.id.find_events_and_activities) {
                 Intent intent = new Intent(ParticipantsActivity.this, FindEventsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
 
             if (id == R.id.manage_events) {
                 Intent intent = new Intent(ParticipantsActivity.this, ManageEventsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         }
