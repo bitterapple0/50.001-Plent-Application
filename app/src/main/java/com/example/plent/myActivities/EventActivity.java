@@ -104,6 +104,7 @@ public class EventActivity extends AppCompatActivity {
             Log.i(TAG, "is null");
             // redirect to login page if no user info stored
             Intent intent = new Intent(EventActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
             finish();
         } else {
@@ -306,6 +307,7 @@ public class EventActivity extends AppCompatActivity {
                 String url = event.getTelegram(); //"https://t.me/sutdathletics2020";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
 
             }
@@ -320,6 +322,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EventActivity.this, CalendarActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         });
@@ -360,21 +363,25 @@ public class EventActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.my_information) {
             Intent intent = new Intent(EventActivity.this, MyInformationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
         if (id == R.id.my_calender) {
             Intent intent = new Intent(EventActivity.this, CalendarActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
         if (id == R.id.find_events_and_activities) {
             Intent intent = new Intent(EventActivity.this, FindEventsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
         if (id == R.id.manage_events) {
             Intent intent = new Intent (EventActivity.this, ManageEventsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
 
