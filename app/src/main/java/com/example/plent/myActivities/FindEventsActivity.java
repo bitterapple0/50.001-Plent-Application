@@ -132,6 +132,11 @@ public class FindEventsActivity extends MenuActivity {
         startActivity(intent);
     }
 
+    public void redirectToSeeAll(View view) {
+        Intent intent = new Intent(FindEventsActivity.this, SeeAllActivity.class);
+        startActivity(intent);
+    }
+
     public void createClusterCards(ActivityType eventType, int image){
         View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
 
