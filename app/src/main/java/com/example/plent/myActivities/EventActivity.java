@@ -30,6 +30,7 @@ import com.example.plent.models.Event;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
+import com.example.plent.utils.DateTimeUtils;
 import com.example.plent.utils.NetworkImage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -123,7 +124,7 @@ public class EventActivity extends AppCompatActivity {
                 }
                 eventHeader.setText(event.getTitle());
                 location.setText(event.getLocation());
-                timeDate.setText(event.getDate().toString());
+                timeDate.setText(DateTimeUtils.formatEventDateTime(event.getDate(), event.getStartTime(), event.getEndTime()));
                 description.setText(event.getDescription());
                 clashText.setText(event.getClashString());
                 try {
@@ -149,10 +150,8 @@ public class EventActivity extends AppCompatActivity {
                                 }
                                 eventHeader.setText(event.getTitle());
                                 location.setText(event.getLocation());
-                                // TODO: date time formatting is not correct yet
-                                timeDate.setText(event.getDate().toString());
+                                timeDate.setText(DateTimeUtils.formatEventDateTime(event.getDate(), event.getStartTime(), event.getEndTime()));
                                 description.setText(event.getDescription());
-                                // TODO: format date and time properly for clash string in backend
                                 clashText.setText(event.getClashString());
                                 Log.i(TAG, "clash string: " + event.getClashString());
                                 try {
