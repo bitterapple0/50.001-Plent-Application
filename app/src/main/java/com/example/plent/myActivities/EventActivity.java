@@ -93,6 +93,13 @@ public class EventActivity extends AppCompatActivity {
         clashText = findViewById(R.id.warning1);
         event_activity_linear_layout = findViewById(R.id.event_activity_linear_layout);
 
+        joinTelegramGroupButton = findViewById(R.id.join_telegram_group_button);
+
+        if (!event.getTelegram().isEmpty()) {
+            // if there is no telegram link provided, no Join Telegram Group Button will be shown
+            joinTelegramGroupButton.setVisibility(View.VISIBLE);
+        }
+
         Gson gson = new Gson();
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
         String json = mPreferences.getString(Constants.USER_KEY, null);
@@ -255,12 +262,7 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
-        joinTelegramGroupButton = findViewById(R.id.join_telegram_group_button);
 
-        if (event.getTelegram().isEmpty()) {
-            // if there is no telegram link provided, no Join Telegram Group Button will be shown
-            joinTelegramGroupButton.setVisibility(View.GONE);
-        }
 
         joinTelegramGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override

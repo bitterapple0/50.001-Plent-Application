@@ -211,7 +211,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     "Requirements: A min of 6 characters \n" +
                                     "Atleast an upper case and lower case letter along with a digit", Toast.LENGTH_LONG).show();
                         }
-                        
+
                     } else {
                         Toast.makeText(SignUpActivity.this, "Oops, that is not a valid email", Toast.LENGTH_LONG).show();
                     }
