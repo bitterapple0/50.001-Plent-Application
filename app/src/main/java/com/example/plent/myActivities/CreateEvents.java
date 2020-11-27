@@ -98,7 +98,7 @@ public class CreateEvents extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       setTheme(R.style.CalendarTheme);
+        setTheme(R.style.CalendarTheme);
         Log.i("Message", "Creating");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);

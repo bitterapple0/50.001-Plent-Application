@@ -1,5 +1,6 @@
 package com.example.plent.myActivities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -59,6 +60,7 @@ public class EventActivity extends AppCompatActivity {
     int permission = 1; // We need to replace this with the user's permission field
 
     void backToFindEvents() {
+        setTheme(R.style.CalendarTheme);
         Toast.makeText(this, "Oops, this event could not be fetched!", Toast.LENGTH_LONG).show();
         finish();
     }
@@ -84,7 +86,7 @@ public class EventActivity extends AppCompatActivity {
 
         location = findViewById(R.id.location);
         timeDate = findViewById(R.id.time_date);
-        eventHeader = findViewById(R.id.Athletics_header);
+        eventHeader = findViewById(R.id.event_header);
         eventPoster = findViewById(R.id.athletics_poster);
         description = findViewById(R.id.post_body);
         clashText = findViewById(R.id.warning1);
@@ -192,11 +194,34 @@ public class EventActivity extends AppCompatActivity {
                     toast_success.show();
 
                     if (alreadyGoing) {
-                        user.cancelAttendance(eventId);
+                        Log.i("Dialog", "Reached Here");
+                        AlertDialog.Builder confirmCancel = new AlertDialog.Builder(EventActivity.this, R.style.AlertDialogCustom);
+                        confirmCancel.setTitle("Cancel sign up for " + eventHeader.getText() + " ?");
+                        confirmCancel.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                user.cancelAttendance(eventId);
+                                event.removeAttendee(user.getId());
+                                signUpButton.setText("Sign Up Now");
+                                signUpButton.setTextAppearance(R.style.Primary_Button);
+                                signUpButton.setBackgroundResource(R.drawable.primary_button);
+                            }
+                        });
+                        confirmCancel.setNegativeButton(
+                                "No",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = confirmCancel.create();
+                        alert.show();
+
+                        /*user.cancelAttendance(eventId);
                         event.removeAttendee(user.getId());
                         signUpButton.setText("Sign Up Now");
                         signUpButton.setTextAppearance(R.style.Primary_Button);
-                        signUpButton.setBackgroundResource(R.drawable.primary_button);
+                        signUpButton.setBackgroundResource(R.drawable.primary_button); */
                     } else {
                         user.signUp(eventId);
                         event.addAttendee(user.getId());
