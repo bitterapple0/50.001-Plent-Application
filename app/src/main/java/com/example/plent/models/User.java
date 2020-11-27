@@ -8,7 +8,7 @@ public class User {
     private String studentId;
     private String password;
     private String id;
-    private int permission; // 0 normal, 1 creator
+    private int permission = 1; // 0 normal, 1 creator
     private ArrayList events;
 
     public int getPermission() {

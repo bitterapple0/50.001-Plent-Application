@@ -6,5 +6,5 @@ public class Constants {
     public static final String SHARED_PREF_FILE = "com.example.android.mainsharedprefs";
     public static final String SELECTED_EVENT_KEY = "current_event";
 
-    public static final boolean SKIP_BACKEND = false;
+    public static final boolean SKIP_BACKEND = true;
 }

@@ -152,7 +152,8 @@
                     android:layout_marginHorizontal="24dp"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:timePickerMode="spinner" />
+                    android:timePickerMode="spinner"
+                    />
 
                 <TextView
                     android:id="@+id/to"
