@@ -22,9 +22,19 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private List<Event> eventList;
     private List<Event> eventListAll;
+<<<<<<< HEAD
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_EVENT = 1;
     private static final int VIEW_TYPE_SPECIFIC_EVENT = 0;
+=======
+    private static final int VIEW_TYPE_EMPTY = 0; // When eventlist is empty
+    private static final int VIEW_TYPE_EVENT = 1; // When eventlist contains all event
+    private static final int VIEW_TYPE_SPECIFIC_EVENT = 2; // When eventlist contains only 1 type of event
+    private static final int VIEW_TYPE_EMPTY = 0;
+    private static final int VIEW_TYPE_EVENT = 1;
+    private static final int VIEW_TYPE_SEE_ALL = 0;
+
+>>>>>>> 95e28e85ad44412085a78cbb0b84994076676c20
 
     public SearchRecyclerAdapter(List<Event> eventList) {
         this.eventList = eventList;
@@ -100,7 +110,16 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
+<<<<<<< HEAD
 
+=======
+    // private setters for each viewholder type, populate the view with info from event object
+    private void setEventDetails (EventViewHolder vh, int position) {
+        Event event = eventList.get(position);
+        vh.name.setText(event.getTitle());
+        vh.location.setText(event.getLocation());
+        vh.time.setText(event.getStart_time()+" to "+event.getEnd_time());
+>>>>>>> 95e28e85ad44412085a78cbb0b84994076676c20
     private void setEventDetails (EventViewHolder holder, int position) {
         Event current_event = eventList.get(position);
         holder.name.setText(current_event.getTitle());
