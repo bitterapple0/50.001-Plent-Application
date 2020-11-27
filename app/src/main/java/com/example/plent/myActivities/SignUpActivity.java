@@ -209,7 +209,7 @@ public class SignUpActivity extends AppCompatActivity {
                         else {
                             Toast.makeText(SignUpActivity.this, "Oops, your password doesn't meet the requirements \n" +
                                     "Requirements: A min of 6 characters \n" +
-                                    "Atleast an upper case and lower case letter along with a digit", Toast.LENGTH_LONG).show();
+                                    "At least an upper case and lower case letter along with a digit", Toast.LENGTH_LONG).show();
                         }
 
                     } else {

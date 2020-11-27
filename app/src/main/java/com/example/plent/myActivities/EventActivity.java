@@ -57,10 +57,6 @@ public class EventActivity extends AppCompatActivity {
 
     int permission = 1; // We need to replace this with the user's permission field
 
-    // NOTE: IF YOU SET SKIPBACKEND TO TRUE, USE ACTUAL DB ID IN FINDEVENTSACTIVITY
-    // IF YOU SET SKIPBACKEND TO FALSE, USE DUMMY ID IN FINDEVENTSACTIVITY
-    // CHANGE THIS VALUE IN REDIRECTTOEVENTSPAGE
-
     void backToFindEvents() {
         Toast.makeText(this, "Oops, this event could not be fetched!", Toast.LENGTH_LONG).show();
         finish();
@@ -95,11 +91,6 @@ public class EventActivity extends AppCompatActivity {
 
         joinTelegramGroupButton = findViewById(R.id.join_telegram_group_button);
 
-        if (!event.getTelegram().isEmpty()) {
-            // if there is no telegram link provided, no Join Telegram Group Button will be shown
-            joinTelegramGroupButton.setVisibility(View.VISIBLE);
-        }
-
         Gson gson = new Gson();
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
         String json = mPreferences.getString(Constants.USER_KEY, null);
@@ -115,11 +106,17 @@ public class EventActivity extends AppCompatActivity {
 
             // fetch event info from db and check for clashes with user's events
             if (Constants.SKIP_BACKEND) {
-                event = new Event("Athletics Freshmore Intro Session", "Monday, Oct 12th, 6.30pm - 8.30pm", "", "", "SUTD Stadium", "Always had a passion for running or just want to maintain your fitness goals? Athletics club is here for you! Come down to experience what our training would be like and join us for a run to Simpang afterwards for supper after burning those calories!", "https://t.me/sutdathletics2020", ActivityType.FIFTH_ROW, "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1605984445/athleticsposter_lhtcqv.png");
-
+                int[] date = {12, 10, 2020};
+                int[] startTime = {18, 30};
+                int[] endTime = {20, 30};
+                event = new Event("Athletics Freshmore Intro Session", date, startTime, endTime, "SUTD Stadium", "Always had a passion for running or just want to maintain your fitness goals? Athletics club is here for you! Come down to experience what our training would be like and join us for a run to Simpang afterwards for supper after burning those calories!", "https://t.me/sutdathletics2020", ActivityType.FIFTH_ROW, "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1605984445/athleticsposter_lhtcqv.png");
+                if (!event.getTelegram().isEmpty()) {
+                    // if there is no telegram link provided, no Join Telegram Group Button will be shown
+                    joinTelegramGroupButton.setVisibility(View.VISIBLE);
+                }
                 eventHeader.setText(event.getTitle());
                 location.setText(event.getLocation());
-                timeDate.setText(event.getDate());
+                timeDate.setText(event.getDate().toString());
                 description.setText(event.getDescription());
                 clashText.setText(event.getClashString());
                 try {
@@ -139,10 +136,14 @@ public class EventActivity extends AppCompatActivity {
                             if (event == null) {
                                 backToFindEvents();
                             } else {
+                                if (!event.getTelegram().isEmpty()) {
+                                    // if there is no telegram link provided, no Join Telegram Group Button will be shown
+                                    joinTelegramGroupButton.setVisibility(View.VISIBLE);
+                                }
                                 eventHeader.setText(event.getTitle());
                                 location.setText(event.getLocation());
                                 // TODO: date time formatting is not correct yet
-                                timeDate.setText(event.getDate());
+                                timeDate.setText(event.getDate().toString());
                                 description.setText(event.getDescription());
                                 // TODO: format date and time properly for clash string in backend
                                 clashText.setText(event.getClashString());

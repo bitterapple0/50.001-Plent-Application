@@ -85,7 +85,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         Event current_event = eventList.get(position);
         holder.name.setText(current_event.getTitle());
         holder.location.setText(current_event.getLocation());
-        holder.time.setText(current_event.getStart_time()+" to "+current_event.getEnd_time());
+        holder.time.setText(current_event.getStartTime().toString()+" to "+current_event.getEndTime().toString());
         // need to set poster image url
 
     }
