@@ -24,6 +24,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private List<Event> eventListAll;
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_EVENT = 1;
+    private static final int VIEW_TYPE_SEE_ALL = 0;
 
 
     public SearchRecyclerAdapter(List<Event> eventList) {
@@ -67,6 +68,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
         return viewHolder;
     }
+
+    //TRYING SOMETHING HERE
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {

@@ -62,6 +62,7 @@
         <activity android:name=".myActivities.ParticipantsActivity"
             android:label="Participants Activity"
             android:parentActivityName=".myActivities.ManageEventsActivity"/>
+        <activity android:name=".myActivities.SeeAllActivity" />
 
         <meta-data android:name="CLOUDINARY_URL" android:value="cloudinary://@dyaxu5mb4"/>
     </application>
