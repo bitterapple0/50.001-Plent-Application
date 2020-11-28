@@ -194,4 +194,10 @@
         <item name="android:colorAccent">#FF6160</item>
     </style>
 
+    <style name="SeeAllEventTitle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#212121</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:fontFamily">@font/avenirnextcyr_medium</item>
+    </style>
+
 </resources>
