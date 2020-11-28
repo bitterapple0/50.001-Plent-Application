@@ -67,11 +67,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     private boolean validatePassword(String passStr) {
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$";
+        String regex2 = "(?=^.{6,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
         Pattern p = Pattern.compile(regex);
+        Pattern p2 = Pattern.compile(regex2);
         Matcher m = p.matcher(passStr);
-        if (m.matches() && passStr.length() > 6) {
+        Matcher m2 = p2.matcher(passStr);
+        if (m.matches() || m2.matches() && passStr.length() > 6) {
             return(true);
-
         }
         else {
             return(false);
