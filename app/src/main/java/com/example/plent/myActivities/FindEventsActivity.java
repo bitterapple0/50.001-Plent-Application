@@ -162,6 +162,14 @@ public class FindEventsActivity extends MenuActivity {
             sl_cluster_linear_layout.addView(find_events_poster, sl_cluster_linear_layout.getChildCount());
         }
     }
+    // need to override to only show search option on this page
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem search_icon = menu.findItem(R.id.search_events);
+        search_icon.setVisible(true);
+        return true;
+    }
 
     // TODO: THIS METHOD IS FOR RUNNING THE APP WITHOUT BACKEND
     public void createClusterCards(ActivityType eventType, int image){

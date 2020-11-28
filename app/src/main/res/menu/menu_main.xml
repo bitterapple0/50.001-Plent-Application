@@ -9,7 +9,8 @@
         android:orderInCategory="100"
         android:icon="@drawable/search"
         android:title="Search Activities"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:visible="false"/>
 
     <item
         android:id="@+id/my_information"
