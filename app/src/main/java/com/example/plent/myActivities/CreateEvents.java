@@ -79,6 +79,7 @@ public class CreateEvents extends AppCompatActivity {
     Bitmap posterBit;
     String imageFilename;
     String imageUrl;
+    ActivityType type;
 
     // exit page
    public void ClosePage(View view) {
@@ -126,6 +127,7 @@ public class CreateEvents extends AppCompatActivity {
         start_time.setIs24HourView(true);
         end_time.setIs24HourView(true);
 
+        // button: next (submission of event information)
         // on click handler for submit button
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -239,10 +241,13 @@ public class CreateEvents extends AppCompatActivity {
     }
 
     public void createEvent() {
-        // formatting data
-        int[] date = {day1, month1, year1};
-        int[] startTime = {start_time.getHour(), start_time.getMinute()};
-        int[] endTime = {end_time.getHour(), end_time.getMinute()};
+       int[] date = {day1, month1, year1};
+       int[] startTime = {start_time.getHour(), start_time.getMinute()};
+       int[] endTime = {end_time.getHour(), end_time.getMinute()};
+
+        event = new Event(title_input.getText().toString().trim(), date, startTime, endTime,
+                location_input.getText().toString().trim(), description_input.getText().toString().trim(),
+                telegram_input.getText().toString().trim(), type, imageUrl);
         ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
 
         // creating event object

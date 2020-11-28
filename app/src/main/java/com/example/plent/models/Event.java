@@ -20,8 +20,8 @@ public class Event {
     private ArrayList attendees;
     private ActivityType type;
 
-    public Event(String title, int[] date, int[] startTime, int[] endTime,
-                 String location, String description, String telegram, ActivityType type, String imageUrl) {
+    public Event(String title, int[] date, int[] startTime, int[] endTime, String location,
+                 String description, String telegram, ActivityType type, String imageUrl) {
     this.title = title;
     this.date = date;
     this.startTime = startTime;
