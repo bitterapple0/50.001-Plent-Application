@@ -13,7 +13,7 @@
         android:id="@+id/calendar_card"
         android:layout_gravity="left"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="66dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary">
 
@@ -45,28 +45,29 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp">
 
                 <TextView
                     android:id="@+id/calendar_time"
                     style="@style/Calendar_body"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="8dp"
                     android:text="6.30pm - 8.30pm"/>
 
                     <TextView
                         android:id="@+id/calendar_location"
                         style="@style/Calendar_body"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginLeft="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="8dp"
                         android:text="SUTD Track"/>
 
                 </LinearLayout>
