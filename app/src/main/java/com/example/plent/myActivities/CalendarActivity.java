@@ -97,7 +97,7 @@ public class CalendarActivity extends MenuActivity {
                         List<CalendarEvent> events = new ArrayList<>();
                         Log.i("Date", toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
                         Log.i("DefaultDate", toDateString(defaultSelectedDate.get(Calendar.DATE), defaultSelectedDate.get(Calendar.MONTH), defaultSelectedDate.get(Calendar.YEAR)));
-                        LocalDate selectedDay = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE));
+                        LocalDate selectedDay = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1, date.get(Calendar.DATE));
                         // for loop to run through dates of events
                         for(Event e: userEvents){
                             Log.i("EventDate", (e.getDate().toString()));
