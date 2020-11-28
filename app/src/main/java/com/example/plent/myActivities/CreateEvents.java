@@ -130,8 +130,6 @@ public class CreateEvents extends AppCompatActivity {
         start_time.setIs24HourView(true);
         end_time.setIs24HourView(true);
 
-        // create close function (set intent)
-
         // button: next (submission of event information)
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -268,10 +266,15 @@ public class CreateEvents extends AppCompatActivity {
 
     public void createEvent() {
        int[] date = {day1, month1, year1};
-       int[] startTime = {start_time.getHour(), start_time.getMinute()};
-       int[] endTime = {end_time.getHour(), end_time.getMinute()};
+       int startTime_hour = start_time.getHour();
+       int startTime_minute = start_time.getMinute();
+       int endTime_hour = end_time.getHour();
+       int endTime_minute = end_time.getMinute();
+/*       int[] startTime = {start_time.getHour(), start_time.getMinute()};
+       int[] endTime = {end_time.getHour(), end_time.getMinute()};*/
        ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
-        event = new Event(title_input.getText().toString().trim(), date, startTime, endTime, location_input.getText().toString().trim(), description_input.getText().toString().trim(), telegram_input.getText().toString().trim(),
+        event = new Event(title_input.getText().toString().trim(), date, startTime_hour, startTime_minute, endTime_hour, endTime_minute,
+                location_input.getText().toString().trim(), description_input.getText().toString().trim(), telegram_input.getText().toString().trim(),
                 type, imageUrl);
         Call<Event> call = api.createEvent(event);
         call.enqueue(new Callback<Event>() {
