@@ -12,9 +12,10 @@ public class Api {
     static volatile Api api;
 
     private Api() {
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://secure-scrubland-16082.herokuapp.com/")
-                //.baseUrl("http://10.0.2.2:5000/")
+//                .baseUrl("https://secure-scrubland-16082.herokuapp.com/")
+                 .baseUrl("http://10.0.2.2:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

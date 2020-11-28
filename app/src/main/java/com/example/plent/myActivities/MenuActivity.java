@@ -78,6 +78,12 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        if (id == R.id.search_events){
+            Intent intent = new Intent(MenuActivity.this, SearchActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
