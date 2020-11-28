@@ -55,7 +55,6 @@ public class CreateEvents extends AppCompatActivity {
     TextView event_type;
     Spinner types;
     TextView date;
-    DatePicker enter_date;
     TextView time;
     TimePicker start_time;
     TextView to;
@@ -73,44 +72,27 @@ public class CreateEvents extends AppCompatActivity {
     EditText date_picker;
     DatePickerDialog picker;
 
-    // local variables
-    String title1;
-    ActivityType type1;
     Integer month1;
     Integer day1;
     Integer year1;
-    String date1;
-    Integer start_hour1;
-    Integer start_minute1;
-    String start_time1;
-    Integer end_hour1;
-    Integer end_minute1;
-    String end_time1;
-    String location1;
-    String description1;
-    String telegram1;
     Event event;
     Bitmap posterBit;
     String imageFilename;
     String imageUrl;
-    boolean completed = false;
-
 
     // exit page
-   public void ClosePage(View view) {finish();}
+   public void ClosePage(View view) {
+       finish();
+   }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.CalendarTheme);
-        Log.i("Message", "Creating");
         super.onCreate(savedInstanceState);
+        setTheme(R.style.CalendarTheme);
         setContentView(R.layout.create_event);
-
-
-
         api =  Api.getInstance().apiModel;
 
-        // calling textView objects
+        // finding and setting views
         create_event = findViewById(R.id.create_event);
         event_title = findViewById(R.id.event_title);
         event_type = findViewById(R.id.event_type);
@@ -123,23 +105,39 @@ public class CreateEvents extends AppCompatActivity {
         telegram = findViewById(R.id.telegram);
         uploaded_image = findViewById(R.id.uploaded_image);
         date_picker = findViewById(R.id.date_picker);
-        date_picker.setInputType(InputType.TYPE_NULL);
         start_time = findViewById(R.id.start_time);
         end_time = findViewById(R.id.end_time);
+        types = findViewById(R.id.types);
+        title_input = findViewById(R.id.title_input);
+        location_input = findViewById(R.id.location_input);
+        description_input = findViewById(R.id.description_input);
+        telegram_input = findViewById(R.id.telegram_input);
 
+        // setting spinner values
+        String[] items = new String[]{"Fifth Row", "Industry Talk", "Student Life"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text_item, items);
+        types.setAdapter(adapter);
+
+        // setting date picker input type to null because EditText field for date picker is just for display purpose
+        // clicking on the field will open a calendar component to select date
+        date_picker.setInputType(InputType.TYPE_NULL);
+
+        // set time picker to be 24 hours
         start_time.setIs24HourView(true);
         end_time.setIs24HourView(true);
 
-        // create close function (set intent)
-
-        // button: next (submission of event information)
+        // on click handler for submit button
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     if (isCompleted()) {
+                        // if all required fields are filled in (ie. everything except telegram and image)
+                        // toast to let user know event creation is in progress
                         Toast.makeText(CreateEvents.this, "Creating event...", Toast.LENGTH_LONG).show();
+                        // check if an image was uploaded
+                        // upload image to Cloudinary if an image is present
                         if (imageFilename != null && !imageFilename.isEmpty()) {
                             MediaManager.get().upload(imageFilename).unsigned("iybnngkh").callback(new UploadCallback() {
                                 @Override
@@ -148,6 +146,7 @@ public class CreateEvents extends AppCompatActivity {
                                 public void onProgress(String requestId, long bytes, long totalBytes) {}
                                 @Override
                                 public void onSuccess(String requestId, Map resultData) {
+                                    // create event only upon successful image upload
                                     imageUrl = resultData.get("secure_url").toString();
                                     createEvent();
                                     Log.i(TAG, "create event return url: " + imageUrl);
@@ -162,28 +161,32 @@ public class CreateEvents extends AppCompatActivity {
                                 public void onReschedule(String requestId, ErrorInfo error) {}
                             }).dispatch();
                         } else {
+                            // if no image was uploaded, create event immediately
                             createEvent();
                         }
                     } else {
+                        // feedback/error message for user
                         Toast.makeText(CreateEvents.this, "Oops, the form has not been completed yet!", Toast.LENGTH_LONG).show();
                     }
-
-
                 } catch (Exception e) {
+                    // feedback/error message for user
                     Toast.makeText(CreateEvents.this, "Oops, something went wrong. Please try again!", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-        // uploading image button
+        // on click handler for uploading image
         upload = findViewById(R.id.upload);
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
+                    // check if user has given permission to use external storage (gallery in this case)
                     if (ActivityCompat.checkSelfPermission(CreateEvents.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        // ask for permission if no permission was given
                         ActivityCompat.requestPermissions(CreateEvents.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_IMAGE_GET);
                     } else {
+                        // redirect to gallery to select image
                         Intent intent = new Intent(Intent.ACTION_PICK);
                         intent.setType("image/*");
                         if (intent.resolveActivity(getPackageManager()) != null) {
@@ -195,40 +198,8 @@ public class CreateEvents extends AppCompatActivity {
                 }
             }
         });
-        // setting spinner values
-        types = findViewById(R.id.types);
-        String[] items = new String[]{"Fifth Row", "Industry Talk", "Student Life"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text_item, items);
-        types.setAdapter(adapter);
 
-        // getting all the values
-        title_input = findViewById(R.id.title_input);
-        //enter_date = findViewById(R.id.enter_date);
-        start_time = findViewById(R.id.start_time);
-        end_time = findViewById(R.id.end_time);
-        location_input = findViewById(R.id.location_input);
-        description_input = findViewById(R.id.description_input);
-        telegram_input = findViewById(R.id.telegram_input);
-
-        /*
-        title1 = title_input.getText().toString();
-        type1 = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_")); // not sure how to change string to activityType (asking xinyi)
-        month1 = enter_date.getMonth();
-        day1 = enter_date.getDayOfMonth();
-        year1 = enter_date.getYear();
-        start_hour1 = start_time.getHour();
-        start_minute1 = start_time.getMinute();
-        end_hour1 = end_time.getHour();
-        end_minute1 = end_time.getMinute();
-        location1 = location_input.getText().toString();
-        description1 = description_input.getText().toString();
-        telegram1 = telegram_input.getText().toString(); */
-        // posterBit ^ as retrieved from above
-
-        final String date1 = String.valueOf(day1) + String.valueOf(month1) + String.valueOf(year1);
-        String start_time1 = String.valueOf(start_hour1) + ":" + String.valueOf(start_minute1);
-        String end_time1 = String.valueOf(end_hour1) + ":" + String.valueOf(end_minute1);
-
+        // on click handler for date picker EditText field
         date_picker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,7 +211,7 @@ public class CreateEvents extends AppCompatActivity {
                 picker = new DatePickerDialog(CreateEvents.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        date_picker.setText(dayOfMonth + " / " + (monthOfYear + 1) + " / " + year);
+                        date_picker.setText(String.format("%d / %d / %d", dayOfMonth, monthOfYear + 1, year));
                         day1 = dayOfMonth;
                         month1 = monthOfYear+1;
                         year1 = year;
@@ -254,11 +225,12 @@ public class CreateEvents extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "on activity result called");
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             try {
+                // display uploaded image in image view
                 posterBit = MediaStore.Images.Media.getBitmap(CreateEvents.this.getContentResolver(), data.getData());
                 uploaded_image.setImageBitmap(posterBit);
+                // save file name of image for uploading onto Cloudinary upon form submission
                 imageFilename = ImageUtils.getImageFilePath(this, data.getData());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -267,12 +239,17 @@ public class CreateEvents extends AppCompatActivity {
     }
 
     public void createEvent() {
-       int[] date = {day1, month1, year1};
-       int[] startTime = {start_time.getHour(), start_time.getMinute()};
-       int[] endTime = {end_time.getHour(), end_time.getMinute()};
-       ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
+        // formatting data
+        int[] date = {day1, month1, year1};
+        int[] startTime = {start_time.getHour(), start_time.getMinute()};
+        int[] endTime = {end_time.getHour(), end_time.getMinute()};
+        ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
+
+        // creating event object
         event = new Event(title_input.getText().toString().trim(), date, startTime, endTime, location_input.getText().toString().trim(), description_input.getText().toString().trim(), telegram_input.getText().toString().trim(),
                 type, imageUrl);
+
+        // making API call
         Call<Event> call = api.createEvent(event);
         call.enqueue(new Callback<Event>() {
             @Override
@@ -280,19 +257,16 @@ public class CreateEvents extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     Toast.makeText(CreateEvents.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
+                    // redirect back to Manage Events page upon successful creation
                     Toast.makeText(CreateEvents.this, "Event created!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(CreateEvents.this, ManageEventsActivity.class);
-                    startActivity(intent);
                     finish();
-                    Log.i("CREATE EVENT", "retrieved event id: " + response.body().getId());
+                    Log.i(TAG, "retrieved event id: " + response.body().getId());
                 }
             }
 
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
-
                 t.printStackTrace();
-
                 Toast.makeText(CreateEvents.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
             }
         });
@@ -303,13 +277,10 @@ public class CreateEvents extends AppCompatActivity {
     }
 
     public boolean isCompleted() {
-       // telegram and image are optional
-        // type always has default value
+        // telegram and image are optional
+        // type, startTime and endTime always has default values
        return !editTextIsEmpty(title_input) && !editTextIsEmpty(location_input)
                && !editTextIsEmpty(description_input)
                && day1 != null && month1 != null && year1 != null;
-//               && start_hour1 != null && start_minute1 != null
-//               && end_hour1 != null && end_minute1 != null;
     }
-
 }
