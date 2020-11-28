@@ -81,6 +81,13 @@ public class CalendarActivity extends MenuActivity {
 
         final Calendar defaultSelectedDate = Calendar.getInstance();
 
+        recyclerView = findViewById(R.id.calendar_events);
+
+        calendarAdapter = new CalendarAdapter(userEvents);
+        RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(pLayoutManager);
+        recyclerView.setAdapter(calendarAdapter);
+
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView).range(startDate, endDate)
                 .datesNumberOnScreen(5)
                 .defaultSelectedDate(defaultSelectedDate)
@@ -90,10 +97,11 @@ public class CalendarActivity extends MenuActivity {
                         List<CalendarEvent> events = new ArrayList<>();
                         Log.i("Date", toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
                         Log.i("DefaultDate", toDateString(defaultSelectedDate.get(Calendar.DATE), defaultSelectedDate.get(Calendar.MONTH), defaultSelectedDate.get(Calendar.YEAR)));
-
+                        LocalDate selectedDay = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE));
                         // for loop to run through dates of events
                         for(Event e: userEvents){
-                            if(e.getDate().equals(toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)))){
+                            Log.i("EventDate", (e.getDate().toString()));
+                            if(e.getDate().isEqual(selectedDay)){
                                 if (e.getType() == ActivityType.FIFTH_ROW) {
                                     events.add(c1);
                                 } else if (e.getType() == ActivityType.STUDENT_LIFE) {
@@ -115,8 +123,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 Log.i("Message", toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
-                linearLayout.removeAllViews();
-                filterCalenderEvents(userEvents, date);
+                // TO DO: Call the RecyclerView again to dynamically update the page layout with the events on that day
             }
         });
 
@@ -130,20 +137,8 @@ public class CalendarActivity extends MenuActivity {
             }
         });
 
-        //linearLayout = findViewById(R.id.calendar_events);
-
         filterCalenderEvents(userEvents, defaultSelectedDate);
-
-        recyclerView = findViewById(R.id.calendar_events);
-
-        calendarAdapter = new CalendarAdapter(userEvents);
-        RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(pLayoutManager);
-        recyclerView.setAdapter(calendarAdapter);
-
     }
-
-
 
     @Override
     protected void onStart() {
@@ -169,45 +164,6 @@ public class CalendarActivity extends MenuActivity {
         Log.i("ALC", "RESTART");
     }
 
-    /*public void addCalendarEvent(Event e) {
-        View calendar_card =  View.inflate(this, R.layout.calendar_card, null);
-
-        if(e.getType() == ActivityType.FIFTH_ROW) {
-            Log.i("CALENDAR", e.getTitle() + " is a fifth row");
-            calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_fr_yellow_dark));
-            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_fr_yellow_bg));
-            TextView header = calendar_card.findViewById(R.id.calendar_title);
-            header.setText(e.getTitle());
-            TextView body = calendar_card.findViewById(R.id.calendar_time);
-            body.setText(e.getDescription());
-
-        } else if (e.getType() == ActivityType.STUDENT_LIFE) {
-            Log.i("CALENDAR", e.getTitle() + " is a student life event");
-            calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_it_green_dark));
-            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_it_green_bg));
-            TextView header = calendar_card.findViewById(R.id.calendar_title);
-            header.setText(e.getTitle());
-            TextView body = calendar_card.findViewById(R.id.calendar_time);
-            body.setText(e.getDescription());
-
-        } else if (e.getType() == ActivityType.INDUSTRY_TALK) {
-            Log.i("CALENDAR", e.getTitle() + " is an industry talk");
-            calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_sl_blue_dark));
-            calendar_card.findViewById(R.id.calendar_card).setBackgroundColor(ContextCompat.getColor(this, R.color.calendar_sl_blue_bg));
-            TextView header = calendar_card.findViewById(R.id.calendar_title);
-            header.setText(e.getTitle());
-            TextView body = calendar_card.findViewById(R.id.calendar_time);
-            body.setText(e.getDescription());
-        } else {
-            calendar_card.findViewById(R.id.indicator).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
-
-        Log.i("Message", String.valueOf(linearLayout.getChildCount()));
-
-        linearLayout.addView(calendar_card, linearLayout.getChildCount());
-
-    } */
-
 
     public void filterCalenderEvents(ArrayList<Event> events, Calendar date){
         for (Event e : events) {
@@ -222,4 +178,6 @@ public class CalendarActivity extends MenuActivity {
     public String toDateString(int date, int month, int year){
         return Integer.toString(date) + Integer.toString(month) +Integer.toString((year));
     }
+
+
 }

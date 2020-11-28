@@ -189,7 +189,7 @@ public class EventActivity extends MenuActivity {
                         }
                         // format date
                         DateTimeFormatter dateFormatObj = DateTimeFormatter.ofPattern("EEEE, MMM d");
-                        DateTimeFormatter timeFormatObj = DateTimeFormatter.ofPattern("h.mma");
+                        DateTimeFormatter timeFormatObj = DateTimeFormatter.ofPattern("hh.mma");
                         String suffix = event.getDate().getDayOfMonth() == 1 ? "st" : event.getDate().getDayOfMonth() == 2 ? "nd" : event.getDate().getDayOfMonth() == 3 ? "rd" : "th";
                         String dateString = event.getDate().format(dateFormatObj) + suffix + ", " + event.getStartTime().format(timeFormatObj) + " - " + event.getEndTime().format(timeFormatObj);
 
