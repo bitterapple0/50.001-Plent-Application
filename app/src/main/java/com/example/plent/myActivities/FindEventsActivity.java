@@ -65,35 +65,6 @@ public class FindEventsActivity extends MenuActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         api = Api.getInstance().apiModel;
 
-        Call<ArrayList<Event>> call = api.getAllEvents();
-        call.enqueue(new Callback<ArrayList<Event>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
-                } else {
-                    events = response.body();
-                    for (Event e: events) {
-                        createClusterCards(e.getType(), e.getImageUrl());
-                    }
-                    for (int i=0; i<4; i++){
-                        createClusterCards(ActivityType.FIFTH_ROW, placeholderImageUrl);
-                        createClusterCards(ActivityType.INDUSTRY_TALK, placeholderImageUrl);
-                        createClusterCards(ActivityType.STUDENT_LIFE, placeholderImageUrl);
-                    }
-                    Log.i(TAG, events.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
-
-                t.printStackTrace();
-
-                Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
-            }
-        });
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -121,6 +92,46 @@ public class FindEventsActivity extends MenuActivity {
         TextView header2 = student_life_card_view.findViewById(R.id.cluster_header);
         header2.setText(R.string.student_life);
         sl_cluster_linear_layout = student_life_card_view.findViewById(R.id.event_poster_linear_layout);
+
+        if (Constants.SKIP_BACKEND) {
+            for (Integer image:images){
+                createClusterCards(ActivityType.FIFTH_ROW, image);
+            }
+
+            for (int i=0; i<6; i++){
+                createClusterCards(ActivityType.INDUSTRY_TALK, R.drawable.poster_placeholder1);
+                createClusterCards(ActivityType.STUDENT_LIFE, R.drawable.poster_placeholder1);
+            }
+        } else {
+            Call<ArrayList<Event>> call = api.getAllEvents();
+            call.enqueue(new Callback<ArrayList<Event>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    } else {
+                        events = response.body();
+                        for (Event e: events) {
+                            createClusterCards(e.getType(), e.getImageUrl());
+                        }
+                        for (int i=0; i<4; i++){
+                            createClusterCards(ActivityType.FIFTH_ROW, placeholderImageUrl);
+                            createClusterCards(ActivityType.INDUSTRY_TALK, placeholderImageUrl);
+                            createClusterCards(ActivityType.STUDENT_LIFE, placeholderImageUrl);
+                        }
+                        Log.i(TAG, events.toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
+
+                    t.printStackTrace();
+
+                    Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
 
@@ -142,6 +153,21 @@ public class FindEventsActivity extends MenuActivity {
         int imageHeight = ImageUtils.dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         int imageWidth = ImageUtils.dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         new NetworkImage(poster, imageHeight, imageWidth).execute(imageUrl);
+
+        if (eventType == ActivityType.FIFTH_ROW){
+            fr_cluster_linear_layout.addView(poster, fr_cluster_linear_layout.getChildCount());
+        } else if (eventType == ActivityType.INDUSTRY_TALK){
+            it_cluster_linear_layout.addView(poster, it_cluster_linear_layout.getChildCount());
+        } else if (eventType == ActivityType.STUDENT_LIFE){
+            sl_cluster_linear_layout.addView(find_events_poster, sl_cluster_linear_layout.getChildCount());
+        }
+    }
+
+    // TODO: THIS METHOD IS FOR RUNNING THE APP WITHOUT BACKEND
+    public void createClusterCards(ActivityType eventType, int image){
+        View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
+        ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
+        poster.setImageResource(image);
 
         if (eventType == ActivityType.FIFTH_ROW){
             fr_cluster_linear_layout.addView(poster, fr_cluster_linear_layout.getChildCount());
