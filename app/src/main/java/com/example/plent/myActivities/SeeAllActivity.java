@@ -15,6 +15,8 @@ import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 import com.example.plent.utils.SearchRecyclerAdapter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,8 @@ public class SeeAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.see_all_activity);
 
-        Event e1 = new Event("Athletics Intro Session", new int[]{02, 10, 2020}, new int[]{12,20}, new int[]{10, 20}, "SUTD Track", "hello", "", FIFTH_ROW,"");
-        Event e2 = new Event("ClImBInG INtrO seSSiOn", new int[]{02, 10, 2020}, new int[]{12,20}, new int[]{10, 20}, "SUTD Track", "hello", "", FIFTH_ROW,"");
+        Event e1 = new Event("Athletics Intro Session", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", FIFTH_ROW,"");
+        Event e2 = new Event("ClImBInG INtrO seSSiOn", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", FIFTH_ROW,"");
 
         eventList.add(e1);
         eventList.add(e2);

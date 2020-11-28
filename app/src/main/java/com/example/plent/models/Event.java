@@ -2,16 +2,19 @@ package com.example.plent.models;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Event {
     private String id;
     private String creatorId;
     private String title;
-    int[] date;         // size 3
-    int[] startTime;    // size 2
-    int[] endTime;      // size 2
+    private String date;
+    private String startTime;
+    private String endTime;
     private String location;
     private String description;
     private String imageUrl;
@@ -20,7 +23,7 @@ public class Event {
     private ArrayList attendees;
     private ActivityType type;
 
-    public Event(String title, int[] date, int[] startTime, int[] endTime, String location,
+    public Event(String title, String date, String startTime, String endTime, String location,
                  String description, String telegram, ActivityType type, String imageUrl) {
     this.title = title;
     this.date = date;
@@ -37,16 +40,27 @@ public class Event {
 
     public String getId() {return id;}
     public String getTitle() { return title; }
-    public int[] getDate() { return date; }
-    public int[] getStartTime() { return startTime; }
-    public int[] getEndTime() { return endTime; }
+    public LocalDate getDate() {
+        Log.i("EVENT", "event " + date);
+        if (date == null) return null;
+        return LocalDate.parse(date);
+    }
+    public LocalTime getStartTime() {
+        Log.i("EVENT", "event " + startTime);
+        if (startTime == null) return null;
+        return LocalTime.parse(startTime);
+    }
+    public LocalTime getEndTime() {
+        Log.i("EVENT", "event " + endTime);
+        if (endTime == null) return null;
+        return LocalTime.parse(endTime);
+    }
     public String getLocation() { return location; }
     public String getDescription() { return description; }
     public String getImageUrl() { return imageUrl; }
     public String getTelegram() { return telegram; }
     public String getClashString() { return clashString; }
     public ArrayList getAttendees() { return attendees; }
-
 
     public void addAttendee(String userId) {
         this.attendees.add(userId);

@@ -35,6 +35,7 @@ import com.example.plent.utils.NetworkImage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 
@@ -186,12 +187,20 @@ public class EventActivity extends MenuActivity {
                             // if there is no telegram link provided, no Join Telegram Group Button will be shown
                             joinTelegramGroupButton.setVisibility(View.INVISIBLE);
                         }
+                        // format date
+                        DateTimeFormatter dateFormatObj = DateTimeFormatter.ofPattern("EEEE, MMM d");
+                        DateTimeFormatter timeFormatObj = DateTimeFormatter.ofPattern("h.mma");
+                        String suffix = event.getDate().getDayOfMonth() == 1 ? "st" : event.getDate().getDayOfMonth() == 2 ? "nd" : event.getDate().getDayOfMonth() == 3 ? "rd" : "th";
+                        String dateString = event.getDate().format(dateFormatObj) + suffix + ", " + event.getStartTime().format(timeFormatObj) + " - " + event.getEndTime().format(timeFormatObj);
+
+                        // setting text information
                         eventHeader.setText(event.getTitle());
                         location.setText(event.getLocation());
-                        timeDate.setText(DateTimeUtils.formatEventDateTime(event.getDate(), event.getStartTime(), event.getEndTime()));
+                        timeDate.setText(dateString);
                         description.setText(event.getDescription());
                         clashText.setText(event.getClashString());
 
+                        // setting image
                         try {
                             new NetworkImage(eventPoster).execute(event.getImageUrl());
                         } catch (Exception e) {

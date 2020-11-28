@@ -2,6 +2,8 @@ package com.example.plent.myActivities;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 import android.Manifest;
@@ -72,9 +74,10 @@ public class CreateEvents extends AppCompatActivity {
     EditText date_picker;
     DatePickerDialog picker;
 
-    Integer month1;
-    Integer day1;
-    Integer year1;
+//    Integer month1;
+//    Integer day1;
+//    Integer year1;
+    LocalDate eventDate;
     Event event;
     Bitmap posterBit;
     String imageFilename;
@@ -214,9 +217,7 @@ public class CreateEvents extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         date_picker.setText(String.format("%d / %d / %d", dayOfMonth, monthOfYear + 1, year));
-                        day1 = dayOfMonth;
-                        month1 = monthOfYear+1;
-                        year1 = year;
+                        eventDate = LocalDate.of(year, monthOfYear+1, dayOfMonth);
                         }
                     }, year, month, day);
                 picker.show();
@@ -241,18 +242,11 @@ public class CreateEvents extends AppCompatActivity {
     }
 
     public void createEvent() {
-       int[] date = {day1, month1, year1};
-       int[] startTime = {start_time.getHour(), start_time.getMinute()};
-       int[] endTime = {end_time.getHour(), end_time.getMinute()};
-
-        event = new Event(title_input.getText().toString().trim(), date, startTime, endTime,
+        // creating event object
+        type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
+        event = new Event(title_input.getText().toString().trim(), eventDate.toString(), LocalTime.of(start_time.getHour(), start_time.getMinute()).toString(), LocalTime.of(end_time.getHour(), end_time.getMinute()).toString(),
                 location_input.getText().toString().trim(), description_input.getText().toString().trim(),
                 telegram_input.getText().toString().trim(), type, imageUrl);
-        ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
-
-        // creating event object
-        event = new Event(title_input.getText().toString().trim(), date, startTime, endTime, location_input.getText().toString().trim(), description_input.getText().toString().trim(), telegram_input.getText().toString().trim(),
-                type, imageUrl);
 
         // making API call
         Call<Event> call = api.createEvent(event);
@@ -286,6 +280,6 @@ public class CreateEvents extends AppCompatActivity {
         // type, startTime and endTime always has default values
        return !editTextIsEmpty(title_input) && !editTextIsEmpty(location_input)
                && !editTextIsEmpty(description_input)
-               && day1 != null && month1 != null && year1 != null;
+               && eventDate != null;
     }
 }

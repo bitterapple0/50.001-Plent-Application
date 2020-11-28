@@ -59,7 +59,8 @@
                 android:text="Monday, Oct 12th, 6.30pm - 8.30pm"
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
-                android:layout_marginLeft="12dp" />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp" />
 
             <TextView
                 style="@style/Post_Body"
@@ -69,7 +70,8 @@
                 android:text="SUTD Stadium"
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
-                android:layout_marginLeft="12dp" />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp" />
 
             <TextView
                 style="@style/Post_Body"

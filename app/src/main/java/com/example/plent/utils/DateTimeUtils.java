@@ -67,8 +67,4 @@ public class DateTimeUtils {
         return returnString;
     }
 
-    public static boolean dateHasPassed() {
-        return false;
-    }
-
 }

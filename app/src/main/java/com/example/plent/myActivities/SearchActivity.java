@@ -18,6 +18,8 @@ import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 import com.example.plent.utils.SearchRecyclerAdapter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,21 +42,14 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         placeholderImageView = findViewById(R.id.search_placeholder_image);
         placeholderTextView = findViewById(R.id.search_placeholder_text);
-        int[] date1 = {20, 10, 2020};
-        int[] date2 = {21, 10, 2020};
-        int[] date3 = {22, 10, 2020};
-        int[] time1 = {9, 00};
-        int[] time2 = {10, 00};
-        int[] time3 = {11, 00};
-        int[] time4 = {12, 00};
-        int[] time5 = {13, 00};
-        Event e1 = new Event("My first Event", date1 , time2, time4, "STUD","YAY number 1", "@nil", ActivityType.INDUSTRY_TALK, "" );
-        Event e2 = new Event("My second Event", date2 , time3, time5, "NUS","Yay number 2", "@nil",ActivityType.INDUSTRY_TALK, "" );
-        Event e3 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil", ActivityType.FIFTH_ROW, "" );
-        Event e4 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
-        Event e5 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
-        Event e6 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "");
-        Event e7 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" );
+
+        Event e1 = new Event("My first Event", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "STUD","YAY number 1", "@nil", ActivityType.INDUSTRY_TALK, "" );
+        Event e2 = new Event("My second Event", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(13, 0).toString(), LocalTime.of(15, 0).toString(), "NUS","Yay number 2", "@nil",ActivityType.INDUSTRY_TALK, "" );
+        Event e3 = new Event("My third Event", LocalDate.of(2020, 11, 30).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "NTU","Yay number 3","@nil", ActivityType.FIFTH_ROW, "" );
+        Event e4 = new Event("My third Event", LocalDate.of(2020, 11, 30).toString(), LocalTime.of(12, 0).toString(), LocalTime.of(13, 0).toString(), "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
+        Event e5 = new Event("My third Event", LocalDate.of(2020, 11, 30).toString(), LocalTime.of(13, 0).toString(), LocalTime.of(14, 0).toString(), "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
+        Event e6 = new Event("My third Event", LocalDate.of(2020, 11, 30).toString(), LocalTime.of(16, 0).toString(), LocalTime.of(18, 0).toString(), "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "");
+        Event e7 = new Event("My third Event", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(20, 0).toString(), LocalTime.of(22, 0).toString(), "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" );
 
         eventList.add(e1);
         eventList.add(e2);
