@@ -104,10 +104,13 @@ public class FindEventsActivity extends MenuActivity {
             }
         } else {
             Call<ArrayList<Event>> call = api.getAllEvents();
+            Log.i(TAG, "find events making call");
             call.enqueue(new Callback<ArrayList<Event>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
+                    Log.i(TAG, "find events response");
                     if (!response.isSuccessful()) {
+                        Log.i(TAG, "find events unsuccessful");
                         Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                     } else {
                         events = response.body();
@@ -119,13 +122,13 @@ public class FindEventsActivity extends MenuActivity {
                             createClusterCards(ActivityType.INDUSTRY_TALK, placeholderImageUrl);
                             createClusterCards(ActivityType.STUDENT_LIFE, placeholderImageUrl);
                         }
-                        Log.i(TAG, events.toString());
+                        Log.i(TAG, "find events " +events.toString());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
-
+                    Log.i(TAG, "find events failure");
                     t.printStackTrace();
 
                     Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();

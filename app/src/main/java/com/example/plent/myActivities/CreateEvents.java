@@ -139,6 +139,7 @@ public class CreateEvents extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     if (isCompleted()) {
+                        Toast.makeText(CreateEvents.this, "Creating event...", Toast.LENGTH_LONG).show();
                         if (imageFilename != null && !imageFilename.isEmpty()) {
                             MediaManager.get().upload(imageFilename).unsigned("iybnngkh").callback(new UploadCallback() {
                                 @Override
@@ -148,7 +149,6 @@ public class CreateEvents extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(String requestId, Map resultData) {
                                     imageUrl = resultData.get("secure_url").toString();
-                                    Toast.makeText(CreateEvents.this, "Creating event...", Toast.LENGTH_LONG).show();
                                     createEvent();
                                     Log.i(TAG, "create event return url: " + imageUrl);
                                 }
@@ -156,6 +156,7 @@ public class CreateEvents extends AppCompatActivity {
                                 @Override
                                 public void onError(String requestId, ErrorInfo error) {
                                     Log.i(TAG,"CLOUDINARY UPLOAD ERROR: " + error.getDescription());
+                                    Toast.makeText(CreateEvents.this, "Oops, something went wrong. Please try again!", Toast.LENGTH_LONG).show();
                                 }
                                 @Override
                                 public void onReschedule(String requestId, ErrorInfo error) {}

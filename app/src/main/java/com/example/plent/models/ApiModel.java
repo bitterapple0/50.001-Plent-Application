@@ -28,7 +28,7 @@ public interface ApiModel {
     Call<Event> createEvent(@Body Event event);
 
     @PUT("event")
-    Call<HashMap> signUp(@Body HashMap userAndEvent);
+    Call<HashMap<String, Object>> signUp(@Body HashMap<String, Object> userAndEvent);
 
     @GET("events")
     Call<ArrayList<Event>> getAllEvents();
