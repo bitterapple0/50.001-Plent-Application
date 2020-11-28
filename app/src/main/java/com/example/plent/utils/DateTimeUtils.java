@@ -65,7 +65,10 @@ public class DateTimeUtils {
         returnString += (endTime[0] / 12 == 0 ? "am" : "pm");
 
         return returnString;
+    }
 
+    public static boolean dateHasPassed() {
+        return false;
     }
 
 }

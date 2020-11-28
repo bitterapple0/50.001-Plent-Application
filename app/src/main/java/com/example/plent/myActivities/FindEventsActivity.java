@@ -44,8 +44,6 @@ public class FindEventsActivity extends MenuActivity {
     final static String TAG = "FIND EVENTS";
     final static String placeholderImageUrl = "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1606499824/plent/poster_placeholder1_jgh6vd.png";
 
-    ArrayList<Integer> images = new ArrayList<>();
-    ArrayList<Object> imagesId = new ArrayList<>();
     ArrayList<Event> events = new ArrayList<>();
     int permission = 1; // We need to replace this with the user's permission field
     ApiModel api;
@@ -69,14 +67,6 @@ public class FindEventsActivity extends MenuActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        // to replace with an arrayList of events
-        images.add(R.drawable.athleticsposter);
-        images.add(R.drawable.bands_poster);
-        images.add(R.drawable.judo_poster);
-        images.add(R.drawable.football_poster);
-        images.add(R.drawable.robotics_poster);
-        images.add(R.drawable.tennis_poster);
-
         // initialise the layouts
         fifth_row_events_card_view = findViewById(R.id.fifth_row_events_card_view);
         TextView header = fifth_row_events_card_view.findViewById(R.id.cluster_header);
@@ -93,50 +83,36 @@ public class FindEventsActivity extends MenuActivity {
         header2.setText(R.string.student_life);
         sl_cluster_linear_layout = student_life_card_view.findViewById(R.id.event_poster_linear_layout);
 
-        if (Constants.SKIP_BACKEND) {
-            for (Integer image:images){
-                createClusterCards(ActivityType.FIFTH_ROW, image);
-            }
-
-            for (int i=0; i<6; i++){
-                createClusterCards(ActivityType.INDUSTRY_TALK, R.drawable.poster_placeholder1);
-                createClusterCards(ActivityType.STUDENT_LIFE, R.drawable.poster_placeholder1);
-            }
-        } else {
-            Call<ArrayList<Event>> call = api.getAllEvents();
-            Log.i(TAG, "find events making call");
-            call.enqueue(new Callback<ArrayList<Event>>() {
-                @Override
-                public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
-                    Log.i(TAG, "find events response");
-                    if (!response.isSuccessful()) {
-                        Log.i(TAG, "find events unsuccessful");
-                        Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
-                    } else {
-                        events = response.body();
-                        for (Event e: events) {
-                            createClusterCards(e.getType(), e.getImageUrl());
-                        }
-                        for (int i=0; i<4; i++){
-                            createClusterCards(ActivityType.FIFTH_ROW, placeholderImageUrl);
-                            createClusterCards(ActivityType.INDUSTRY_TALK, placeholderImageUrl);
-                            createClusterCards(ActivityType.STUDENT_LIFE, placeholderImageUrl);
-                        }
-                        Log.i(TAG, "find events " +events.toString());
+        // retrieve all events from API
+        Call<ArrayList<Event>> call = api.getAllEvents();
+        call.enqueue(new Callback<ArrayList<Event>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                } else {
+                    events = response.body();
+                    for (Event e: events) {
+                        createClusterCards(e.getType(), e.getImageUrl());
                     }
+                    // TODO: do we want to leave placeholders to fill up the row of 4 if there are <4 events in each cluster?
+                    // TODO: remove this section if no, modify it to add logic to keep track of number of proper posters if yes
+                    for (int i=0; i<4; i++){
+                        createClusterCards(ActivityType.FIFTH_ROW, placeholderImageUrl);
+                        createClusterCards(ActivityType.INDUSTRY_TALK, placeholderImageUrl);
+                        createClusterCards(ActivityType.STUDENT_LIFE, placeholderImageUrl);
+                    }
+                    Log.i(TAG, "find events " +events.toString());
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
-                    Log.i(TAG, "find events failure");
-                    t.printStackTrace();
-
-                    Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
-
 
     public void redirectToEventsPage(View view){
         Intent intent = new Intent(FindEventsActivity.this, EventActivity.class);
@@ -150,6 +126,7 @@ public class FindEventsActivity extends MenuActivity {
         startActivity(intent);
     }
 
+    // add a poster to each cluster
     public void createClusterCards(ActivityType eventType, String imageUrl){
         View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
         ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
@@ -165,7 +142,8 @@ public class FindEventsActivity extends MenuActivity {
             sl_cluster_linear_layout.addView(find_events_poster, sl_cluster_linear_layout.getChildCount());
         }
     }
-    // need to override to only show search option on this page
+
+    // override to only show search option on this page
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -173,21 +151,4 @@ public class FindEventsActivity extends MenuActivity {
         search_icon.setVisible(true);
         return true;
     }
-
-    // TODO: THIS METHOD IS FOR RUNNING THE APP WITHOUT BACKEND
-    public void createClusterCards(ActivityType eventType, int image){
-        View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
-        ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
-        poster.setImageResource(image);
-
-        if (eventType == ActivityType.FIFTH_ROW){
-            fr_cluster_linear_layout.addView(poster, fr_cluster_linear_layout.getChildCount());
-        } else if (eventType == ActivityType.INDUSTRY_TALK){
-            it_cluster_linear_layout.addView(poster, it_cluster_linear_layout.getChildCount());
-        } else if (eventType == ActivityType.STUDENT_LIFE){
-            sl_cluster_linear_layout.addView(find_events_poster, sl_cluster_linear_layout.getChildCount());
-        }
-    }
-
-
 }
