@@ -79,6 +79,7 @@ public class CreateEvents extends AppCompatActivity {
     Bitmap posterBit;
     String imageFilename;
     String imageUrl;
+    ActivityType type;
 
     // exit page
    public void ClosePage(View view) {
@@ -241,17 +242,12 @@ public class CreateEvents extends AppCompatActivity {
 
     public void createEvent() {
        int[] date = {day1, month1, year1};
-       int startTime_hour = start_time.getHour();
-       int startTime_minute = start_time.getMinute();
-       int endTime_hour = end_time.getHour();
-       int endTime_minute = end_time.getMinute();
-/*       int[] startTime = {start_time.getHour(), start_time.getMinute()};
-       int[] endTime = {end_time.getHour(), end_time.getMinute()};*/
-       ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
-        event = new Event(title_input.getText().toString().trim(), date, startTime_hour, startTime_minute, endTime_hour, endTime_minute,
-                location_input.getText().toString().trim(), description_input.getText().toString().trim(), telegram_input.getText().toString().trim(),
-        // formatting data
-        int[] date = {day1, month1, year1};
+       int[] startTime = {start_time.getHour(), start_time.getMinute()};
+       int[] endTime = {end_time.getHour(), end_time.getMinute()};
+
+        event = new Event(title_input.getText().toString().trim(), date, startTime, endTime,
+                location_input.getText().toString().trim(), description_input.getText().toString().trim(),
+                telegram_input.getText().toString().trim(), type, imageUrl);
         ActivityType type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
 
         // creating event object

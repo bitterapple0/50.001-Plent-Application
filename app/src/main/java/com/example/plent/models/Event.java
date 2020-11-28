@@ -10,10 +10,8 @@ public class Event {
     private String creatorId;
     private String title;
     int[] date;         // size 3
-    int startTime_hour;
-    int startTime_minute;
-    int endTime_hour;
-    int endTime_minute;
+    int[] startTime;    // size 2
+    int[] endTime;      // size 2
     private String location;
     private String description;
     private String imageUrl;
@@ -22,15 +20,12 @@ public class Event {
     private ArrayList attendees;
     private ActivityType type;
 
-    public Event(String title, int[] date, int startTime_hour, int startTime_minute, int endTime_hour,
-                 int endTime_minute, String location, String description, String telegram, ActivityType type,
-                 String imageUrl) {
+    public Event(String title, int[] date, int[] startTime, int[] endTime, String location,
+                 String description, String telegram, ActivityType type, String imageUrl) {
     this.title = title;
     this.date = date;
-    this.startTime_hour = startTime_hour;
-    this.startTime_minute = startTime_minute;
-    this.endTime_hour = endTime_hour;
-    this.endTime_minute = endTime_minute;
+    this.startTime = startTime;
+    this.endTime = endTime;
     this.location = location;
     this.description = description;
     this.telegram = telegram;
@@ -43,10 +38,8 @@ public class Event {
     public String getId() {return id;}
     public String getTitle() { return title; }
     public int[] getDate() { return date; }
-    public int getStartTime_hour() { return startTime_hour; }
-    public int getStartTime_minute() { return startTime_minute; }
-    public int endTime_hour() { return endTime_hour; }
-    public int endTime_minute() { return endTime_minute; }
+    public int[] getStartTime() { return startTime; }
+    public int[] getEndTime() { return endTime; }
     public String getLocation() { return location; }
     public String getDescription() { return description; }
     public String getImageUrl() { return imageUrl; }
