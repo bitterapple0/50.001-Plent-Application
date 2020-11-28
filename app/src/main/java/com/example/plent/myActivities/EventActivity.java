@@ -202,7 +202,7 @@ public class EventActivity extends MenuActivity {
 
                         // setting image
                         try {
-                            new NetworkImage(eventPoster).execute(event.getImageUrl());
+                            new NetworkImage.NetworkImageBuilder().setImageView(eventPoster).build().execute(event.getImageUrl());
                         } catch (Exception e) {
                             Log.e(TAG, "Could not get poster image");
                         }

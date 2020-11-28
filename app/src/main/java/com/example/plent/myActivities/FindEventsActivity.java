@@ -36,6 +36,7 @@ import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
 import com.example.plent.utils.ImageUtils;
 import com.example.plent.utils.NetworkImage;
+import com.example.plent.utils.NetworkImageCallback;
 
 import java.util.ArrayList;
 
@@ -110,19 +111,38 @@ public class FindEventsActivity extends MenuActivity {
     }
 
     // add a poster to each cluster
-    public void createClusterCards(ActivityType eventType, String imageUrl){
+    public void createClusterCards(final ActivityType eventType, String imageUrl){
         View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
         ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
         int imageHeight = ImageUtils.dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         int imageWidth = ImageUtils.dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
-        new NetworkImage(poster, imageHeight, imageWidth).execute(imageUrl);
-        addToCluster(eventType, poster);
+        new NetworkImage.NetworkImageBuilder().setImageView(poster).setDimensions(imageHeight, imageWidth).setCallback(new NetworkImageCallback() {
+            @Override
+            public void callback(ImageView view) {
+                ViewGroup parent = eventType == ActivityType.FIFTH_ROW ? fr_cluster_linear_layout : eventType == ActivityType.INDUSTRY_TALK ? it_cluster_linear_layout : sl_cluster_linear_layout;
+                int index = -1;
+                ImageView currentView = null;
+                for (int i=0; i<4; i++) {
+                    currentView = (ImageView) parent.getChildAt(i);
+                    if (currentView.getId() == R.id.placeholder_poster) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index > -1) {
+                    parent.removeView(currentView);
+                    parent.removeView(view);
+                    parent.addView(view, index);
+                } else {
+                    parent.addView(view, parent.getChildCount());
+                }
+            }
+        }).build().execute(imageUrl);
     }
 
     public void setLoadingCards(ActivityType eventType, int image){
-        View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
-        ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
-        poster.setImageResource(image);
+        View find_events_poster = View.inflate(this, R.layout.placeholder_poster, null);
+        ImageView poster = find_events_poster.findViewById(R.id.placeholder_poster);
         addToCluster(eventType, poster);
     }
 
@@ -160,13 +180,6 @@ public class FindEventsActivity extends MenuActivity {
                     for (Event e: response.body()) {
                         if (!eventIds.contains(e.getId())) {
                             createClusterCards(e.getType(), e.getImageUrl());
-                        }
-                    }
-                    if (events.size() == 0) {
-                        for (int i=3; i>=0; i--) {
-                            fr_cluster_linear_layout.removeViewAt(i);
-                            it_cluster_linear_layout.removeViewAt(i);
-                            sl_cluster_linear_layout.removeViewAt(i);
                         }
                     }
                     events = response.body();
