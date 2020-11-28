@@ -1,9 +1,12 @@
 package com.example.plent.myActivities;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +25,7 @@ public class SeeAllActivity extends AppCompatActivity {
     private List<Event> eventList = new ArrayList<>();
     private RecyclerView recyclerView;
     private SearchRecyclerAdapter seeAllAdapter;
+    private CardView seeAllCard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +48,6 @@ public class SeeAllActivity extends AppCompatActivity {
         eventList.add(e1);
         eventList.add(e1);
         eventList.add(e1);
-
 
         recyclerView = findViewById(R.id.see_all_recycler_view);
         seeAllAdapter = new SearchRecyclerAdapter(eventList);

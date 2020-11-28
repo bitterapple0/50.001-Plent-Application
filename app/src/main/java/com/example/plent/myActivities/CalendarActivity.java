@@ -17,7 +17,9 @@ import androidx.cardview.widget.CardView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
+import com.example.plent.utils.CalendarAdapter;
 import com.example.plent.utils.DateTimeUtils;
+import com.example.plent.utils.ParticipantsAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -25,6 +27,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
@@ -38,6 +44,9 @@ public class CalendarActivity extends MenuActivity {
     LinearLayout linearLayout;
     String eventType;
     ArrayList<Event> userEvents= new ArrayList<Event>();
+    RecyclerView recyclerView;
+    CalendarAdapter calendarAdapter;
+
     int[] date1 = {20, 10, 2020};
     int[] date2 = {21, 10, 2020};
     int[] date3 = {22, 10, 2020};
@@ -64,9 +73,9 @@ public class CalendarActivity extends MenuActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
 
-        /* userEvents.add(e1);
+        userEvents.add(e1);
         userEvents.add(e2);
-        userEvents.add(e3); */
+        userEvents.add(e3);
 
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
@@ -127,9 +136,16 @@ public class CalendarActivity extends MenuActivity {
             }
         });
 
-        linearLayout = findViewById(R.id.calendar_events);
+        //linearLayout = findViewById(R.id.calendar_events);
 
         filterCalenderEvents(userEvents, defaultSelectedDate);
+
+        recyclerView = findViewById(R.id.calendar_events);
+
+        calendarAdapter = new CalendarAdapter(userEvents);
+        RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(pLayoutManager);
+        recyclerView.setAdapter(calendarAdapter);
 
     }
 
@@ -159,7 +175,7 @@ public class CalendarActivity extends MenuActivity {
         Log.i("ALC", "RESTART");
     }
 
-    public void addCalendarEvent(Event e) {
+    /*public void addCalendarEvent(Event e) {
         View calendar_card =  View.inflate(this, R.layout.calendar_card, null);
 
         if(e.getType() == ActivityType.FIFTH_ROW) {
@@ -196,28 +212,17 @@ public class CalendarActivity extends MenuActivity {
 
         linearLayout.addView(calendar_card, linearLayout.getChildCount());
 
-    }
+    } */
 
 
     public void filterCalenderEvents(ArrayList<Event> events, Calendar date){
         for (Event e : events) {
             int[] calendarDate = {date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)};
             if (DateTimeUtils.compareDate(calendarDate, e.getDate())){
-                addCalendarEvent(e);
+                //addCalendarEvent(e);
             }
         }
 
-        /* Ignore this i wanted to add a placeholder when there are no events
-        on the date but i realised my method is wrong
-            if (events.isEmpty()){
-            ImageView placeholder_calendar = new ImageView(this);
-            placeholder_calendar.setMaxWidth(224);
-            placeholder_calendar.setMaxHeight(224);
-            placeholder_calendar.setImageResource(R.drawable.placeholder_calendar);
-            placeholder_calendar.setPadding(0, 48, 0, 24);
-            linearLayout.addView(placeholder_calendar, linearLayout.getChildCount());
-            Log.i("Check", "Works");
-        }*/
     }
 
     public String toDateString(int date, int month, int year){

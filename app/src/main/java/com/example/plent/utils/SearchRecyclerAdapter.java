@@ -1,5 +1,7 @@
 package com.example.plent.utils;
 
+import android.text.Layout;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plent.R;
@@ -71,7 +74,14 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder = new EventViewHolder(eventView);
                 break;
             case VIEW_TYPE_SEE_ALL_EVENT:
-                View seeAllEventView = layoutInflater.inflate(R.layout.see_all_card,parent, false );
+                View seeAllEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
+
+                GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) seeAllEventView.getLayoutParams();
+                int width = parent.getMeasuredWidth() / 3;
+                params.width = (width-20);
+                params.height = (int) ((int) width*1.5);
+                seeAllEventView.setLayoutParams(params);
+
                 viewHolder = new SeeAllEventViewHolder(seeAllEventView);
                 break;
 
@@ -188,4 +198,5 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
         }
     }
+
 }
