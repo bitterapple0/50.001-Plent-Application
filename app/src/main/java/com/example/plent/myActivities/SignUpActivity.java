@@ -57,22 +57,23 @@ public class SignUpActivity extends AppCompatActivity {
     boolean completed = false;
     boolean disabled = true;
 
-    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[0-9?A-z0-9?]+(\\.)?[0-9?A-z0-9?]+@[A-z]+\\.[A-z]{3}.?[A-z]{0,3}$", Pattern.CASE_INSENSITIVE);
 
     private static boolean validateEmail(String emailStr) {
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        return matcher.find();
+        Pattern generic_email =
+                Pattern.compile("^[0-9?A-z0-9?]+(\\.)?[0-9?A-z0-9?]+@[A-z]+\\.[A-z]{3}.?[A-z]{0,3}$", Pattern.CASE_INSENSITIVE);
+        Pattern sutd_email = Pattern.compile("^[0-9?A-z0-9?]+(\\.)?[0-9?A-z0-9?]+@[[A-z]*]{0,8}\\.sutd\\.edu\\.sg$", Pattern.CASE_INSENSITIVE);
+        Matcher m_generic = generic_email.matcher(emailStr);
+        Matcher m_sutd = sutd_email.matcher(emailStr);
+        return(m_sutd.find() || m_generic.find());
     }
 
     private boolean validatePassword(String passStr) {
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$";
-        String regex2 = "(?=^.{6,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
-        Pattern p = Pattern.compile(regex);
-        Pattern p2 = Pattern.compile(regex2);
-        Matcher m = p.matcher(passStr);
-        Matcher m2 = p2.matcher(passStr);
-        if (m.matches() || m2.matches() && passStr.length() > 6) {
+        Pattern pass_wo_spl = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$");
+        Pattern pass_w_spl = Pattern.compile("(?=^.{6,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
+
+        Matcher m_wo_spl = pass_wo_spl.matcher(passStr);
+        Matcher m_w_spl = pass_w_spl.matcher(passStr);
+        if (m_wo_spl.matches() || m_w_spl.matches() && passStr.length() > 6) {
             return(true);
         }
         else {
@@ -239,6 +240,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void createUser() {
@@ -280,4 +282,6 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }
