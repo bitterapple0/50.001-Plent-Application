@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import android.Manifest;
@@ -216,8 +217,13 @@ public class CreateEvents extends AppCompatActivity {
                 picker = new DatePickerDialog(CreateEvents.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        date_picker.setText(String.format("%d / %d / %d", dayOfMonth, monthOfYear + 1, year));
                         eventDate = LocalDate.of(year, monthOfYear+1, dayOfMonth);
+                        if (eventDate.isBefore(LocalDate.now(ZoneId.of("Asia/Singapore")))) {
+                            Toast.makeText(CreateEvents.this, "Oops, this date has already passed!", Toast.LENGTH_LONG).show();
+                            eventDate = null;
+                        } else {
+                            date_picker.setText(String.format("%d / %d / %d", dayOfMonth, monthOfYear + 1, year));
+                        }
                         }
                     }, year, month, day);
                 picker.show();
@@ -243,32 +249,42 @@ public class CreateEvents extends AppCompatActivity {
 
     public void createEvent() {
         // creating event object
-        type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
-        event = new Event(title_input.getText().toString().trim(), eventDate.toString(), LocalTime.of(start_time.getHour(), start_time.getMinute()).toString(), LocalTime.of(end_time.getHour(), end_time.getMinute()).toString(),
-                location_input.getText().toString().trim(), description_input.getText().toString().trim(),
-                telegram_input.getText().toString().trim(), type, imageUrl);
+        LocalTime startTime = LocalTime.of(start_time.getHour(), start_time.getMinute());
+        LocalTime endTime = LocalTime.of(end_time.getHour(), end_time.getMinute());
+        if (!startTime.isBefore(endTime)) {
+            // check whether start time < end time
+            Toast.makeText(CreateEvents.this, "Oops, it seems like your start time is before your end time!", Toast.LENGTH_LONG).show();
+        } else if (LocalDate.now(ZoneId.of("Asia/Singapore")).isEqual(eventDate) && startTime.isBefore(LocalTime.now(ZoneId.of("Asia/Singapore")))) {
+            // check whether start time has already passed
+            Toast.makeText(CreateEvents.this, "Oops, it looks like your start time has already passed!", Toast.LENGTH_LONG).show();
+        } else {
+            type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
+            event = new Event(title_input.getText().toString().trim(), eventDate.toString(), startTime.toString(), endTime.toString(),
+                    location_input.getText().toString().trim(), description_input.getText().toString().trim(),
+                    telegram_input.getText().toString().trim(), type, imageUrl);
 
-        // making API call
-        Call<Event> call = api.createEvent(event);
-        call.enqueue(new Callback<Event>() {
-            @Override
-            public void onResponse(Call<Event> call, Response<Event> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(CreateEvents.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
-                } else {
-                    // redirect back to Manage Events page upon successful creation
-                    Toast.makeText(CreateEvents.this, "Event created!", Toast.LENGTH_LONG).show();
-                    finish();
-                    Log.i(TAG, "retrieved event id: " + response.body().getId());
+            // making API call
+            Call<Event> call = api.createEvent(event);
+            call.enqueue(new Callback<Event>() {
+                @Override
+                public void onResponse(Call<Event> call, Response<Event> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(CreateEvents.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    } else {
+                        // redirect back to Manage Events page upon successful creation
+                        Toast.makeText(CreateEvents.this, "Event created!", Toast.LENGTH_LONG).show();
+                        finish();
+                        Log.i(TAG, "retrieved event id: " + response.body().getId());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Event> call, Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(CreateEvents.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Event> call, Throwable t) {
+                    t.printStackTrace();
+                    Toast.makeText(CreateEvents.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     public boolean editTextIsEmpty(EditText editTextField) {

@@ -24,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -168,7 +169,7 @@ public class CalendarActivity extends MenuActivity {
     public void filterCalenderEvents(ArrayList<Event> events, Calendar date){
         for (Event e : events) {
             int[] calendarDate = {date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)};
-            if (e.getDate().isEqual(LocalDate.now())){
+            if (e.getDate().isEqual(LocalDate.now(ZoneId.of("Asia/Singapore")))){
                 //addCalendarEvent(e);
             }
         }
