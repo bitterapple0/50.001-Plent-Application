@@ -1,6 +1,8 @@
 package com.example.plent.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.util.Log;
@@ -21,6 +23,7 @@ import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 import com.example.plent.myActivities.CalendarActivity;
+import com.example.plent.myActivities.EventActivity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +31,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
+import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
+import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
+import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyViewHolder>{
 
@@ -41,9 +48,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
         public CardView calendarCard;
 
 
-
         public MyViewHolder(View view){
             super(view);
+            CALENDAR_CARD_CONTEXT = view.getContext();
             eventTitle = view.findViewById(R.id.calendar_title);
             time = view.findViewById(R.id.calendar_time);
             location = view.findViewById(R.id.calendar_location);
@@ -66,7 +73,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull CalendarAdapter.MyViewHolder holder, int position) {
-        Event calendarEvent = calendarEvents.get(position);
+        final Event calendarEvent = calendarEvents.get(position);
         holder.eventTitle.setText(calendarEvent.getTitle());
         DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("HH:mm");
         holder.time.setText(calendarEvent.getStartTime().format(formatObj) + " - " + calendarEvent.getEndTime().format(formatObj));
@@ -83,6 +90,18 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
             holder.indicator.setBackgroundColor(Color.parseColor("#81C3D2"));
             holder.calendarCard.setBackgroundColor(Color.parseColor("#EAFBFF"));
         }
+
+        final String CAL_EVENT_CLICK = calendarEvent.getId();
+
+        holder.calendarCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View V){
+                Intent intent = new Intent(CALENDAR_CARD_CONTEXT, EventActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra(PREVIOUS_ACTIVITY, CAL_EVENT_CLICK);
+                CALENDAR_CARD_CONTEXT.startActivity(intent);
+            }
+        });
     }
 
     @Override
