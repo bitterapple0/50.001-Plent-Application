@@ -28,6 +28,7 @@ import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
+    private static final String TAG = "SEARCH RECYCLER ADAPTER";
     private Context context;
     private List<Event> eventList;
     private List<Event> eventListAll;
@@ -55,7 +56,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
     public SearchRecyclerAdapter(List<Event> eventList, String eventOrganiser, Context context) {
         this.eventOrganiser = eventOrganiser;
-        this.eventListAll = new ArrayList<>(eventList);
+        this.eventList = new ArrayList<>(eventList);
         this.context = context;
         /*for(Event e : eventListAll){
 //            TODO manage event view
@@ -121,6 +122,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
+        Log.i(TAG, "search recycler adapter " + viewType);
         switch (viewType){
             case VIEW_TYPE_SEARCH_EVENT:
                 View eventView = layoutInflater.inflate(R.layout.search_event_item, parent, false);
@@ -141,8 +143,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View horizontalEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
                 RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
                 // TODO need to find a way to fix the view
+                parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                 int horizontalWidth = parent.getMeasuredWidth() / 5;
-                params1.width = horizontalWidth;
+                Log.i(TAG, "search recycler adapter, measured width " + horizontalWidth);
+                params1.width = 180;
                 horizontalEventView.setLayoutParams(params1);
                 viewHolder = new SeeAllEventViewHolder(horizontalEventView);
                 break;

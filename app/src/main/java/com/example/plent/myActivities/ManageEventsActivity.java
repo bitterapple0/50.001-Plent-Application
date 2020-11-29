@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
+import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
 import com.example.plent.utils.ParticipantsAdapter;
 import com.example.plent.utils.SearchRecyclerAdapter;
@@ -47,6 +48,7 @@ public class ManageEventsActivity extends MenuActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_event_activity);
+        api = Api.getInstance().apiModel;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
