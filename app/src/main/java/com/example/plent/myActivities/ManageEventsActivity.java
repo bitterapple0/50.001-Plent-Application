@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.plent.R;
+import com.example.plent.utils.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ManageEventsActivity extends MenuActivity {
@@ -62,6 +63,7 @@ public class ManageEventsActivity extends MenuActivity {
     public void redirectToParticipantsActivity(View view) {
         Intent intentToParticipantsActivity = new Intent(ManageEventsActivity.this, ParticipantsActivity.class);
         intentToParticipantsActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intentToParticipantsActivity.putExtra(Constants.SELECTED_EVENT_KEY, "5fb937bce230d0e3a9e2f912");
         startActivity(intentToParticipantsActivity);
     }
 

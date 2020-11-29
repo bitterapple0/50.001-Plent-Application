@@ -34,7 +34,7 @@ public class SeeAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.see_all_activity);
 
-        Event e1 = new Event("Athletics Intro Session", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", FIFTH_ROW,"");
+        Event e1 = new Event("Athletics Intro Session", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", FIFTH_ROW,"https://abhisekmishra.com/project4_3.jpg");
         Event e2 = new Event("ClImBInG INtrO seSSiOn", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", FIFTH_ROW,"");
 
         eventList.add(e1);

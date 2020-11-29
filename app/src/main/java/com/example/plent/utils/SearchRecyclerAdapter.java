@@ -188,6 +188,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private void setSeeAllEventDetails (SeeAllEventViewHolder vh, int position) {
         Event current_event = eventList.get(position);
         vh.eventTitle.setText(current_event.getTitle());
+        new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).build().execute(current_event.getImageUrl());
         //vh.seeAllPoster.setImageResource(Integer.parseInt(current_event.getImageUrl()));
         //TODO set the image via getImageURL
     }

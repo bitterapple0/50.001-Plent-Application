@@ -83,7 +83,7 @@ public class EventActivity extends MenuActivity {
             // if no event id is stored, bring them back to find events activity screen
             backToFindEvents();
         } else {
-            eventId = extras.getString(PREVIOUS_ACTIVITY);
+            eventId = extras.getString(Constants.SELECTED_EVENT_KEY);
             if (eventId == null) {
                 // if no event id is stored, bring them back to find events activity screen
                 backToFindEvents();
@@ -209,8 +209,6 @@ public class EventActivity extends MenuActivity {
                             Log.e(TAG, "Could not get poster image");
                         }
                     }
-
-                    Log.i(TAG, "Retrieved event id: " + event.getId());
                 }
             }
 

@@ -258,15 +258,14 @@ public class SignUpActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     Toast.makeText(SignUpActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
-                    Log.d(TAG, "onResponse was successful");
-                    Log.i(TAG, "retrieved user id: " + response.body().getId() + ", " + response.body().getPermission());
-                    user.removePassword();
-                    Log.d(TAG, "User.removepassword was successful");
-                    user.setId("test_id");
-                    Log.d(TAG, "User.setID was successful");
-                    user.setPermission(1);
-                    Log.d(TAG, "User.setPermission was successful");
-                    onSubmitSuccess();
+                    if (response.body() != null) {
+                        user.removePassword();
+                        user.setId(response.body().getId());
+                        user.setPermission(response.body().getPermission());
+                        onSubmitSuccess();
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Oops, this student id has already been used. Log in instead!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
