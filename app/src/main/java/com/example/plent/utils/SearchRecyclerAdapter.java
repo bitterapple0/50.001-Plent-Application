@@ -1,18 +1,18 @@
 package com.example.plent.utils;
 
-import android.text.Layout;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plent.R;
@@ -25,15 +25,23 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private List<Event> eventList;
     private List<Event> eventListAll;
-
+    private RecyclerView recyclerView;
     private static final int VIEW_TYPE_EMPTY = 0;
-    private static final int VIEW_TYPE_EVENT = 1;
+    private static final int VIEW_TYPE_SEARCH_EVENT = 1;
     private static final int VIEW_TYPE_SEE_ALL_EVENT = 2;
+    private static final int VIEW_TYPE_HORIZONTAL_EVENT = 3;
+
 
 
     public SearchRecyclerAdapter(List<Event> eventList) {
         this.eventList = eventList;
         this.eventListAll = new ArrayList<>(eventList);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -48,18 +56,23 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemViewType(int position) {
         if (eventList.size() == 0){
-            return VIEW_TYPE_EMPTY; // only for search!! messed up in see_all view due to layout manager being gridlayout
+            return VIEW_TYPE_EMPTY;
         }else{
             Event e = eventList.get(0);
             for (int i = 1; i < eventList.size(); i++) {
                 if(e.getType()!=eventList.get(i).getType()){
-                    return VIEW_TYPE_EVENT;
+                    return VIEW_TYPE_SEARCH_EVENT;
                 }else{
                     e = eventList.get(i);
                 }
             }
         }
-        return VIEW_TYPE_SEE_ALL_EVENT;
+        if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
+            return VIEW_TYPE_SEE_ALL_EVENT;
+        }else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager){
+            return VIEW_TYPE_HORIZONTAL_EVENT;
+        }
+        return 0;
     }
 
     @NonNull
@@ -69,7 +82,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
         switch (viewType){
-            case VIEW_TYPE_EVENT:
+            case VIEW_TYPE_SEARCH_EVENT:
                 View eventView = layoutInflater.inflate(R.layout.search_event_item, parent, false);
                 viewHolder = new EventViewHolder(eventView);
                 break;
@@ -84,10 +97,20 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 viewHolder = new SeeAllEventViewHolder(seeAllEventView);
                 break;
+            case VIEW_TYPE_HORIZONTAL_EVENT:
+                View HorizontalEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
+                viewHolder = new SeeAllEventViewHolder(HorizontalEventView);
+                break;
 
             default:
-                View v0 = layoutInflater.inflate(R.layout.search_placeholder, parent, false);
-                viewHolder = new EmptyViewHolder(v0);
+                View emptyView = layoutInflater.inflate(R.layout.search_placeholder, parent, false);
+                if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
+                    GridLayoutManager.LayoutParams params_empty = (GridLayoutManager.LayoutParams) emptyView.getLayoutParams();
+                    params_empty.width = parent.getMeasuredWidth();
+                    emptyView.setLayoutParams(params_empty);
+
+                }
+                viewHolder = new EmptyViewHolder(emptyView);
                 break;
         }
         return viewHolder;
@@ -98,13 +121,22 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch(holder.getItemViewType()){
-            case VIEW_TYPE_EVENT:
+            case VIEW_TYPE_SEARCH_EVENT:
                 EventViewHolder eventViewHolder = (EventViewHolder) holder;
                 setEventDetails(eventViewHolder, position);
                 break;
             case VIEW_TYPE_SEE_ALL_EVENT:
                 SeeAllEventViewHolder seeAllEventViewHolder = (SeeAllEventViewHolder) holder;
                 setSeeAllEventDetails(seeAllEventViewHolder, position);
+                break;
+            case VIEW_TYPE_HORIZONTAL_EVENT:
+                SeeAllEventViewHolder HorizontalEventViewHolder;
+                HorizontalEventViewHolder = (SeeAllEventViewHolder) holder;
+                setSeeAllEventDetails(HorizontalEventViewHolder, position);
+                break;
+            case VIEW_TYPE_EMPTY:
+                EmptyViewHolder emptyViewHolder = (EmptyViewHolder) holder;
+                setEmptyEventDetails(emptyViewHolder, position);
                 break;
             default:
                 break;
@@ -124,6 +156,12 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         vh.eventTitle.setText(current_event.getTitle());
         //vh.seeAllPoster.setImageResource(Integer.parseInt(current_event.getImageUrl()));
         //TODO set the image via getImageURL
+    }
+
+    private void setEmptyEventDetails (EmptyViewHolder vh, int position){
+        if (recyclerView.getLayoutManager() instanceof GridLayoutManager){
+            vh.placeholderText.setText("No Events to display :(");
+        }
     }
 
 
@@ -171,7 +209,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             poster = itemView.findViewById(R.id.search_event_poster);
             name = itemView.findViewById(R.id.search_event_name);
             time = itemView.findViewById(R.id.search_event_time);
-            location = itemView.findViewById(R.id.seach_event_location);
+            location = itemView.findViewById(R.id.search_event_location);
         }
         //TODO fix this onclick to direct to an intent
         @Override
@@ -194,8 +232,12 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     class EmptyViewHolder extends RecyclerView.ViewHolder {
+        TextView placeholderText;
+        ImageView placeholderImage;
         public EmptyViewHolder(@NonNull View itemView) {
             super(itemView);
+            placeholderText = itemView.findViewById(R.id.placeholder_text);
+            placeholderImage = itemView.findViewById(R.id.placeholder_image);
         }
     }
 

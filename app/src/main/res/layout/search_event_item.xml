@@ -38,13 +38,13 @@
         android:layout_height="wrap_content"
         android:text="time goes here"
         android:textAppearance="@style/Sub_Header"
-        app:layout_constraintBottom_toTopOf="@+id/seach_event_location"
+        app:layout_constraintBottom_toTopOf="@+id/search_event_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/search_event_name"
         app:layout_constraintTop_toBottomOf="@+id/search_event_name" />
 
     <TextView
-        android:id="@+id/seach_event_location"
+        android:id="@+id/search_event_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Location goes here"

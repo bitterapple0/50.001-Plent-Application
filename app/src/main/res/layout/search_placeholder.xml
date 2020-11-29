@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/placeholder_search_text"
+        android:id="@+id/placeholder_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -16,7 +16,7 @@
         android:text="Oops, looks like that event doesn't exist!"
         android:textAppearance="@style/Placeholder_Title" />
     <ImageView
-        android:id="@+id/placeholder_search_imageView"
+        android:id="@+id/placeholder_image"
         android:layout_width="308dp"
         android:layout_height="300dp"
         android:layout_gravity="center"

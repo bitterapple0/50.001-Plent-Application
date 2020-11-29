@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +47,9 @@ public class FindEventsActivity extends MenuActivity {
     final static String placeholderImageUrl = "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1606499824/plent/poster_placeholder1_jgh6vd.png";
 
     ArrayList<Event> events = new ArrayList<>();
+    ArrayList<Event> fifthRowEvents = new ArrayList<>();
+    ArrayList<Event> studentLifeEvents = new ArrayList<>();
+    ArrayList<Event> industryTalkEvents = new ArrayList<>();
     int permission = 1; // We need to replace this with the user's permission field
     ApiModel api;
     CardView fifth_row_events_card_view;
@@ -54,6 +58,8 @@ public class FindEventsActivity extends MenuActivity {
     LinearLayout fr_cluster_linear_layout;
     LinearLayout it_cluster_linear_layout;
     LinearLayout sl_cluster_linear_layout;
+    RecyclerView fr_cluster_recyclerView,it_cluster_recyclerView,sl_cluster_recyclerView;
+    SearchRecyclerAdapter fr_adapter, it_adapter, sl_adapter;
     DisplayMetrics displayMetrics;
 
     @Override
@@ -73,11 +79,14 @@ public class FindEventsActivity extends MenuActivity {
         TextView header = fifth_row_events_card_view.findViewById(R.id.cluster_header);
         header.setText(R.string.fifth_row_activities);
         fr_cluster_linear_layout = fifth_row_events_card_view.findViewById(R.id.event_poster_linear_layout);
+        fr_cluster_recyclerView = fifth_row_events_card_view.findViewById(R.id.horizontal_recycler_view);
+        fr_adapter = new SearchRecyclerAdapter()
 
         industry_talks_card_view = findViewById(R.id.industry_talks_card_view);
         TextView header1 = industry_talks_card_view.findViewById(R.id.cluster_header);
         header1.setText(R.string.industry_talks);
         it_cluster_linear_layout = industry_talks_card_view.findViewById(R.id.event_poster_linear_layout);
+        it_cluster_recyclerView = industry_talks_card_view.findViewById(R.id.horizontal_recycler_view);
 
         student_life_card_view = findViewById(R.id.student_life_card_view);
         TextView header2 = student_life_card_view.findViewById(R.id.cluster_header);
