@@ -36,6 +36,7 @@ import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
 import com.example.plent.utils.ImageUtils;
 import com.example.plent.utils.NetworkImage;
+import com.example.plent.utils.NetworkImageCallback;
 
 import java.util.ArrayList;
 
@@ -83,35 +84,18 @@ public class FindEventsActivity extends MenuActivity {
         header2.setText(R.string.student_life);
         sl_cluster_linear_layout = student_life_card_view.findViewById(R.id.event_poster_linear_layout);
 
-        // retrieve all events from API
-        Call<ArrayList<Event>> call = api.getAllEvents();
-        call.enqueue(new Callback<ArrayList<Event>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
-                } else {
-                    events = response.body();
-                    for (Event e: events) {
-                        createClusterCards(e.getType(), e.getImageUrl());
-                    }
-                    // TODO: do we want to leave placeholders to fill up the row of 4 if there are <4 events in each cluster?
-                    // TODO: remove this section if no, modify it to add logic to keep track of number of proper posters if yes
-                    for (int i=0; i<4; i++){
-                        createClusterCards(ActivityType.FIFTH_ROW, placeholderImageUrl);
-                        createClusterCards(ActivityType.INDUSTRY_TALK, placeholderImageUrl);
-                        createClusterCards(ActivityType.STUDENT_LIFE, placeholderImageUrl);
-                    }
-                    Log.i(TAG, "find events " +events.toString());
-                }
-            }
+        for (int i=0; i<4; i++) {
+            setLoadingCards(ActivityType.FIFTH_ROW, R.drawable.poster_placeholder1);
+            setLoadingCards(ActivityType.INDUSTRY_TALK, R.drawable.poster_placeholder1);
+            setLoadingCards(ActivityType.STUDENT_LIFE, R.drawable.poster_placeholder1);
+        }
+    }
 
-            @Override
-            public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // retrieve all events from API
+        retrieveEvents();
     }
 
     public void redirectToEventsPage(View view){
@@ -127,19 +111,48 @@ public class FindEventsActivity extends MenuActivity {
     }
 
     // add a poster to each cluster
-    public void createClusterCards(ActivityType eventType, String imageUrl){
+    public void createClusterCards(final ActivityType eventType, String imageUrl){
         View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
         ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
         int imageHeight = ImageUtils.dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         int imageWidth = ImageUtils.dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
-        new NetworkImage(poster, imageHeight, imageWidth).execute(imageUrl);
+        new NetworkImage.NetworkImageBuilder().setImageView(poster).setDimensions(imageHeight, imageWidth).setCallback(new NetworkImageCallback() {
+            @Override
+            public void callback(ImageView view) {
+                ViewGroup parent = eventType == ActivityType.FIFTH_ROW ? fr_cluster_linear_layout : eventType == ActivityType.INDUSTRY_TALK ? it_cluster_linear_layout : sl_cluster_linear_layout;
+                int index = -1;
+                ImageView currentView = null;
+                for (int i=0; i<4; i++) {
+                    currentView = (ImageView) parent.getChildAt(i);
+                    if (currentView.getId() == R.id.placeholder_poster) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index > -1) {
+                    parent.removeView(currentView);
+                    parent.removeView(view);
+                    parent.addView(view, index);
+                } else {
+                    parent.addView(view, parent.getChildCount());
+                }
+            }
+        }).build().execute(imageUrl);
+    }
 
+    public void setLoadingCards(ActivityType eventType, int image){
+        View find_events_poster = View.inflate(this, R.layout.placeholder_poster, null);
+        ImageView poster = find_events_poster.findViewById(R.id.placeholder_poster);
+        addToCluster(eventType, poster);
+    }
+
+    private void addToCluster(ActivityType eventType, ImageView poster) {
         if (eventType == ActivityType.FIFTH_ROW){
             fr_cluster_linear_layout.addView(poster, fr_cluster_linear_layout.getChildCount());
         } else if (eventType == ActivityType.INDUSTRY_TALK){
             it_cluster_linear_layout.addView(poster, it_cluster_linear_layout.getChildCount());
         } else if (eventType == ActivityType.STUDENT_LIFE){
-            sl_cluster_linear_layout.addView(find_events_poster, sl_cluster_linear_layout.getChildCount());
+            sl_cluster_linear_layout.addView(poster, sl_cluster_linear_layout.getChildCount());
         }
     }
 
@@ -150,5 +163,35 @@ public class FindEventsActivity extends MenuActivity {
         MenuItem search_icon = menu.findItem(R.id.search_events);
         search_icon.setVisible(true);
         return true;
+    }
+
+    public void retrieveEvents() {
+        Call<ArrayList<Event>> call = api.getAllEvents();
+        call.enqueue(new Callback<ArrayList<Event>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                } else {
+                    ArrayList<String> eventIds = new ArrayList<>();
+                    for (Event e: events) {
+                        eventIds.add(e.getId());
+                    }
+                    for (Event e: response.body()) {
+                        if (!eventIds.contains(e.getId())) {
+                            createClusterCards(e.getType(), e.getImageUrl());
+                        }
+                    }
+                    events = response.body();
+                    Log.i(TAG, "find events " +events.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(FindEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

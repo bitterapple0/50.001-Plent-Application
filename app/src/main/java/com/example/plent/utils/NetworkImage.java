@@ -2,25 +2,54 @@ package com.example.plent.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Network;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+import java.util.function.Function;
 
 public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
-    Integer imageHeight;
-    Integer imageWidth;
+    private ImageView bmImage;
+    private Integer imageHeight;
+    private Integer imageWidth;
+    private NetworkImageCallback callback;
 
-    public NetworkImage(ImageView bmImage) {
-        this.bmImage = bmImage;
+    private NetworkImage(NetworkImageBuilder netWorkImageBuilder) {
+        this.bmImage = netWorkImageBuilder.bmImage;
+        this.imageWidth = netWorkImageBuilder.imageWidth;
+        this.imageHeight = netWorkImageBuilder.imageHeight;
+        this.callback = netWorkImageBuilder.callback;
     }
 
-    public NetworkImage(ImageView bmImage, int imageHeight, int imageWidth) {
-        this.bmImage = bmImage;
-        this.imageWidth = imageWidth;
-        this.imageHeight = imageHeight;
+    public static class NetworkImageBuilder {
+        private ImageView bmImage;
+        private Integer imageHeight;
+        private Integer imageWidth;
+        private NetworkImageCallback callback;
+
+        public NetworkImageBuilder() {}
+
+        public NetworkImageBuilder setImageView(ImageView bmImage) {
+            this.bmImage = bmImage;
+            return this;
+        }
+
+        public NetworkImageBuilder setDimensions(int imageHeight, int imageWidth) {
+            this.imageHeight = imageHeight;
+            this.imageWidth = imageWidth;
+            return this;
+        }
+
+        public NetworkImageBuilder setCallback(NetworkImageCallback callback) {
+            this.callback = callback;
+            return this;
+        }
+
+        public NetworkImage build() {
+            return new NetworkImage(this);
+        }
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -45,5 +74,6 @@ public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
             bmImage.setImageBitmap(scaledImage);
         }
 
+        callback.callback(bmImage);
     }
 }

@@ -5,6 +5,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 public class ImageUtils {
     public static String getImageFilePath(Context context, Uri uri) {
