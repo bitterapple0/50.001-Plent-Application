@@ -143,7 +143,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View horizontalEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
                 RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
                 // TODO need to find a way to fix the view
-                parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//                parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                 int horizontalWidth = parent.getMeasuredWidth() / 5;
                 Log.i(TAG, "search recycler adapter, measured width " + horizontalWidth);
                 params1.width = 180;
