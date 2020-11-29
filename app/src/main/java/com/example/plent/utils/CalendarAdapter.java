@@ -101,7 +101,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
                 intent.putExtra(PREVIOUS_ACTIVITY, CAL_EVENT_CLICK);
                 CALENDAR_CARD_CONTEXT.startActivity(intent);
             }
-        });
+        }); 
     }
 
     @Override

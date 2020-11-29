@@ -254,7 +254,7 @@ public class SignUpActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.d(TAG, "On Response Called" );
+//                Log.d(TAG, "On Response Called" );
                 if (!response.isSuccessful()) {
                     Toast.makeText(SignUpActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {

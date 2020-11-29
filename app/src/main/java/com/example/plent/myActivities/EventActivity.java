@@ -39,6 +39,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
+import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 
 
 public class EventActivity extends MenuActivity {

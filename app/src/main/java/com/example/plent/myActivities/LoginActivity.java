@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.plent.R;
 import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
@@ -31,6 +32,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.view.View.INVISIBLE;
 
 // TODO: ADD CHECK FOR WHETHER USER IS ALR LOGGED IN
 // TODO: EDIT AP CALL
@@ -46,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     Button createAcc;
     ApiModel api;
+    LottieAnimationView progressBar;
 
     User userCred;
     boolean emailInList = false;
@@ -99,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         password =  findViewById(R.id.passwordInput);
         login = findViewById(R.id.login);
         createAcc = findViewById(R.id.createAcc);
+        progressBar = findViewById(R.id.progressBar);
 
         email.addTextChangedListener(new TextWatcher(){
             @Override
@@ -150,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
+                        progressBar.setVisibility(View.VISIBLE);
                         authenticateAndFetchUser();
                     }
                 }
@@ -160,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
         createAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(INVISIBLE);
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
@@ -187,8 +194,9 @@ public class LoginActivity extends AppCompatActivity {
                             preferencesEditor.putString(Constants.USER_KEY, gson.toJson(userCred));
                             preferencesEditor.apply();
 
-                            Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MyInformationActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                            progressBar.setVisibility(INVISIBLE);
                             startActivity(intent);
                             finish();
                         }

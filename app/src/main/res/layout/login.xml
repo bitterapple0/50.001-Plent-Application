@@ -16,7 +16,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_marginTop="48dp"
         android:layout_margin="16dp"
         android:src="@drawable/plent_logo"
@@ -103,5 +103,18 @@
         android:textColor="#1B223C"
         android:gravity="center"
         android:background="@drawable/secondary_button_stroke"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="40dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="invisible"
+        app:lottie_rawRes="@raw/loadin" />
+
+    
 
 </LinearLayout>
