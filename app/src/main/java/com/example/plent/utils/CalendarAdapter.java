@@ -42,7 +42,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
     List<Event> calendarEventsAll;
     private Activity CalendarActivity;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView eventTitle, time, location;
         public ImageView indicator;
         public CardView calendarCard;

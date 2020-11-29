@@ -59,7 +59,7 @@ public class SearchActivity extends AppCompatActivity {
         eventList.add(e6);
         eventList.add(e7);
 
-        searchRecyclerAdapter = new SearchRecyclerAdapter(eventList);
+        searchRecyclerAdapter = new SearchRecyclerAdapter(eventList, this);
         recyclerView.setAdapter(searchRecyclerAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);

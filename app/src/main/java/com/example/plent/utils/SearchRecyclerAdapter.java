@@ -1,5 +1,6 @@
 package com.example.plent.utils;
 
+import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
+    private Context context;
     private List<Event> eventList;
     private List<Event> eventListAll;
     private RecyclerView recyclerView;
@@ -40,19 +42,21 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 
 
-    public SearchRecyclerAdapter(List<Event> eventList) {
+    public SearchRecyclerAdapter(List<Event> eventList, Context context) {
         this.eventList = eventList;
         this.eventListAll = new ArrayList<>(eventList);
+        this.context = context;
     }
 
-    public SearchRecyclerAdapter(List<Event> eventList, ActivityType eventType) {
+    public SearchRecyclerAdapter(List<Event> eventList, ActivityType eventType, Context context) {
         this.eventType = eventType;
         this.eventList=eventList;
-        
+        this.context = context;
     }
-    public SearchRecyclerAdapter(List<Event> eventList, String eventOrganiser) {
+    public SearchRecyclerAdapter(List<Event> eventList, String eventOrganiser, Context context) {
         this.eventOrganiser = eventOrganiser;
         this.eventListAll = new ArrayList<>(eventList);
+        this.context = context;
         for(Event e : eventListAll){
 //            TODO manage event view
 //            Need to implement the getter for the organiser
@@ -194,7 +198,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private void setSeeAllEventDetails (SeeAllEventViewHolder vh, int position) {
         Event current_event = eventList.get(position);
         vh.eventTitle.setText(current_event.getTitle());
-        DisplayMetrics displayMetrics = new DisplayMetrics();
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         int imageHeight = ImageUtils.dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         int imageWidth = ImageUtils.dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
