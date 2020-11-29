@@ -35,7 +35,6 @@ import com.example.plent.models.ApiModel;
 public class ManageEventsActivity extends MenuActivity {
 
     FloatingActionButton fab_add;
-    LinearLayout linearLayout;
     private ApiModel api;
     final List<Event> organisedEvents = new ArrayList<>();
     RecyclerView recyclerView;

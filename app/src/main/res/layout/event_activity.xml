@@ -14,117 +14,124 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/event_activity_linear_layout"
+        android:layout_height="match_parent">
+        <ScrollView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/event_activity_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Main_Header"
+                    android:id="@+id/event_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Athletics Freshmore Intro Session"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="12dp" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_height="1dp"
+                    android:background="#E8E8E8"/>
+
+                <ImageView
+                    android:id="@+id/athletics_poster"
+                    android:layout_margin="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="210dp"
+                    android:layout_gravity="center_horizontal"/>
+    <!--                android:src="@drawable/athleticsposter" />-->
+
+                <TextView
+                    style="@style/Post_Body"
+                    android:id="@+id/time_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monday, Oct 12th, 6.30pm - 8.30pm"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp" />
+
+                <TextView
+                    style="@style/Post_Body"
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SUTD Stadium"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp" />
+
+                <TextView
+                    style="@style/Post_Body"
+                    android:id="@+id/post_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Always had a passion for running or just want to maintain your fitness goals? Athletics club is here for you! Come down to experience what our training would be like and join us for a run to Simpang afterwards for supper after burning those calories!"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp" />
+
+                <TextView
+                    style="@style/Warning"
+                    android:id="@+id/warning1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You have “Volleyball Intro Session” at 7pm on Oct 12th "
+                    android:layout_gravity="center"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp" />
+
+                <Button
+                    android:id="@+id/sign_up_button"
+                    style="@style/Primary_Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/sign_up_now"
+                    android:layout_alignParentBottom="true"/>
+
+                <Button
+                    android:id="@+id/join_telegram_group_button"
+                    style="@style/Secondary_Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/join_telegram_group"
+                    android:layout_alignParentBottom="true"/>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/Main_Header"
-                android:id="@+id/event_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Athletics Freshmore Intro Session"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="12dp" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_height="1dp"
-                android:background="#E8E8E8"/>
-
-            <ImageView
-                android:id="@+id/athletics_poster"
-                android:layout_margin="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="210dp"
-                android:layout_gravity="center_horizontal"/>
-<!--                android:src="@drawable/athleticsposter" />-->
-
-            <TextView
-                style="@style/Post_Body"
-                android:id="@+id/time_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monday, Oct 12th, 6.30pm - 8.30pm"
-                android:layout_gravity="center"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp" />
-
-            <TextView
-                style="@style/Post_Body"
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SUTD Stadium"
-                android:layout_gravity="center"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp" />
-
-            <TextView
-                style="@style/Post_Body"
-                android:id="@+id/post_body"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Always had a passion for running or just want to maintain your fitness goals? Athletics club is here for you! Come down to experience what our training would be like and join us for a run to Simpang afterwards for supper after burning those calories!"
-                android:layout_gravity="center"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp" />
-
-            <TextView
-                style="@style/Warning"
-                android:id="@+id/warning1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You have “Volleyball Intro Session” at 7pm on Oct 12th "
-                android:layout_gravity="center"
-                android:layout_marginTop="36dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp" />
-
-            <Button
-                android:id="@+id/sign_up_button"
-                style="@style/Primary_Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/sign_up_now"
-                android:layout_alignParentBottom="true"/>
-
-            <Button
-                android:id="@+id/join_telegram_group_button"
-                style="@style/Secondary_Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/join_telegram_group"
-                android:layout_alignParentBottom="true"/>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="48dp"
-                app:srcCompat="@drawable/calendar" />
-
-        </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="48dp"
+            app:srcCompat="@drawable/calendar" />
+    </RelativeLayout>
 
 
-    </ScrollView>
 
 
 
