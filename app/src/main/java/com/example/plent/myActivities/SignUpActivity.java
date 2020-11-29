@@ -26,11 +26,13 @@ import android.widget.Toast;
 
 import com.example.plent.R;
 import com.example.plent.models.ApiModel;
+import com.example.plent.models.Event;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.*;
@@ -121,11 +123,9 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
-        Log.d(TAG, "Activity Created");
         api = Api.getInstance().apiModel;
         mPreferences = getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
@@ -217,14 +217,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (validateEmail(email.toString())) {
                         if (validatePassword(password.toString())) {
                             if (validateStudentId(studentId.toString()))
-                                if (Constants.SKIP_BACKEND) {
-                                    user = new User(name.toString(), email.toString(), studentId.toString(), "");
-                                    user.setId("dummy_id");
-                                    user.setPermission(0);
-                                    onSubmitSuccess();
-                                } else {
-                                    createUser();
-                                }
+                                createUser();
                             else {
                                 Toast.makeText(SignUpActivity.this, "Oops, this is not a valid student id",
                                         Toast.LENGTH_LONG).show();
@@ -254,7 +247,6 @@ public class SignUpActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-//                Log.d(TAG, "On Response Called" );
                 if (!response.isSuccessful()) {
                     Toast.makeText(SignUpActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
@@ -262,6 +254,7 @@ public class SignUpActivity extends AppCompatActivity {
                         user.removePassword();
                         user.setId(response.body().getId());
                         user.setPermission(response.body().getPermission());
+                        user.setOrganisedEvents(new ArrayList<String>());
                         onSubmitSuccess();
                     } else {
                         Toast.makeText(SignUpActivity.this, "Oops, this student id has already been used. Log in instead!", Toast.LENGTH_LONG).show();
@@ -271,9 +264,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
                 t.printStackTrace();
-
                 Toast.makeText(SignUpActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
             }
         });

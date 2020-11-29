@@ -1,7 +1,9 @@
 package com.example.plent.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
+import com.example.plent.myActivities.EventActivity;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
+    private static final String TAG = "SEARCH RECYCLER ADAPTER";
     private Context context;
     private List<Event> eventList;
     private List<Event> eventListAll;
@@ -93,6 +98,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
+        Log.i(TAG, "search recycler adapter " + viewType);
         switch (viewType){
             case VIEW_TYPE_SEARCH_EVENT:
                 View eventView = layoutInflater.inflate(R.layout.search_event_item, parent, false);
@@ -113,8 +119,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View horizontalEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
                 RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
                 // TODO need to find a way to fix the view
+//                parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                 int horizontalWidth = parent.getMeasuredWidth() / 5;
-                params1.width = horizontalWidth;
+                Log.i(TAG, "search recycler adapter, measured width " + horizontalWidth);
+                params1.width = 180;
                 horizontalEventView.setLayoutParams(params1);
                 viewHolder = new SeeAllEventViewHolder(horizontalEventView);
                 break;
@@ -176,12 +184,22 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         //TODO set the image via getImageURL
     }
     private void setSeeAllEventDetails (SeeAllEventViewHolder vh, int position) {
-        Event current_event = eventList.get(position);
+        final Event current_event = eventList.get(position);
         vh.eventTitle.setText(current_event.getTitle());
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         int imageHeight = ImageUtils.dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         int imageWidth = ImageUtils.dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
+
+        vh.seeAllPoster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EventActivity.class);
+                intent.putExtra(Constants.SELECTED_EVENT_KEY, current_event.getId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                context.startActivity(intent);
+            }
+        });
     }
 
     private void setEmptyEventDetails (EmptyViewHolder vh, int position){
@@ -196,7 +214,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         Event current_event = eventList.get(position);
         vh.title.setText(current_event.getTitle());
         vh.location.setText(current_event.getLocation());
-        //vh.timing.setText(current_event.getStartTime().toString()+" to "+current_event.getEndTime().toString());
+        vh.timing.setText(DateTimeUtils.formatDate(current_event.getDate()) + ", " + DateTimeUtils.formatTime24H(current_event.getStartTime()) + " - " + DateTimeUtils.formatTime24H(current_event.getEndTime()));
     }
 
     /****** Adapter Methods ******/

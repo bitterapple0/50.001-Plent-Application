@@ -85,8 +85,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
     public void onBindViewHolder(@NonNull CalendarAdapter.MyViewHolder holder, int position) {
         final Event calendarEvent = calendarEvents.get(position);
         holder.eventTitle.setText(calendarEvent.getTitle());
-        DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("HH:mm");
-        holder.time.setText(calendarEvent.getStartTime().format(formatObj) + " - " + calendarEvent.getEndTime().format(formatObj));
+        holder.time.setText(DateTimeUtils.formatTime24H(calendarEvent.getStartTime()) + " - " + DateTimeUtils.formatTime24H(calendarEvent.getEndTime()));
         holder.location.setText(calendarEvent.getLocation());
 
 

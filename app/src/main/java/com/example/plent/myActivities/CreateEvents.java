@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -50,6 +51,8 @@ public class CreateEvents extends AppCompatActivity {
 
     final static int REQUEST_IMAGE_GET = 1;
     final static String TAG = "CREATE_EVENT";
+    private SharedPreferences mPreferences;
+    private String userId;
 
     TextView create_event;
     Button submit;
@@ -96,6 +99,8 @@ public class CreateEvents extends AppCompatActivity {
         setTheme(R.style.CalendarTheme);
         setContentView(R.layout.create_event);
         api =  Api.getInstance().apiModel;
+        mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
+        userId = getUserFromSharedPref().getId();
 
         // finding and setting views
         create_event = findViewById(R.id.create_event);
@@ -261,7 +266,7 @@ public class CreateEvents extends AppCompatActivity {
             type = ActivityType.valueOf(((types.getSelectedItem().toString()).toUpperCase()).replace(" ","_"));
             event = new Event(title_input.getText().toString().trim(), eventDate.toString(), startTime.toString(), endTime.toString(),
                     location_input.getText().toString().trim(), description_input.getText().toString().trim(),
-                    telegram_input.getText().toString().trim(), type, imageUrl);
+                    telegram_input.getText().toString().trim(), type, imageUrl, userId);
 
             // making API call
             Call<Event> call = api.createEvent(event);
@@ -297,5 +302,22 @@ public class CreateEvents extends AppCompatActivity {
        return !editTextIsEmpty(title_input) && !editTextIsEmpty(location_input)
                && !editTextIsEmpty(description_input)
                && eventDate != null;
+    }
+
+    private User getUserFromSharedPref() {
+        Gson gson = new Gson();
+        String json = mPreferences.getString(Constants.USER_KEY, null);
+
+        if (json == null) {
+            Log.i(TAG, "is null");
+            // redirect to login page if no user info stored
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            finish();
+
+            return null;
+        }
+        return gson.fromJson(json, User.class);
     }
 }
