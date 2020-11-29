@@ -113,13 +113,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
     // calendarEventsAll what we use to remember all the user events.
     public void filterEvents(Calendar date){
         calendarEvents.clear();
-        String calendarDate = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1 ,date.get(Calendar.DATE)).toString();
+        LocalDate calendarDate = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1 ,date.get(Calendar.DATE));
 
         for(Event e : calendarEventsAll){
-
-            if (e.getDate().toString().equals(calendarDate)){
+            if (e.getDate().isEqual(calendarDate)){
                 calendarEvents.add(e);
-
             }
         }
         notifyDataSetChanged();
