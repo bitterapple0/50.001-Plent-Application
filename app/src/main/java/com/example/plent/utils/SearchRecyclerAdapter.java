@@ -1,5 +1,6 @@
 package com.example.plent.utils;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
+import com.example.plent.myActivities.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
-// WHat if i create another parameter in the adapter called eventType. Then, fileter all events based on this type during
-// the constructor call?
+
     private List<Event> eventList;
     private List<Event> eventListAll;
     private RecyclerView recyclerView;
@@ -132,8 +133,12 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder = new SeeAllEventViewHolder(seeAllEventView);
                 break;
             case VIEW_TYPE_HORIZONTAL_EVENT:
-                View HorizontalEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
-                viewHolder = new SeeAllEventViewHolder(HorizontalEventView);
+                View horizontalEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
+                RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
+                // TODO need to find a way to fix the view
+                params1.width = 180;
+                horizontalEventView.setLayoutParams(params1);
+                viewHolder = new SeeAllEventViewHolder(horizontalEventView);
                 break;
 
             default:
@@ -189,8 +194,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         Event current_event = eventList.get(position);
         vh.eventTitle.setText(current_event.getTitle());
         new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).build().execute(current_event.getImageUrl());
-        //vh.seeAllPoster.setImageResource(Integer.parseInt(current_event.getImageUrl()));
-        //TODO set the image via getImageURL
     }
 
     private void setEmptyEventDetails (EmptyViewHolder vh, int position){
@@ -220,6 +223,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }else{
             this.eventList = new_eventList;
         }
+        Log.i("HELP" , eventList.toString());
         notifyDataSetChanged();
     }
 

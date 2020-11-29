@@ -52,7 +52,7 @@ public class SeeAllActivity extends AppCompatActivity {
         eventList.add(e1);
 
         recyclerView = findViewById(R.id.see_all_recycler_view);
-        seeAllAdapter = new SearchRecyclerAdapter(eventList);
+        seeAllAdapter = new SearchRecyclerAdapter(eventList, FIFTH_ROW);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(seeAllAdapter);
 

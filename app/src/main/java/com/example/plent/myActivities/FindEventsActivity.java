@@ -49,6 +49,7 @@ public class FindEventsActivity extends MenuActivity {
 
     final static String TAG = "FIND EVENTS";
     final static String placeholderImageUrl = "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1606499824/plent/poster_placeholder1_jgh6vd.png";
+    Event testEvent = new Event("Athletics Intro Session", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", ActivityType.FIFTH_ROW,"https://abhisekmishra.com/project4_3.jpg");
     Event emptyEvent = new Event("Loading...",LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "", "", "", null,""); ;
     ArrayList<Event> events = new ArrayList<>();
     ArrayList<Event> fifthRowEvents = new ArrayList<>();
@@ -102,6 +103,7 @@ public class FindEventsActivity extends MenuActivity {
             fifthRowEvents.add(emptyEvent);
             industryTalkEvents.add(emptyEvent);
             studentLifeEvents.add(emptyEvent);
+            //events.add(testEvent);
         }
         fr_adapter = new SearchRecyclerAdapter(fifthRowEvents, ActivityType.FIFTH_ROW);
         fr_cluster_recyclerView.setAdapter(fr_adapter);
@@ -121,8 +123,11 @@ public class FindEventsActivity extends MenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("HELOOOO" , "On Resume CAlled");
         // retrieve all events from API
         retrieveEvents();
+        Log.i("WHAT IS INSIDE MY EVENTSSSS" , events.toString());
+
     }
 
     public void redirectToEventsPage(View view){
