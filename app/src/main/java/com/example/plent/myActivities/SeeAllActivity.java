@@ -37,19 +37,19 @@ public class SeeAllActivity extends AppCompatActivity {
         Event e1 = new Event("Athletics Intro Session", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", FIFTH_ROW,"https://abhisekmishra.com/project4_3.jpg");
         Event e2 = new Event("ClImBInG INtrO seSSiOn", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", FIFTH_ROW,"");
 
-        eventList.add(e1);
-        eventList.add(e2);
-        eventList.add(e2);
-        eventList.add(e2);
-        eventList.add(e2);
-        eventList.add(e2);
-        eventList.add(e1);
-        eventList.add(e1);
-        eventList.add(e1);
-        eventList.add(e1);
-        eventList.add(e1);
-        eventList.add(e1);
-        eventList.add(e1);
+//        eventList.add(e1);
+//        eventList.add(e2);
+//        eventList.add(e2);
+//        eventList.add(e2);
+//        eventList.add(e2);
+//        eventList.add(e2);
+//        eventList.add(e1);
+//        eventList.add(e1);
+//        eventList.add(e1);
+//        eventList.add(e1);
+//        eventList.add(e1);
+//        eventList.add(e1);
+//        eventList.add(e1);
 
         recyclerView = findViewById(R.id.see_all_recycler_view);
         seeAllAdapter = new SearchRecyclerAdapter(eventList, FIFTH_ROW, this);

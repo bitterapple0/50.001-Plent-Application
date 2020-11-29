@@ -65,15 +65,25 @@ public class ManageEventsActivity extends MenuActivity {
 
         organisedEvents.add(e1);
         organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
 
         Log.i("Event", String.valueOf(organisedEvents));
 
         recyclerView = findViewById(R.id.manageEventRecyclerView);
-        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
+        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", this);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
         recyclerView.setAdapter(manageEventRecyclerAdapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ManageEventsActivity.this, DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
     }
