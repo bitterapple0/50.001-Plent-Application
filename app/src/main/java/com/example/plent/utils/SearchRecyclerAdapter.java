@@ -1,5 +1,6 @@
 package com.example.plent.utils;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -193,7 +194,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private void setSeeAllEventDetails (SeeAllEventViewHolder vh, int position) {
         Event current_event = eventList.get(position);
         vh.eventTitle.setText(current_event.getTitle());
-        new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).build().execute(current_event.getImageUrl());
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        int imageHeight = ImageUtils.dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
+        int imageWidth = ImageUtils.dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
+        new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
     }
 
     private void setEmptyEventDetails (EmptyViewHolder vh, int position){
