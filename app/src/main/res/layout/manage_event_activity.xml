@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivityOld">
+    tools:context=".myActivities.ManageEventsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -37,13 +37,11 @@
         android:padding="12dp"
         android:background="#FFFFFF"/>
 
-    <LinearLayout
-        android:id="@+id/upcoming_events"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/manageEventRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    </LinearLayout>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
