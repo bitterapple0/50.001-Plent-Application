@@ -80,6 +80,12 @@ public class ManageEventsActivity extends MenuActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        Log.i("Event", "manage events " + String.valueOf(organisedEvents));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Call<ArrayList<Event>> call = api.getOrganisedEvents(user.getId());
         call.enqueue(new Callback<ArrayList<Event>>() {
             @Override
@@ -92,11 +98,21 @@ public class ManageEventsActivity extends MenuActivity {
                         redirectToFindEvents();
                         Toast.makeText(ManageEventsActivity.this, "Hm, it seems that you're not an organiser", Toast.LENGTH_LONG).show();
                     } else {
-                        for (Event e: response.body()) {
-                            organisedEvents.add(e);
+                        boolean refreshCards = false;
+                        ArrayList<String> eventIds = new ArrayList<>();
+                        for (Event e: organisedEvents) {
+                            eventIds.add(e.getId());
                         }
-                        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
-                        recyclerView.setAdapter(manageEventRecyclerAdapter);
+                        for (Event e: response.body()) {
+                            if (!eventIds.contains(e.getId())) {
+                                refreshCards = true;
+                                organisedEvents.add(e);
+                            }
+                        }
+                        if (refreshCards) {
+                            manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
+                            recyclerView.setAdapter(manageEventRecyclerAdapter);
+                        }
                     }
                 }
             }
@@ -107,13 +123,6 @@ public class ManageEventsActivity extends MenuActivity {
                 Toast.makeText(ManageEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
             }
         });
-
-        Log.i("Event", "manage events " + String.valueOf(organisedEvents));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
 
