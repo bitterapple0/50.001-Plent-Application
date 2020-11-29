@@ -200,6 +200,9 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }
+                        else {
+                            Toast.makeText(LoginActivity.this, "Please ensure that the entered credentials are correct", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
