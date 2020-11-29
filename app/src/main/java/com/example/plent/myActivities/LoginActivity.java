@@ -194,7 +194,7 @@ public class LoginActivity extends AppCompatActivity {
                             preferencesEditor.putString(Constants.USER_KEY, gson.toJson(userCred));
                             preferencesEditor.apply();
 
-                            Intent intent = new Intent(LoginActivity.this, MyInformationActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                             progressBar.setVisibility(INVISIBLE);
                             startActivity(intent);
