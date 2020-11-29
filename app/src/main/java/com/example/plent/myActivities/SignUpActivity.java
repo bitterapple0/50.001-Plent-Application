@@ -26,11 +26,13 @@ import android.widget.Toast;
 
 import com.example.plent.R;
 import com.example.plent.models.ApiModel;
+import com.example.plent.models.Event;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.*;
@@ -262,6 +264,7 @@ public class SignUpActivity extends AppCompatActivity {
                         user.removePassword();
                         user.setId(response.body().getId());
                         user.setPermission(response.body().getPermission());
+                        user.setOrganisedEvents(new ArrayList<String>());
                         onSubmitSuccess();
                     } else {
                         Toast.makeText(SignUpActivity.this, "Oops, this student id has already been used. Log in instead!", Toast.LENGTH_LONG).show();
