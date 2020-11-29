@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
-import com.example.plent.myActivities.LoginActivity;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,20 +50,13 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public SearchRecyclerAdapter(List<Event> eventList, ActivityType eventType, Context context) {
         this.eventType = eventType;
-        this.eventList=eventList;
+        this.eventList= eventList;
         this.context = context;
     }
     public SearchRecyclerAdapter(List<Event> eventList, String eventOrganiser, Context context) {
         this.eventOrganiser = eventOrganiser;
-        this.eventList = new ArrayList<>(eventList);
         this.context = context;
-        /*for(Event e : eventListAll){
-//            TODO manage event view
-//            Need to implement the getter for the organiser
-//            if(e.getOrganiser() == eventOrganiser){
-//                this.eventList.add(e);
-//            }
-        }*/
+        this.eventList=eventList;
     }
 
     @Override
@@ -84,24 +76,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-//        if (eventList.size() == 0){
-//            return VIEW_TYPE_EMPTY;
-//        }else{
-//            Event e = eventList.get(0);
-//            for (int i = 1; i < eventList.size(); i++) {
-//                if(e.getType()!=eventList.get(i).getType()){
-//                    return VIEW_TYPE_SEARCH_EVENT;
-//                }else{
-//                    e = eventList.get(i);
-//                }
-//            }
-//        }
-//        if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
-//            return VIEW_TYPE_SEE_ALL_EVENT;
-//        }else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager){
-//            return VIEW_TYPE_HORIZONTAL_EVENT;
-//        }
-//        return 0;
         if (eventList.size() == 0){
             return VIEW_TYPE_EMPTY;
         }else if(eventType != null){
@@ -152,15 +126,15 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 break;
             case VIEW_TYPE_MANAGE_EVENT:
                 View manageEventView = layoutInflater.inflate(R.layout.manage_event_card, parent, false);
-                RecyclerView.LayoutParams manageEventParams = (RecyclerView.LayoutParams) manageEventView.getLayoutParams();
                 viewHolder = new ManageEventViewHolder(manageEventView);
+                break;
 
             default:
                 View emptyView = layoutInflater.inflate(R.layout.search_placeholder, parent, false);
                 if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
-                    GridLayoutManager.LayoutParams params_empty = (GridLayoutManager.LayoutParams) emptyView.getLayoutParams();
-                    params_empty.width = parent.getMeasuredWidth();
-                    emptyView.setLayoutParams(params_empty);
+                    GridLayoutManager.LayoutParams params_empty_see_all = (GridLayoutManager.LayoutParams) emptyView.getLayoutParams();
+                    params_empty_see_all.width = parent.getMeasuredWidth();
+                    emptyView.setLayoutParams(params_empty_see_all);
 
                 }
                 viewHolder = new EmptyViewHolder(emptyView);
@@ -219,12 +193,16 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private void setEmptyEventDetails (EmptyViewHolder vh, int position){
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager){
             vh.placeholderText.setText("No Events to display :(");
+        } else if(eventOrganiser != null){
+            vh.placeholderText.setText("Looks like you don't have any events to manage :(");
         }
     }
 
     private void setManageEventDetails (ManageEventViewHolder vh, int position){
         Event current_event = eventList.get(position);
-
+        vh.title.setText(current_event.getTitle());
+        vh.location.setText(current_event.getLocation());
+        vh.timing.setText(DateTimeUtils.formatDate(current_event.getDate()) + ", " + DateTimeUtils.formatTime24H(current_event.getStartTime()) + " - " + DateTimeUtils.formatTime24H(current_event.getEndTime()));
     }
 
     /****** Adapter Methods ******/
@@ -248,7 +226,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }else{
             this.eventList = new_eventList;
         }
-        Log.i("HELP" , eventList.toString());
         notifyDataSetChanged();
     }
 
@@ -338,7 +315,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
             title = itemView.findViewById(R.id.event_title);
             timing = itemView.findViewById(R.id.event_time);
-            location = itemView.findViewById(R.id.location);
+            location = itemView.findViewById(R.id.event_location);
         }
     }
 
