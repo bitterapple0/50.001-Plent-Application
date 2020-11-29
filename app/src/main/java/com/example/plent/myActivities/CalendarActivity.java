@@ -47,16 +47,13 @@ public class CalendarActivity extends MenuActivity {
     LinearLayout linearLayout;
     String eventType;
     ArrayList<Event> userEvents= new ArrayList<Event>();
+    ArrayList<Event> allUserEvents;
     RecyclerView recyclerView;
     CalendarAdapter calendarAdapter;
 
     Event e1 = new Event("My first Event", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "STUD","YAY number 1", "@nil", ActivityType.INDUSTRY_TALK, "" );
     Event e2 = new Event("My second Event", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(13, 0).toString(), LocalTime.of(15, 0).toString(), "NUS","Yay number 2", "@nil",ActivityType.INDUSTRY_TALK, "" );
     Event e3 = new Event("My third Event", LocalDate.of(2020, 11, 30).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "NTU","Yay number 3","@nil", ActivityType.FIFTH_ROW, "" );
-//    Event e4 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
-//    Event e5 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.FIFTH_ROW, "" );
-//    Event e6 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "");
-//    Event e7 = new Event("My third Event", date3 , time1, time4, "NTU","Yay number 3","@nil",ActivityType.STUDENT_LIFE, "" );
 
     CalendarEvent c1 = new CalendarEvent(Color.parseColor("#EAD620"), "event");
     CalendarEvent c2 = new CalendarEvent(Color.parseColor("#81D2AC"), "event");
@@ -72,6 +69,8 @@ public class CalendarActivity extends MenuActivity {
         userEvents.add(e2);
         userEvents.add(e3);
 
+        allUserEvents = new ArrayList<>(userEvents); // need to track ALL events the user will attend to get all DOTS on calendar
+
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
@@ -84,7 +83,7 @@ public class CalendarActivity extends MenuActivity {
 
         recyclerView = findViewById(R.id.calendar_events);
 
-        calendarAdapter = new CalendarAdapter(userEvents);
+        calendarAdapter = new CalendarAdapter(userEvents); // this array list is the dynamic one we will vary based on date selected
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
         recyclerView.setAdapter(calendarAdapter);
@@ -96,11 +95,11 @@ public class CalendarActivity extends MenuActivity {
                     @Override
                     public List<CalendarEvent> events(Calendar date) {
                         List<CalendarEvent> events = new ArrayList<>();
-                        Log.i("Date", toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
-                        Log.i("DefaultDate", toDateString(defaultSelectedDate.get(Calendar.DATE), defaultSelectedDate.get(Calendar.MONTH), defaultSelectedDate.get(Calendar.YEAR)));
+//                        Log.i("Date", LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1 ,date.get(Calendar.DATE)).toString());
+//                        Log.i("DefaultDate", LocalDate.of(defaultSelectedDate.get(Calendar.YEAR), defaultSelectedDate.get(Calendar.MONTH)+1,defaultSelectedDate.get(Calendar.DATE)).toString());
                         LocalDate selectedDay = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1, date.get(Calendar.DATE));
                         // for loop to run through dates of events
-                        for(Event e: userEvents){
+                        for(Event e: allUserEvents){
                             Log.i("EventDate", (e.getDate().toString()));
                             if(e.getDate().isEqual(selectedDay)){
                                 if (e.getType() == ActivityType.FIFTH_ROW) {
@@ -123,8 +122,7 @@ public class CalendarActivity extends MenuActivity {
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
-                Log.i("Message", toDateString(date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)));
-                // TO DO: Call the RecyclerView again to dynamically update the page layout with the events on that day
+                calendarAdapter.filterEvents(date);
             }
         });
 
@@ -138,43 +136,9 @@ public class CalendarActivity extends MenuActivity {
             }
         });
 
-        filterCalenderEvents(userEvents, defaultSelectedDate);
+        calendarAdapter.filterEvents(defaultSelectedDate);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i("ALC", "start");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i("ALC", "stop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("ALC", "DESTROY");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i("ALC", "RESTART");
-    }
-
-
-    public void filterCalenderEvents(ArrayList<Event> events, Calendar date){
-        for (Event e : events) {
-            int[] calendarDate = {date.get(Calendar.DATE), date.get(Calendar.MONTH), date.get(Calendar.YEAR)};
-            if (e.getDate().isEqual(LocalDate.now(ZoneId.of("Asia/Singapore")))){
-                //addCalendarEvent(e);
-            }
-        }
-
-    }
 
     public String toDateString(int date, int month, int year){
         return Integer.toString(date) + Integer.toString(month) +Integer.toString((year));

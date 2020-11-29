@@ -38,6 +38,8 @@ import com.example.plent.utils.Constants;
 import com.example.plent.utils.ImageUtils;
 import com.example.plent.utils.NetworkImage;
 import com.example.plent.utils.NetworkImageCallback;
+import com.example.plent.utils.SearchRecyclerAdapter;
+
 
 import java.util.ArrayList;
 
@@ -79,14 +81,14 @@ public class FindEventsActivity extends MenuActivity {
         TextView header = fifth_row_events_card_view.findViewById(R.id.cluster_header);
         header.setText(R.string.fifth_row_activities);
         fr_cluster_linear_layout = fifth_row_events_card_view.findViewById(R.id.event_poster_linear_layout);
-        fr_cluster_recyclerView = fifth_row_events_card_view.findViewById(R.id.horizontal_recycler_view);
-        fr_adapter = new SearchRecyclerAdapter()
+//        fr_cluster_recyclerView = fifth_row_events_card_view.findViewById(R.id.horizontal_recycler_view);
+//        fr_adapter = new SearchRecyclerAdapter()
 
         industry_talks_card_view = findViewById(R.id.industry_talks_card_view);
         TextView header1 = industry_talks_card_view.findViewById(R.id.cluster_header);
         header1.setText(R.string.industry_talks);
         it_cluster_linear_layout = industry_talks_card_view.findViewById(R.id.event_poster_linear_layout);
-        it_cluster_recyclerView = industry_talks_card_view.findViewById(R.id.horizontal_recycler_view);
+//        it_cluster_recyclerView = industry_talks_card_view.findViewById(R.id.horizontal_recycler_view);
 
         student_life_card_view = findViewById(R.id.student_life_card_view);
         TextView header2 = student_life_card_view.findViewById(R.id.cluster_header);

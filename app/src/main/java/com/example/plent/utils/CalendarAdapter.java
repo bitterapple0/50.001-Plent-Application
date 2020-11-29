@@ -3,6 +3,7 @@ package com.example.plent.utils;
 import android.app.Activity;
 import android.graphics.Color;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,17 @@ import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 import com.example.plent.myActivities.CalendarActivity;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyViewHolder>{
 
     List<Event> calendarEvents;
+    List<Event> calendarEventsAll;
     private Activity CalendarActivity;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -48,6 +54,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
 
     public CalendarAdapter(List<Event> calendarEvents) {
         this.calendarEvents = calendarEvents;
+        this.calendarEventsAll = new ArrayList<>(calendarEvents);
     }
 
     @NonNull
@@ -83,4 +90,19 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
         return calendarEvents.size();
     }
 
+    // it edits the calendarEvent array which is what will be displayed in the recycleviewer.
+    // calendarEventsAll what we use to remember all the user events.
+    public void filterEvents(Calendar date){
+        calendarEvents.clear();
+        String calendarDate = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1 ,date.get(Calendar.DATE)).toString();
+
+        for(Event e : calendarEventsAll){
+
+            if (e.getDate().toString().equals(calendarDate)){
+                calendarEvents.add(e);
+
+            }
+        }
+        notifyDataSetChanged();
+    }
 }
