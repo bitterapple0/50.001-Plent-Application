@@ -57,13 +57,13 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.eventOrganiser = eventOrganiser;
         this.eventListAll = new ArrayList<>(eventList);
         this.context = context;
-        for(Event e : eventListAll){
+        /*for(Event e : eventListAll){
 //            TODO manage event view
 //            Need to implement the getter for the organiser
 //            if(e.getOrganiser() == eventOrganiser){
 //                this.eventList.add(e);
 //            }
-        }
+        }*/
     }
 
     @Override
@@ -141,10 +141,15 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View horizontalEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
                 RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
                 // TODO need to find a way to fix the view
-                params1.width = 180;
+                int horizontalWidth = parent.getMeasuredWidth() / 5;
+                params1.width = horizontalWidth;
                 horizontalEventView.setLayoutParams(params1);
                 viewHolder = new SeeAllEventViewHolder(horizontalEventView);
                 break;
+            case VIEW_TYPE_MANAGE_EVENT:
+                View manageEventView = layoutInflater.inflate(R.layout.manage_event_card, parent, false);
+                RecyclerView.LayoutParams manageEventParams = (RecyclerView.LayoutParams) manageEventView.getLayoutParams();
+                viewHolder = new ManageEventViewHolder(manageEventView);
 
             default:
                 View emptyView = layoutInflater.inflate(R.layout.search_placeholder, parent, false);
@@ -182,6 +187,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 EmptyViewHolder emptyViewHolder = (EmptyViewHolder) holder;
                 setEmptyEventDetails(emptyViewHolder, position);
                 break;
+            case VIEW_TYPE_MANAGE_EVENT:
+                ManageEventViewHolder manageEventViewHolder = (ManageEventViewHolder) holder;
+                setManageEventDetails(manageEventViewHolder, position);
             default:
                 break;
 
@@ -208,6 +216,11 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager){
             vh.placeholderText.setText("No Events to display :(");
         }
+    }
+
+    private void setManageEventDetails (ManageEventViewHolder vh, int position){
+        Event current_event = eventList.get(position);
+
     }
 
     /****** Adapter Methods ******/
@@ -309,6 +322,19 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
             placeholderText = itemView.findViewById(R.id.placeholder_text);
             placeholderImage = itemView.findViewById(R.id.placeholder_image);
+        }
+    }
+
+    class ManageEventViewHolder extends RecyclerView.ViewHolder {
+        TextView title;
+        TextView timing;
+        TextView location;
+
+        public ManageEventViewHolder(@NonNull View itemView) {
+            super(itemView);
+            title = itemView.findViewById(R.id.event_title);
+            timing = itemView.findViewById(R.id.event_time);
+            location = itemView.findViewById(R.id.location);
         }
     }
 
