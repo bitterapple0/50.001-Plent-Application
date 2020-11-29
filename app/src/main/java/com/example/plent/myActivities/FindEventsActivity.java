@@ -105,11 +105,11 @@ public class FindEventsActivity extends MenuActivity {
             studentLifeEvents.add(emptyEvent);
             //events.add(testEvent);
         }
-        fr_adapter = new SearchRecyclerAdapter(fifthRowEvents, ActivityType.FIFTH_ROW);
+        fr_adapter = new SearchRecyclerAdapter(fifthRowEvents, ActivityType.FIFTH_ROW, this);
         fr_cluster_recyclerView.setAdapter(fr_adapter);
-        it_adapter = new SearchRecyclerAdapter(industryTalkEvents, ActivityType.INDUSTRY_TALK);
+        it_adapter = new SearchRecyclerAdapter(industryTalkEvents, ActivityType.INDUSTRY_TALK, this);
         it_cluster_recyclerView.setAdapter(it_adapter);
-        sl_adapter = new SearchRecyclerAdapter(studentLifeEvents, ActivityType.STUDENT_LIFE);
+        sl_adapter = new SearchRecyclerAdapter(studentLifeEvents, ActivityType.STUDENT_LIFE, this);
         sl_cluster_recyclerView.setAdapter(sl_adapter);
 
 

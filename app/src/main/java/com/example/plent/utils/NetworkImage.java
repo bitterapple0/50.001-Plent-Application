@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.function.Function;
 
 public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
+    private String TAG = "NETWORK IMAGE";
     private ImageView bmImage;
     private Integer imageHeight;
     private Integer imageWidth;
@@ -70,8 +71,12 @@ public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
         if (imageWidth == null || imageHeight == null) {
             bmImage.setImageBitmap(result);
         } else {
-            Bitmap scaledImage = Bitmap.createScaledBitmap(result, imageWidth, imageHeight, false);
-            bmImage.setImageBitmap(scaledImage);
+            if (result != null) {
+                Log.i(TAG, "network image width " + imageWidth);
+                Log.i(TAG, "network image height " + imageHeight);
+                Bitmap scaledImage = Bitmap.createScaledBitmap(result, imageWidth, imageHeight, false);
+                bmImage.setImageBitmap(scaledImage);
+            }
         }
         if (callback != null) callback.callback(bmImage);
     }
