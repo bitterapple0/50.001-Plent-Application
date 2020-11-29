@@ -179,8 +179,7 @@ public class LoginActivity extends AppCompatActivity {
                     userCred = response.body();
 
                     if (userCred == null) {
-                        Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. \\n\" +\n" +
-                                "                                \"Try using another email address or Create a new account", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. Try using another email address or Create a new account", Toast.LENGTH_LONG).show();
                     } else {
                         if (userCred.getPassword().equals(password.getText().toString())) {
                             SharedPreferences.Editor preferencesEditor = mPreferences.edit();

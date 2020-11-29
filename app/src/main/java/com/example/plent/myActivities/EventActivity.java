@@ -38,6 +38,8 @@ import com.google.gson.Gson;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
+
 
 public class EventActivity extends MenuActivity {
 
@@ -81,7 +83,7 @@ public class EventActivity extends MenuActivity {
             // if no event id is stored, bring them back to find events activity screen
             backToFindEvents();
         } else {
-            eventId = extras.getString(Constants.SELECTED_EVENT_KEY);
+            eventId = extras.getString(PREVIOUS_ACTIVITY);
             if (eventId == null) {
                 // if no event id is stored, bring them back to find events activity screen
                 backToFindEvents();

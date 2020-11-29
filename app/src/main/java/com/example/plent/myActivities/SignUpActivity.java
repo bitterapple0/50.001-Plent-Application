@@ -8,6 +8,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -33,6 +34,8 @@ import com.google.gson.Gson;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.*;
+
+import static com.example.plent.utils.Constants.SHARED_PREF_FILE;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -118,8 +121,9 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
+        Log.d(TAG, "Activity Created");
         api = Api.getInstance().apiModel;
-
+        mPreferences = getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
@@ -250,13 +254,18 @@ public class SignUpActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                Log.d(TAG, "On Response Called" );
                 if (!response.isSuccessful()) {
                     Toast.makeText(SignUpActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
+                    Log.d(TAG, "onResponse was successful");
                     Log.i(TAG, "retrieved user id: " + response.body().getId() + ", " + response.body().getPermission());
                     user.removePassword();
-                    user.setId(response.body().getId());
-                    user.setPermission(response.body().getPermission());
+                    Log.d(TAG, "User.removepassword was successful");
+                    user.setId("test_id");
+                    Log.d(TAG, "User.setID was successful");
+                    user.setPermission(1);
+                    Log.d(TAG, "User.setPermission was successful");
                     onSubmitSuccess();
                 }
             }

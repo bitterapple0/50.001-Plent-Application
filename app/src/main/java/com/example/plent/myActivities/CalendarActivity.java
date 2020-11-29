@@ -38,6 +38,9 @@ import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
+import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
+
+
 public class CalendarActivity extends MenuActivity {
 
     CardView cardview;
