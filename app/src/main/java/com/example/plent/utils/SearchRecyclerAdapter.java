@@ -16,26 +16,48 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plent.R;
+import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
-
+// WHat if i create another parameter in the adapter called eventType. Then, fileter all events based on this type during
+// the constructor call?
     private List<Event> eventList;
     private List<Event> eventListAll;
     private RecyclerView recyclerView;
+    private ActivityType eventType = null;
+    private String eventOrganiser = null;
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_SEARCH_EVENT = 1;
     private static final int VIEW_TYPE_SEE_ALL_EVENT = 2;
     private static final int VIEW_TYPE_HORIZONTAL_EVENT = 3;
+    private static final int VIEW_TYPE_MANAGE_EVENT = 4;
 
 
 
     public SearchRecyclerAdapter(List<Event> eventList) {
         this.eventList = eventList;
         this.eventListAll = new ArrayList<>(eventList);
+    }
+
+    public SearchRecyclerAdapter(List<Event> eventList, ActivityType eventType) {
+        this.eventType = eventType;
+        this.eventList=eventList;
+        
+    }
+    public SearchRecyclerAdapter(List<Event> eventList, String eventOrganiser) {
+        this.eventOrganiser = eventOrganiser;
+        this.eventListAll = new ArrayList<>(eventList);
+        for(Event e : eventListAll){
+//            TODO manage event view
+//            Need to implement the getter for the organiser
+//            if(e.getOrganiser() == eventOrganiser){
+//                this.eventList.add(e);
+//            }
+        }
     }
 
     @Override
@@ -55,24 +77,36 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
+//        if (eventList.size() == 0){
+//            return VIEW_TYPE_EMPTY;
+//        }else{
+//            Event e = eventList.get(0);
+//            for (int i = 1; i < eventList.size(); i++) {
+//                if(e.getType()!=eventList.get(i).getType()){
+//                    return VIEW_TYPE_SEARCH_EVENT;
+//                }else{
+//                    e = eventList.get(i);
+//                }
+//            }
+//        }
+//        if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
+//            return VIEW_TYPE_SEE_ALL_EVENT;
+//        }else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager){
+//            return VIEW_TYPE_HORIZONTAL_EVENT;
+//        }
+//        return 0;
         if (eventList.size() == 0){
             return VIEW_TYPE_EMPTY;
-        }else{
-            Event e = eventList.get(0);
-            for (int i = 1; i < eventList.size(); i++) {
-                if(e.getType()!=eventList.get(i).getType()){
-                    return VIEW_TYPE_SEARCH_EVENT;
-                }else{
-                    e = eventList.get(i);
-                }
+        }else if(eventType != null){
+            if (recyclerView.getLayoutManager() instanceof GridLayoutManager){
+                return VIEW_TYPE_SEE_ALL_EVENT;
+            }else if(recyclerView.getLayoutManager() instanceof LinearLayoutManager){
+                return VIEW_TYPE_HORIZONTAL_EVENT;
             }
+        }else if(eventOrganiser != null){
+            return VIEW_TYPE_MANAGE_EVENT;
         }
-        if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
-            return VIEW_TYPE_SEE_ALL_EVENT;
-        }else if (recyclerView.getLayoutManager() instanceof LinearLayoutManager){
-            return VIEW_TYPE_HORIZONTAL_EVENT;
-        }
-        return 0;
+        return VIEW_TYPE_SEARCH_EVENT;
     }
 
     @NonNull
@@ -143,7 +177,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         }
     }
-
+    /***** View Setters ******/
     private void setEventDetails (EventViewHolder vh, int position) {
         Event current_event = eventList.get(position);
         vh.name.setText(current_event.getTitle());
@@ -164,7 +198,29 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-
+    /****** Adapter Methods ******/
+    public void refreshEvents(List<Event> new_eventList, ActivityType eventType, String eventOrganiser){
+        eventListAll= new ArrayList<>(new_eventList);
+        eventList.clear();
+        if (eventType != null){
+            for(Event e : eventListAll){
+                if(e.getType() == eventType){
+                    this.eventList.add(e);
+                }
+            }
+        }else if (eventOrganiser != null){
+            for(Event e : eventListAll){
+//            TODO manage event view
+//            Need to implement the getter for the organiser
+//            if(e.getOrganiser() == eventOrganiser){
+//                this.eventList.add(e);
+//            }
+            }
+        }else{
+            this.eventList = new_eventList;
+        }
+        notifyDataSetChanged();
+    }
 
     @Override
     public Filter getFilter() {
@@ -198,6 +254,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     };
 
+
+/****** View Holder Class ******/
     class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             ImageView poster;
             TextView name;
