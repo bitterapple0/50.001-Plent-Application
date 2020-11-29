@@ -73,7 +73,6 @@ public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
             Bitmap scaledImage = Bitmap.createScaledBitmap(result, imageWidth, imageHeight, false);
             bmImage.setImageBitmap(scaledImage);
         }
-
-        callback.callback(bmImage);
+        if (callback != null) callback.callback(bmImage);
     }
 }
