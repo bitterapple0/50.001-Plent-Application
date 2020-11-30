@@ -41,15 +41,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
     List<Event> calendarEvents;
     List<Event> calendarEventsAll;
     private Activity CalendarActivity;
-    private OnCalendarListener mOnCalendarListener;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView eventTitle, time, location;
         public ImageView indicator;
         public CardView calendarCard;
 
-        public OnCalendarListener onCalendarListener;
-        public MyViewHolder(View view, OnCalendarListener onCalendarListener){
+
+        public MyViewHolder(View view){
             super(view);
             CALENDAR_CARD_CONTEXT = view.getContext();
             eventTitle = view.findViewById(R.id.calendar_title);
@@ -57,28 +56,19 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
             location = view.findViewById(R.id.calendar_location);
             indicator = view.findViewById(R.id.indicator);
             calendarCard = view.findViewById(R.id.calendar_card);
-            this.onCalendarListener = onCalendarListener;
-
-            view.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            onCalendarListener.onCalendarClick(getAdapterPosition());
         }
     }
 
-    public CalendarAdapter(List<Event> calendarEvents, OnCalendarListener onCalendarListener) {
+    public CalendarAdapter(List<Event> calendarEvents) {
         this.calendarEvents = calendarEvents;
         this.calendarEventsAll = new ArrayList<>(calendarEvents);
-        this.mOnCalendarListener = onCalendarListener;
     }
 
     @NonNull
     @Override
     public CalendarAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View calendarView = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_card, parent, false);
-        return new CalendarAdapter.MyViewHolder(calendarView, mOnCalendarListener);
+        return new CalendarAdapter.MyViewHolder(calendarView);
     }
 
     @Override
@@ -100,18 +90,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
             holder.calendarCard.setBackgroundColor(Color.parseColor("#EAFBFF"));
         }
 
-//        TODO: Not the most efficient way - can be removed if the other way works
-//        final String CAL_EVENT_CLICK = calendarEvent.getId();
+        final String CAL_EVENT_CLICK = calendarEvent.getId();
 
-//        holder.calendarCard.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View V){
-//                Intent intent = new Intent(CALENDAR_CARD_CONTEXT, EventActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                intent.putExtra(PREVIOUS_ACTIVITY, CAL_EVENT_CLICK);
-//                CALENDAR_CARD_CONTEXT.startActivity(intent);
-//            }
-//        });
+        holder.calendarCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View V){
+                Intent intent = new Intent(CALENDAR_CARD_CONTEXT, EventActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra(PREVIOUS_ACTIVITY, CAL_EVENT_CLICK);
+                CALENDAR_CARD_CONTEXT.startActivity(intent);
+            }
+        }); 
     }
 
     @Override
