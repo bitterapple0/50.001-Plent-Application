@@ -82,12 +82,16 @@ public class EventActivity extends MenuActivity {
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
             // if no event id is stored, bring them back to find events activity screen
-            backToFindEvents();
+            // TODO Need to uncomment later
+//            backToFindEvents();
+            Toast.makeText(this, "Extras is null", Toast.LENGTH_LONG).show();
         } else {
-            eventId = extras.getString(Constants.SELECTED_EVENT_KEY);
+            eventId = extras.getString(PREVIOUS_ACTIVITY);
             if (eventId == null) {
                 // if no event id is stored, bring them back to find events activity screen
-                backToFindEvents();
+                // TODO Need to uncomment later
+//                backToFindEvents();
+                Toast.makeText(this, "Extras is not null, but the event id from the put extras string is null", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -186,7 +190,7 @@ public class EventActivity extends MenuActivity {
                     if (event == null) {
                         backToFindEvents();
                     } else {
-                        if (event.getTelegram().isEmpty()) {
+                        if (event.getTelegram() == null || event.getTelegram().isEmpty()) {
                             // if there is no telegram link provided, no Join Telegram Group Button will be shown
                             joinTelegramGroupButton.setVisibility(View.INVISIBLE);
                         }
