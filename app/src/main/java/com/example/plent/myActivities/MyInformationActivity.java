@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.plent.R;
@@ -25,6 +26,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.plent.utils.Constants.SKIP_BACKEND;
 
 public class MyInformationActivity extends AppCompatActivity {
     private boolean disabled = true;
@@ -45,17 +48,23 @@ public class MyInformationActivity extends AppCompatActivity {
     private final String TAG = "MyInformation";
     ApiModel api;
 
+    String Name;
+    String Email;
+    String StudentId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.example.plent.R.layout.activity_my_information);
-
+        Log.d(TAG, "onCreate: Created");
         edit = findViewById(R.id.edit);
         logout = findViewById(R.id.logout);
         nameInput = findViewById(R.id.nameInput);
         emailInput = findViewById(R.id.emailInput);
         idInput = findViewById(R.id.idInput);
+
+        editedUser = new User("Place holder", "placeholder@mail.com", "1000000", "Password123*");
 
 
         Gson gson = new Gson();
@@ -71,9 +80,14 @@ public class MyInformationActivity extends AppCompatActivity {
             Log.i(TAG, "json");
             user = gson.fromJson(json, User.class);
 
-            idInput.setText(user.getStudentId());
-            emailInput.setText(user.getEmail());
-            nameInput.setText(user.getName());
+            Name = user.getName();
+            Email = user.getEmail();
+            StudentId = user.getStudentId();
+
+            idInput.setText(StudentId, TextView.BufferType.EDITABLE);
+            emailInput.setText(Email, TextView.BufferType.EDITABLE);
+            nameInput.setText(Name, TextView.BufferType.EDITABLE);;
+
 
             nameInput.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -87,7 +101,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     name_CS = s;
-                    buttonStateChange();
+                    // buttonStateChange();
                 }
             });
 
@@ -103,7 +117,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     email_CS = s;
-                    buttonStateChange();
+                    // buttonStateChange();
                 }
             });
 
@@ -119,7 +133,7 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     id_CS = s;
-                    buttonStateChange();
+                    // buttonStateChange();
                 }
             });
         }
@@ -154,43 +168,62 @@ public class MyInformationActivity extends AppCompatActivity {
     }
 
     private void editUser() {
-        Call<User> call = api.editUser(editedUser);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (!response.isSuccessful()) {
+        if (SKIP_BACKEND) {
+            Gson gson = new Gson();
+            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+            // preferencesEditor.remove(Constants.USER_KEY);
+            preferencesEditor.putString(Constants.USER_KEY, gson.toJson(editedUser));
+            preferencesEditor.apply();
+
+            Toast.makeText(MyInformationActivity.this, "Your details have been updated !",
+                    Toast.LENGTH_LONG).show();
+
+        }
+        else{
+            Call<User> call = api.editUser(editedUser);
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
+                                Toast.LENGTH_LONG).show();
+
+                        nameInput.setText(user.getName());
+                        idInput.setText(user.getId());
+                        emailInput.setText(user.getEmail());
+                    } else {
+                        Gson gson = new Gson();
+                        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+                        preferencesEditor.remove(Constants.USER_KEY);
+                        preferencesEditor.putString(Constants.USER_KEY, gson.toJson(editedUser));
+                        preferencesEditor.apply();
+                        Toast.makeText(MyInformationActivity.this, "Your details have been updated !",
+                                Toast.LENGTH_LONG).show();
+
+                        nameInput.setText(editedUser.getName());
+                        idInput.setText(editedUser.getId());
+                        emailInput.setText(editedUser.getEmail());
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    t.printStackTrace();
                     Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
                             Toast.LENGTH_LONG).show();
-
-                    nameInput.setHint(user.getName());
-                    idInput.setHint(user.getId());
-                    emailInput.setHint(user.getEmail());
-                } else {
-                    Gson gson = new Gson();
-                    SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-                    // preferencesEditor.remove(Constants.USER_KEY);
-                    preferencesEditor.putString(Constants.USER_KEY, gson.toJson(editedUser));
-                    preferencesEditor.apply();
-                    Toast.makeText(MyInformationActivity.this, "Your details have been updated !",
-                            Toast.LENGTH_LONG).show();
-                    finish();
                 }
-            }
+            });
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void buttonStateChange() {
-        changed = (name_CS != user.getName() && !name_CS.toString().isEmpty()
-                && email_CS != user.getEmail() && !email_CS.toString().isEmpty())
-                && id_CS != user.getId() && !id_CS.toString().isEmpty();
+        changed = (name_CS != Name && !name_CS.toString().isEmpty()
+                && email_CS != Email && !email_CS.toString().isEmpty())
+                && id_CS != StudentId && !id_CS.toString().isEmpty();
         if (changed) {
             disabled = false;
             edit.setTextAppearance(R.style.Primary_Button);
