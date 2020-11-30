@@ -14,16 +14,16 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        >
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <TextView
-            android:id="@+id/toolbar_title"
+            android:id="@+id/search_event_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search Events"
             android:layout_margin="14dp"
-            style="@style/Toolbar_Title"/>
+            style="@style/Toolbar_Title"
+            app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     </androidx.appcompat.widget.Toolbar>
 

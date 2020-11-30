@@ -68,6 +68,24 @@
         <meta-data
             android:name="CLOUDINARY_URL"
             android:value="cloudinary://@dyaxu5mb4" />
+
     </application>
+
+    <queries>
+        <!-- Gallery -->
+        <intent>
+            <action android:name="android.intent.action.PICK_ACTIVITY"/>
+        </intent>
+
+        <intent>
+            <action android:name="android.intent.action.PICK"/>
+            <data android:mimeType="image/**" />
+        </intent>
+
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT"/>
+        </intent>
+
+    </queries>
 
 </manifest>

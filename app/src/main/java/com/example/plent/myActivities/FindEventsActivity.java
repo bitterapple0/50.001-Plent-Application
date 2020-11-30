@@ -39,6 +39,7 @@ import com.example.plent.utils.ImageUtils;
 import com.example.plent.utils.NetworkImage;
 import com.example.plent.utils.NetworkImageCallback;
 import com.example.plent.utils.SearchRecyclerAdapter;
+import com.google.gson.Gson;
 
 
 import java.time.LocalDate;
@@ -148,23 +149,26 @@ public class FindEventsActivity extends MenuActivity {
         sl_button = findViewById(R.id.student_life_card_view).findViewById(R.id.see_all_button);
         it_button = findViewById(R.id.industry_talks_card_view).findViewById(R.id.see_all_button);
         //get the id of the view clicked. (in this case button)
+
+        Gson gson = new Gson();
+
         if (fr_button.equals(view)) { // if its button1
             Intent intent1 = new Intent(FindEventsActivity.this, SeeAllActivity.class);
-            intent1.putExtra("EventType", ActivityType.FIFTH_ROW.toString());
+            String jsonString = gson.toJson(fifthRowEvents);
+            intent1.putExtra("EventList", jsonString);
             startActivity(intent1);
+
         } else if (sl_button.equals(view)) {
             Intent intent2 = new Intent(FindEventsActivity.this, SeeAllActivity.class);
-            intent2.putExtra("EventType", ActivityType.STUDENT_LIFE.toString());
+            String jsonString = gson.toJson(studentLifeEvents);
+            intent2.putExtra("EventList", jsonString);
             startActivity(intent2);
         } else if (it_button.equals(view)) {
             Intent intent3 = new Intent(FindEventsActivity.this, SeeAllActivity.class);
-            intent3.putExtra("EventType", ActivityType.INDUSTRY_TALK.toString());
+            String jsonString = gson.toJson(industryTalkEvents);
+            intent3.putExtra("EventList", jsonString);
             startActivity(intent3);
-        } else {
-            Intent intent = new Intent(FindEventsActivity.this, SeeAllActivity.class);
-            startActivity(intent);
         }
-
     }
 
     // add a poster to each cluster
@@ -219,7 +223,21 @@ public class FindEventsActivity extends MenuActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem search_icon = menu.findItem(R.id.search_events);
         search_icon.setVisible(true);
+
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.search_events){
+            Gson gson = new Gson();
+            Intent intent = new Intent(FindEventsActivity.this, SearchActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            String jsonString = gson.toJson(events);
+            intent.putExtra("EventList", jsonString);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void retrieveEvents() {

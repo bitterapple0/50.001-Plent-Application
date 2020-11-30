@@ -189,6 +189,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         vh.name.setText(current_event.getTitle());
         vh.location.setText(current_event.getLocation());
         vh.time.setText(current_event.getStartTime().toString()+" to "+current_event.getEndTime().toString());
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int imageHeight = dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
+        int imageWidth = dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
+        new NetworkImage.NetworkImageBuilder().setImageView(vh.poster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
         //TODO set the image via getImageURL
     }
     private void setSeeAllEventDetails (SeeAllEventViewHolder vh, int position) {
@@ -249,7 +253,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Event> filteredList = new ArrayList<>();
             if(constraint.toString().isEmpty()){
-                filteredList.clear();
+                filteredList.addAll(eventListAll);
             }else{
                 for(Event e : eventListAll){
                     if(e.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())){

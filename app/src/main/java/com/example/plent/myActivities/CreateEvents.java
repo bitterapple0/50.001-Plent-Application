@@ -196,9 +196,11 @@ public class CreateEvents extends AppCompatActivity {
                     } else {
                         // redirect to gallery to select image
                         Log.i("Browse", "RedirectinigToGallery");
-                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        Intent intent = new Intent(); //Intent.ACTION_PICK
                         intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_PICK);
                         if (intent.resolveActivity(getPackageManager()) != null) {
+                            Log.i("Browse", "Success");
                             startActivityForResult(intent, REQUEST_IMAGE_GET);
                         }
                     }
