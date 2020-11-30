@@ -86,7 +86,7 @@ public class EventActivity extends MenuActivity {
 //            backToFindEvents();
             Toast.makeText(this, "Extras is null", Toast.LENGTH_LONG).show();
         } else {
-            eventId = extras.getString(PREVIOUS_ACTIVITY);
+            eventId = extras.getString(SELECTED_EVENT_KEY);
             if (eventId == null) {
                 // if no event id is stored, bring them back to find events activity screen
                 // TODO Need to uncomment later

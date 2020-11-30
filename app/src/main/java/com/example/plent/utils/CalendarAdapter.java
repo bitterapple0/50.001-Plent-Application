@@ -37,6 +37,7 @@ import java.util.List;
 import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
 import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
 import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
+import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyViewHolder> {
 
@@ -138,7 +139,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
                 Intent intent = new Intent(CALENDAR_CARD_CONTEXT, EventActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 Log.d("Calendar Adapter", "onClick " + CAL_EVENT_CLICK);
-                intent.putExtra(PREVIOUS_ACTIVITY, CAL_EVENT_CLICK);
+                intent.putExtra(SELECTED_EVENT_KEY, CAL_EVENT_CLICK);
                 CALENDAR_CARD_CONTEXT.startActivity(intent);
             }
         });
