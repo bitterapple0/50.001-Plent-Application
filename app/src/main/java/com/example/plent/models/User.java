@@ -6,18 +6,16 @@ public class User {
     private String name;
     private String email;
     private String studentId;
-    private String password;
     private String id;
     private int permission; // 0 normal, 1 creator
     private ArrayList<String> events;
     private ArrayList<String> organisedEvents;
 
 
-    public User(String name, String email, String studentId, String password) {
+    public User(String name, String email, String studentId) {
         this.name = name;
         this.email = email;
         this.studentId = studentId;
-        this.password = password;
         this.events = new ArrayList();
     }
 
@@ -39,10 +37,6 @@ public class User {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setEvents(ArrayList events) {
@@ -71,20 +65,12 @@ public class User {
 
     public ArrayList<String> getEvents() { return events; }
 
-    public void removePassword() {
-        this.password = "";
-    }
-
     public void signUp(String eventId) {
         this.events.add(eventId);
     }
 
     public void cancelAttendance(String eventId) {
         this.events.remove(eventId);
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public ArrayList<String> getOrganisedEvents() {

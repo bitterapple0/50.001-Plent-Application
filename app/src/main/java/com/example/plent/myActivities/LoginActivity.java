@@ -1,5 +1,6 @@
 package com.example.plent.myActivities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
@@ -28,6 +29,11 @@ import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -41,6 +47,7 @@ import static android.view.View.INVISIBLE;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LOGIN";
     private SharedPreferences mPreferences;
+    private FirebaseAuth mAuth;
 
     private EditText email;
     private EditText password;
@@ -78,8 +85,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        mAuth = FirebaseAuth.getInstance();
         api = Api.getInstance().apiModel;
-
+FirebaseAuth.getInstance().signOut();
         // SKIPS LOGIN IF USER INFO IS ALR SAVED IN SHARED PREF
         Gson gson = new Gson();
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
@@ -144,7 +152,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     progressBar.setVisibility(View.VISIBLE);
-                    authenticateAndFetchUser();
+                    firebaseLogin();
+//                    authenticateAndFetchUser();
                 }
             }
 
@@ -161,6 +170,40 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    private void firebaseLogin() {
+        mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            authenticateAndFetchUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Incorrect credentials",
+                                    Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(INVISIBLE);
+                        }
+                    }
+                });
+    }
+
     public void authenticateAndFetchUser(){
         Call<User> call = api.getUserCred(email.getText().toString());
         call.enqueue(new Callback<User>() {
@@ -175,7 +218,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (userCred == null) {
                         Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. Try using another email address or Create a new account", Toast.LENGTH_LONG).show();
                     } else {
-                        if (userCred.getPassword().equals(password.getText().toString())) {
                             SharedPreferences.Editor preferencesEditor = mPreferences.edit();
                             Gson gson = new Gson();
                             preferencesEditor.putString(Constants.USER_KEY, gson.toJson(userCred));
@@ -186,11 +228,6 @@ public class LoginActivity extends AppCompatActivity {
                             progressBar.setVisibility(INVISIBLE);
                             startActivity(intent);
                             finish();
-                        }
-                        else {
-                            Toast.makeText(LoginActivity.this, "Please ensure that the entered credentials are correct", Toast.LENGTH_LONG).show();
-                            progressBar.setVisibility(INVISIBLE);
-                        }
                     }
                 }
             }

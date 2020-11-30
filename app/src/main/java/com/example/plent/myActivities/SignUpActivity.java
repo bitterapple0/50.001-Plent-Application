@@ -1,5 +1,6 @@
 package com.example.plent.myActivities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
@@ -29,6 +30,11 @@ import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -42,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "SIGN UP";
     public static int FIELDS = 4;
+    private FirebaseAuth mAuth;
 
     private SharedPreferences mPreferences;
 
@@ -124,6 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.signup);
         Log.d(TAG, "Activity Created");
         api = Api.getInstance().apiModel;
+        mAuth = FirebaseAuth.getInstance();
         mPreferences = getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE);
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         int height = displayMetrics.heightPixels;
@@ -217,7 +225,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (validateEmail(email.toString())) {
                         if (validatePassword(password.toString())) {
                             if (validateStudentId(studentId.toString()))
-                                createUser();
+                                authenticateWithFirebase();
                             else {
                                 Toast.makeText(SignUpActivity.this, "Oops, this is not a valid student id",
                                         Toast.LENGTH_LONG).show();
@@ -240,8 +248,29 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    private void authenticateWithFirebase() {
+        mAuth.createUserWithEmailAndPassword(email.toString(), password.toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            createUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(SignUpActivity.this, "Authentication failed. Log in instead?",
+                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(SignUpActivity.this, "Oops, this email has already been used. Log in instead!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
     private void createUser() {
-        user = new User(name.toString(), email.toString(), studentId.toString(), password.toString());
+        user = new User(name.toString(), email.toString(), studentId.toString());
         Call<User> call = api.createUser(user);
 
         call.enqueue(new Callback<User>() {
@@ -251,7 +280,6 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     if (response.body() != null) {
-                        user.removePassword();
                         user.setId(response.body().getId());
                         user.setPermission(response.body().getPermission());
                         user.setOrganisedEvents(new ArrayList<String>());
