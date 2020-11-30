@@ -55,7 +55,7 @@ import retrofit2.Response;
 import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
 import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 
-
+// TODO Comment below for the best parctice method for onCLick
 //public class CalendarActivity extends MenuActivity implements CalendarAdapter.OnCalendarListener {
 public class CalendarActivity extends MenuActivity {
 
@@ -110,7 +110,8 @@ public class CalendarActivity extends MenuActivity {
                     Log.i(TAG, "calendar upon retrieving data " + allUserEvents);
 
                     calendarAdapter = new CalendarAdapter(userEvents); // this array list is the dynamic one we will vary based on date selected
-//                    calendarAdapter = new CalendarAdapter(userEvents, CalendarActivity.this); // this array list is the dynamic one we will vary based on date selected
+                    // TODO Comment below for the best parctice method for onCLick
+//                    calendarAdapter = new CalendarAdapter(userEvents,CalendarActivity.this); // this array list is the dynamic one we will vary based on date selected
                     RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
                     recyclerView.setLayoutManager(pLayoutManager);
                     recyclerView.setAdapter(calendarAdapter);
@@ -164,6 +165,7 @@ public class CalendarActivity extends MenuActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(CalendarActivity.this, "Calendar card is Pressed ", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CalendarActivity.this, FindEventsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
@@ -188,7 +190,7 @@ public class CalendarActivity extends MenuActivity {
         return gson.fromJson(json, User.class);
     }
 
-
+    // TODO Comment below for the best parctice method for onCLick
 //    @Override
 //    public void onCalendarClick(int position) {
 //        Log.d(TAG, "Clicked the Calendar Card");
