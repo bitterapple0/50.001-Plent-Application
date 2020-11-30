@@ -38,84 +38,92 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
 
-            <devs.mulham.horizontalcalendar.HorizontalCalendarView
-                android:id="@+id/calendarView"
+                <devs.mulham.horizontalcalendar.HorizontalCalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    app:textColorSelected="@color/colorAccent"
+                    app:textColorNormal="#717171"/>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/calendar_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                app:textColorSelected="@color/colorAccent"
-                app:textColorNormal="#717171"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                >
 
-        </com.google.android.material.appbar.AppBarLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/calendar_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp"
-            >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/circle_indicator_yellow"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fifth_row_activities"
+                        style="@style/Calendar_indicator" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/circle_indicator_blue"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/industry_talks"
+                        style="@style/Calendar_indicator" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/circle_indicator_green"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/student_life"
+                        style="@style/Calendar_indicator"/>
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/calendar_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/circle_indicator_yellow"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fifth_row_activities"
-                    style="@style/Calendar_indicator" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/circle_indicator_blue"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/industry_talks"
-                    style="@style/Calendar_indicator" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/circle_indicator_green"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/student_life"
-                    style="@style/Calendar_indicator"/>
-
-
+                android:id="@+id/calendar_placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
             </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendar_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
 
         </LinearLayout>
 

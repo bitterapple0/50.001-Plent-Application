@@ -195,7 +195,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         int imageHeight = dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         int imageWidth = dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         new NetworkImage.NetworkImageBuilder().setImageView(vh.poster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
-        //TODO set the image via getImageURL
     }
     private void setSeeAllEventDetails (SeeAllEventViewHolder vh, int position) {
         final Event current_event = eventList.get(position);
