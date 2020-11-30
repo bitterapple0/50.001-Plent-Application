@@ -189,6 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             Toast.makeText(LoginActivity.this, "Please ensure that the entered credentials are correct", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(INVISIBLE);
                         }
                     }
                 }
