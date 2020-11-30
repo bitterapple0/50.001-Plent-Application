@@ -48,8 +48,6 @@ import java.util.ArrayList;
 public class FindEventsActivity extends MenuActivity {
 
     final static String TAG = "FIND EVENTS";
-    final static String placeholderImageUrl = "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1606499824/plent/poster_placeholder1_jgh6vd.png";
-    Event testEvent = new Event("Athletics Intro Session", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", ActivityType.FIFTH_ROW,"https://abhisekmishra.com/project4_3.jpg");
     Event emptyEvent = new Event("Loading...",LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "", "", "", null,""); ;
     ArrayList<Event> events = new ArrayList<>();
     ArrayList<Event> fifthRowEvents = new ArrayList<>();
