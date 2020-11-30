@@ -95,6 +95,7 @@ public class ParticipantsActivity extends MenuActivity {
                     recyclerView.setLayoutManager(pLayoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.setAdapter(participantsAdapter);
+
                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ParticipantsActivity.this, DividerItemDecoration.VERTICAL);
                     recyclerView.addItemDecoration(dividerItemDecoration);
 
