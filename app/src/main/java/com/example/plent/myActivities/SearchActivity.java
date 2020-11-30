@@ -40,8 +40,6 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         recyclerView = findViewById(R.id.recyclerView);
-        placeholderImageView = findViewById(R.id.search_placeholder_image);
-        placeholderTextView = findViewById(R.id.search_placeholder_text);
 
         Bundle bundle = getIntent().getExtras();
         String jsonString = bundle.getString("EventList");
@@ -55,15 +53,6 @@ public class SearchActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        if(eventList.isEmpty()){
-            recyclerView.setVisibility(View.GONE);
-            placeholderTextView.setVisibility(View.VISIBLE);
-            placeholderImageView.setVisibility(View.VISIBLE);
-        }else{
-            recyclerView.setVisibility(View.VISIBLE);
-            placeholderTextView.setVisibility(View.GONE);
-            placeholderImageView.setVisibility(View.GONE);
-        }
 
 
 

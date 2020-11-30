@@ -48,6 +48,7 @@ public class CalendarActivity extends MenuActivity {
     final ArrayList<Event> userEvents = new ArrayList<>();
     RecyclerView recyclerView;
     CalendarAdapter calendarAdapter;
+    LinearLayout calendar_placeholder;
 
     final Calendar defaultDate = Calendar.getInstance();
 
@@ -63,6 +64,7 @@ public class CalendarActivity extends MenuActivity {
         api = Api.getInstance().apiModel;
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
         user = getUserFromSharedPref();
+        calendar_placeholder = findViewById(R.id.calendar_placeholder);
 
         recyclerView = findViewById(R.id.calendar_events);
 
@@ -199,6 +201,19 @@ public class CalendarActivity extends MenuActivity {
 //        Intent intent = new Intent(this, EventActivity.class);
 //        intent.putExtra(SELECTED_EVENT_KEY, userEvents.get(position).getId());
 //        startActivity(intent); }
+
+//    private void setListAppearance() {
+//        if (UserEvent.isEmpty()) {
+//            recyclerView.setVisibility(View.GONE);
+//            numberOfParticipants.setText("(0)");
+//            placeholder_participants.setVisibility(View.VISIBLE);
+//            placeholder_participants_text.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            calendar_placeholder.setVisibility(View.VISIBLE);
+//        }
+//
+//    }
 
 
     }
