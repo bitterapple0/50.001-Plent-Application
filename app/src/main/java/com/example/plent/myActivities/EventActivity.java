@@ -83,14 +83,14 @@ public class EventActivity extends MenuActivity {
         if(extras == null) {
             // if no event id is stored, bring them back to find events activity screen
             // TODO Need to uncomment later
-//            backToFindEvents();
+            backToFindEvents();
             Toast.makeText(this, "Extras is null", Toast.LENGTH_LONG).show();
         } else {
             eventId = extras.getString(SELECTED_EVENT_KEY);
             if (eventId == null) {
                 // if no event id is stored, bring them back to find events activity screen
                 // TODO Need to uncomment later
-//                backToFindEvents();
+                backToFindEvents();
                 Toast.makeText(this, "Extras is not null, but the event id from the put extras string is null", Toast.LENGTH_LONG).show();
             }
         }
@@ -203,7 +203,7 @@ public class EventActivity extends MenuActivity {
                         timeDate.setText(dateString);
                         description.setText(event.getDescription());
                         clashText.setText(event.getClashString());
-
+                        Log.i(TAG, "event activity " + user.getEvents());
                         // setting image
                         try {
                             new NetworkImage.NetworkImageBuilder().setImageView(eventPoster).build().execute(event.getImageUrl());

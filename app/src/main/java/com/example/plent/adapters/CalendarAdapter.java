@@ -1,41 +1,32 @@
-package com.example.plent.utils;
+package com.example.plent.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
-import com.example.plent.myActivities.CalendarActivity;
 import com.example.plent.myActivities.EventActivity;
+import com.example.plent.utils.DateTimeUtils;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
-import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
 import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyViewHolder> {
@@ -174,6 +165,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
         notifyDataSetChanged();
     }
 
+    public void updateEvents(ArrayList<Event> events) {
+        this.calendarEvents = new ArrayList<>(events);
+        this.calendarEventsAll = new ArrayList<>(events);
+        notifyDataSetChanged();
+    }
 
     // TODO Comment below for the best parctice method for onCLick
 //    public interface OnCalendarListener {

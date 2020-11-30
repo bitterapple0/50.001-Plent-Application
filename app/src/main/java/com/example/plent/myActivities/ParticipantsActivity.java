@@ -1,18 +1,12 @@
 package com.example.plent.myActivities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -27,12 +21,10 @@ import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
-import com.example.plent.utils.ParticipantsAdapter;
+import com.example.plent.adapters.ParticipantsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
 
 public class ParticipantsActivity extends MenuActivity {
 

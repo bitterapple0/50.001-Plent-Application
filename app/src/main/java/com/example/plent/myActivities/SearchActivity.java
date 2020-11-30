@@ -14,15 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.plent.R;
-import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
-import com.example.plent.utils.SearchRecyclerAdapter;
+import com.example.plent.adapters.SearchRecyclerAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.plent.utils;
+package com.example.plent.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,10 @@ import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 import com.example.plent.myActivities.EventActivity;
 import com.example.plent.myActivities.ManageEventsActivity;
+import com.example.plent.myActivities.ParticipantsActivity;
+import com.example.plent.utils.Constants;
+import com.example.plent.utils.DateTimeUtils;
+import com.example.plent.utils.NetworkImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +156,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     GridLayoutManager.LayoutParams params_empty_see_all = (GridLayoutManager.LayoutParams) emptyView.getLayoutParams();
                     params_empty_see_all.width = parent.getMeasuredWidth();
                     emptyView.setLayoutParams(params_empty_see_all);
-
                 }
                 viewHolder = new EmptyViewHolder(emptyView);
                 break;
@@ -208,7 +212,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 Intent intent = new Intent(context, EventActivity.class);
                 intent.putExtra(Constants.SELECTED_EVENT_KEY, SEARCH_TO_EVENT);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                SEARCH_CONTEXT.startActivity(intent);
+                context.startActivity(intent);
             }
         });
     }
@@ -226,11 +230,11 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         vh.seeAllPoster.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SEE_ALL_CONTEXT, EventActivity.class);
+                Intent intent = new Intent(context, EventActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 Log.d("Calendar Adapter", "onClick " + SEE_ALL_TO_EVENT);
                 intent.putExtra(SELECTED_EVENT_KEY, SEE_ALL_TO_EVENT);
-                SEE_ALL_CONTEXT.startActivity(intent);
+                context.startActivity(intent);
             }
         });
     }
@@ -244,10 +248,20 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private void setManageEventDetails (ManageEventViewHolder vh, int position){
-        Event current_event = eventList.get(position);
+        final Event current_event = eventList.get(position);
         vh.title.setText(current_event.getTitle());
         vh.location.setText(current_event.getLocation());
         vh.timing.setText(DateTimeUtils.formatDate(current_event.getDate()) + ", " + DateTimeUtils.formatTime24H(current_event.getStartTime()) + " - " + DateTimeUtils.formatTime24H(current_event.getEndTime()));
+
+        vh.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ParticipantsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra(SELECTED_EVENT_KEY, current_event.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     /****** Adapter Methods ******/
@@ -361,12 +375,14 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView title;
         TextView timing;
         TextView location;
+        RelativeLayout mainLayout;
 
         public ManageEventViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.event_title);
             timing = itemView.findViewById(R.id.event_time);
             location = itemView.findViewById(R.id.event_location);
+            mainLayout = itemView.findViewById(R.id.manage_events_card);
         }
 
     }

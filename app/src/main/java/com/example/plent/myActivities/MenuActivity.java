@@ -1,26 +1,31 @@
 package com.example.plent.myActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.plent.R;
-import com.example.plent.utils.SearchRecyclerAdapter;
+import com.example.plent.adapters.SearchRecyclerAdapter;
+import com.example.plent.models.User;
+import com.example.plent.utils.Constants;
+import com.google.gson.Gson;
 
 public class MenuActivity extends AppCompatActivity {
-    int permission = 1;
-
     SearchRecyclerAdapter searchRecyclerAdapter;
+    SharedPreferences mPreferences;
+    int permission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            }
+        mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
+        permission = getUserFromSharedPref().getPermission();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,6 +86,22 @@ public class MenuActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private User getUserFromSharedPref() {
+        Gson gson = new Gson();
+        String json = mPreferences.getString(Constants.USER_KEY, null);
+
+        if (json == null) {
+            // redirect to login page if no user info stored
+            Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            finish();
+
+            return null;
+        }
+        return gson.fromJson(json, User.class);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.plent.utils;
+package com.example.plent.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

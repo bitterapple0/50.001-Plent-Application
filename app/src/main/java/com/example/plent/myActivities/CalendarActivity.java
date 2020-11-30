@@ -6,15 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
@@ -22,25 +14,16 @@ import com.example.plent.models.ApiModel;
 import com.example.plent.models.Event;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
-import com.example.plent.utils.CalendarAdapter;
+import com.example.plent.adapters.CalendarAdapter;
 import com.example.plent.utils.Constants;
-import com.example.plent.utils.DateTimeUtils;
-import com.example.plent.utils.ParticipantsAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,9 +34,6 @@ import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
-import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 
 // TODO Comment below for the best parctice method for onCLick
 //public class CalendarActivity extends MenuActivity implements CalendarAdapter.OnCalendarListener {
@@ -68,6 +48,8 @@ public class CalendarActivity extends MenuActivity {
     final ArrayList<Event> userEvents = new ArrayList<>();
     RecyclerView recyclerView;
     CalendarAdapter calendarAdapter;
+
+    final Calendar defaultDate = Calendar.getInstance();
 
     CalendarEvent c1 = new CalendarEvent(Color.parseColor("#EAD620"), "event");
     CalendarEvent c2 = new CalendarEvent(Color.parseColor("#81D2AC"), "event");
@@ -84,6 +66,14 @@ public class CalendarActivity extends MenuActivity {
 
         recyclerView = findViewById(R.id.calendar_events);
 
+        // to retain most recently selected date when calling recreate()
+        Bundle test = getIntent().getExtras();
+        if (test != null ) {
+            String[] date = test.getString("DATE").split("-");
+            defaultDate.set(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+            Log.i(TAG, "calendar " + test.getString("DATE"));
+        }
+
         /* starts before 1 month from now */
         final Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
@@ -92,7 +82,6 @@ public class CalendarActivity extends MenuActivity {
         final Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
-        final Calendar defaultSelectedDate = Calendar.getInstance();
         LocalDate startLocalDate =  LocalDate.of(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH)+1, startDate.get(Calendar.DATE));
         LocalDate endLocalDate =  LocalDate.of(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH)+1, endDate.get(Calendar.DATE));
 
@@ -116,11 +105,11 @@ public class CalendarActivity extends MenuActivity {
                     recyclerView.setLayoutManager(pLayoutManager);
                     recyclerView.setAdapter(calendarAdapter);
 
-                    calendarAdapter.filterEvents(defaultSelectedDate);
-
+                    calendarAdapter.filterEvents(defaultDate);
+                    Log.i(TAG, defaultDate.toString());
                     HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(CalendarActivity.this, R.id.calendarView).range(startDate, endDate)
                             .datesNumberOnScreen(5)
-                            .defaultSelectedDate(defaultSelectedDate)
+                            .defaultSelectedDate(defaultDate)
                             .addEvents(new CalendarEventsPredicate() {
                                 @Override
                                 public List<CalendarEvent> events(Calendar date) {
@@ -148,6 +137,7 @@ public class CalendarActivity extends MenuActivity {
                         @Override
                         public void onDateSelected(Calendar date, int position) {
                             calendarAdapter.filterEvents(date);
+                            getIntent().putExtra("DATE", "" + date.get(Calendar.YEAR) + "-" + date.get(Calendar.MONTH) + "-" + date.get(Calendar.DATE));
                         }
                     });
                 }
@@ -171,6 +161,18 @@ public class CalendarActivity extends MenuActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        user = getUserFromSharedPref();
+        for (Event e: allUserEvents) {
+            if (!user.getEvents().contains(e.getId())) {
+                recreate();
+            }
+        }
     }
 
     private User getUserFromSharedPref() {

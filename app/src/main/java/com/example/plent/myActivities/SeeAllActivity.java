@@ -1,42 +1,23 @@
 package com.example.plent.myActivities;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
-import com.example.plent.models.ApiModel;
 import com.example.plent.models.Event;
-import com.example.plent.utils.Api;
-import com.example.plent.utils.Constants;
-import com.example.plent.utils.SearchRecyclerAdapter;
+import com.example.plent.adapters.SearchRecyclerAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.example.plent.models.ActivityType.FIFTH_ROW;
-import static com.example.plent.models.ActivityType.INDUSTRY_TALK;
-import static com.example.plent.models.ActivityType.STUDENT_LIFE;
 
 public class SeeAllActivity extends AppCompatActivity {
 

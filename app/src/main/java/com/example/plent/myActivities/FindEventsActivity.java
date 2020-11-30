@@ -1,27 +1,17 @@
 package com.example.plent.myActivities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import retrofit2.Call;
@@ -32,13 +22,9 @@ import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.ApiModel;
 import com.example.plent.models.Event;
-import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
-import com.example.plent.utils.ImageUtils;
-import com.example.plent.utils.NetworkImage;
-import com.example.plent.utils.NetworkImageCallback;
-import com.example.plent.utils.SearchRecyclerAdapter;
+import com.example.plent.adapters.SearchRecyclerAdapter;
 import com.google.gson.Gson;
 
 

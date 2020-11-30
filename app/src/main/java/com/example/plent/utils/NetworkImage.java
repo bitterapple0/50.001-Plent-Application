@@ -55,13 +55,11 @@ public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
 
     protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
-       // Log.i("NETWORK IMAGE", urldisplay);
         Bitmap mIcon11 = null;
         try {
             InputStream in = new java.net.URL(urldisplay).openStream();
             mIcon11 = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
-            Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
         return mIcon11;
@@ -72,8 +70,6 @@ public class NetworkImage extends AsyncTask<String, Void, Bitmap> {
             bmImage.setImageBitmap(result);
         } else {
             if (result != null) {
-                Log.i(TAG, "network image width " + imageWidth);
-                Log.i(TAG, "network image height " + imageHeight);
                 Bitmap scaledImage = Bitmap.createScaledBitmap(result, imageWidth, imageHeight, false);
                 bmImage.setImageBitmap(scaledImage);
             }

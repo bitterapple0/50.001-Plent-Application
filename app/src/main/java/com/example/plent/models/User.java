@@ -8,16 +8,11 @@ public class User {
     private String studentId;
     private String password;
     private String id;
-    private int permission = 1; // 0 normal, 1 creator
+    private int permission; // 0 normal, 1 creator
     private ArrayList<String> events;
     private ArrayList<String> organisedEvents;
 
-    public int getPermission() {
-        return permission;
-    }
-    public void setPermission(int permission) {
-        this.permission = permission;
-    }
+
     public User(String name, String email, String studentId, String password) {
         this.name = name;
         this.email = email;
@@ -54,6 +49,14 @@ public class User {
         this.events = events;
     }
 
+    public void setPermission(int permission) {
+        this.permission = permission;
+    }
+
+    public int getPermission() {
+        return permission;
+    }
+
     public String getName() {
         return name;
     }
@@ -66,7 +69,7 @@ public class User {
         return studentId;
     }
 
-    public ArrayList getEvents() { return events; }
+    public ArrayList<String> getEvents() { return events; }
 
     public void removePassword() {
         this.password = "";

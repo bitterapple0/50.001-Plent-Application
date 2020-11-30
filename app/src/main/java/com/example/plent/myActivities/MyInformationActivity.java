@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.plent.R;
 import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
+import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
 import com.google.gson.Gson;
 
@@ -57,6 +58,8 @@ public class MyInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.example.plent.R.layout.activity_my_information);
+        api = Api.getInstance().apiModel;
+
         Log.d(TAG, "onCreate: Created");
         edit = findViewById(R.id.edit);
         logout = findViewById(R.id.logout);
@@ -168,54 +171,42 @@ public class MyInformationActivity extends AppCompatActivity {
     }
 
     private void editUser() {
-        if (SKIP_BACKEND) {
-            Gson gson = new Gson();
-            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-            // preferencesEditor.remove(Constants.USER_KEY);
-            preferencesEditor.putString(Constants.USER_KEY, gson.toJson(editedUser));
-            preferencesEditor.apply();
-
-            Toast.makeText(MyInformationActivity.this, "Your details have been updated !",
-                    Toast.LENGTH_LONG).show();
-
-        }
-        else{
-            Call<User> call = api.editUser(editedUser);
-            call.enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
-                                Toast.LENGTH_LONG).show();
-
-                        nameInput.setText(user.getName());
-                        idInput.setText(user.getId());
-                        emailInput.setText(user.getEmail());
-                    } else {
-                        Gson gson = new Gson();
-                        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-                        preferencesEditor.remove(Constants.USER_KEY);
-                        preferencesEditor.putString(Constants.USER_KEY, gson.toJson(editedUser));
-                        preferencesEditor.apply();
-                        Toast.makeText(MyInformationActivity.this, "Your details have been updated !",
-                                Toast.LENGTH_LONG).show();
-
-                        nameInput.setText(editedUser.getName());
-                        idInput.setText(editedUser.getId());
-                        emailInput.setText(editedUser.getEmail());
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    t.printStackTrace();
+        Call<User> call = api.editUser(editedUser);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (!response.isSuccessful()) {
                     Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
                             Toast.LENGTH_LONG).show();
-                }
-            });
 
-        }
+                    nameInput.setText(user.getName());
+                    idInput.setText(user.getId());
+                    emailInput.setText(user.getEmail());
+                } else {
+                    Gson gson = new Gson();
+                    SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+                    preferencesEditor.remove(Constants.USER_KEY);
+                    preferencesEditor.putString(Constants.USER_KEY, gson.toJson(editedUser));
+                    preferencesEditor.apply();
+                    Toast.makeText(MyInformationActivity.this, "Your details have been updated !",
+                            Toast.LENGTH_LONG).show();
+
+                    nameInput.setText(editedUser.getName());
+                    idInput.setText(editedUser.getId());
+                    emailInput.setText(editedUser.getEmail());
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 
     }
 
