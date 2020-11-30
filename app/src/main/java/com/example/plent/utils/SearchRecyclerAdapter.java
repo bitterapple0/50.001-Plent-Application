@@ -212,7 +212,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         Event current_event = eventList.get(position);
         vh.title.setText(current_event.getTitle());
         vh.location.setText(current_event.getLocation());
-        //vh.timing.setText(current_event.getStartTime().toString()+" to "+current_event.getEndTime().toString());
+        vh.timing.setText(DateTimeUtils.formatDate(current_event.getDate()) + ", " + DateTimeUtils.formatTime24H(current_event.getStartTime()) + " - " + DateTimeUtils.formatTime24H(current_event.getEndTime()));
     }
 
     /****** Adapter Methods ******/

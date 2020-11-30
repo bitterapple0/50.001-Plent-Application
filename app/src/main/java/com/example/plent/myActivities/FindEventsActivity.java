@@ -230,19 +230,22 @@ public class FindEventsActivity extends MenuActivity {
                 if (!response.isSuccessful()) {
                     Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
-//                    ArrayList<String> eventIds = new ArrayList<>();
-//                    for (Event e: events) {
-//                        eventIds.add(e.getId());
-//                    }
-//                    for (Event e: response.body()) {
-//                        if (!eventIds.contains(e.getId())) {
-//                            createClusterCards(e.getType(), e.getImageUrl());
-//                        }
-//                    }
-                    events = response.body();
-                    fr_adapter.refreshEvents(events, ActivityType.FIFTH_ROW, null);
-                    it_adapter.refreshEvents(events, ActivityType.INDUSTRY_TALK, null);
-                    sl_adapter.refreshEvents(events, ActivityType.STUDENT_LIFE, null);
+                    boolean refreshCards = false;
+                    ArrayList<String> eventIds = new ArrayList<>();
+                    for (Event e: events) {
+                        eventIds.add(e.getId());
+                    }
+                    for (Event e: response.body()) {
+                        if (!eventIds.contains(e.getId())) {
+                            refreshCards = true;
+                        }
+                    }
+                    if (refreshCards) {
+                        events = response.body();
+                        fr_adapter.refreshEvents(events, ActivityType.FIFTH_ROW, null);
+                        it_adapter.refreshEvents(events, ActivityType.INDUSTRY_TALK, null);
+                        sl_adapter.refreshEvents(events, ActivityType.STUDENT_LIFE, null);
+                    }
                     Log.i(TAG, "find events " +events.toString());
                 }
             }
