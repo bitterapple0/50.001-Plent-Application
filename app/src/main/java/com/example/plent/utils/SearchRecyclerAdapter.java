@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -28,6 +29,9 @@ import com.example.plent.myActivities.ManageEventsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.plent.utils.Constants.SEE_ALL_CONTEXT;
+import static com.example.plent.utils.Constants.SEARCH_CONTEXT;
+import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 import static com.example.plent.utils.ImageUtils.*;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
@@ -183,6 +187,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             default:
                 break;
 
+
         }
     }
     /***** View Setters ******/
@@ -195,6 +200,17 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         int imageHeight = dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         int imageWidth = dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         new NetworkImage.NetworkImageBuilder().setImageView(vh.poster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
+
+        final String SEARCH_TO_EVENT = current_event.getId();
+        vh.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EventActivity.class);
+                intent.putExtra(Constants.SELECTED_EVENT_KEY, SEARCH_TO_EVENT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                SEARCH_CONTEXT.startActivity(intent);
+            }
+        });
     }
     private void setSeeAllEventDetails (SeeAllEventViewHolder vh, int position) {
         final Event current_event = eventList.get(position);
@@ -204,13 +220,17 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         int imageWidth = dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
 
-        vh.seeAllPoster.setOnClickListener(new View.OnClickListener() {
+
+        final String SEE_ALL_TO_EVENT = current_event.getId();
+
+        vh.seeAllPoster.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, EventActivity.class);
-                intent.putExtra(Constants.SELECTED_EVENT_KEY, current_event.getId());
+            public void onClick(View v) {
+                Intent intent = new Intent(SEE_ALL_CONTEXT, EventActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                context.startActivity(intent);
+                Log.d("Calendar Adapter", "onClick " + SEE_ALL_TO_EVENT);
+                intent.putExtra(SELECTED_EVENT_KEY, SEE_ALL_TO_EVENT);
+                SEE_ALL_CONTEXT.startActivity(intent);
             }
         });
     }
@@ -293,6 +313,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             TextView name;
             TextView time;
             TextView location;
+            Button button;
+
         public EventViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -300,6 +322,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             name = itemView.findViewById(R.id.search_event_name);
             time = itemView.findViewById(R.id.search_event_time);
             location = itemView.findViewById(R.id.search_event_location);
+            button = itemView.findViewById(R.id.search_event_button);
+
+            SEARCH_CONTEXT = itemView.getContext();
         }
         //TODO fix this onclick to direct to an intent
         @Override
@@ -316,6 +341,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView eventTitle;
         public SeeAllEventViewHolder(@NonNull View itemView) {
             super(itemView);
+            SEE_ALL_CONTEXT = itemView.getContext();
             seeAllPoster = itemView.findViewById(R.id.see_all_image);
             eventTitle = itemView.findViewById(R.id.see_all_event_title);
         }
