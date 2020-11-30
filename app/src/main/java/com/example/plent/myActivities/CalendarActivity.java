@@ -53,10 +53,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
-import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 
 
-public class CalendarActivity extends MenuActivity implements CalendarAdapter.OnCalendarListener {
+public class CalendarActivity extends MenuActivity {
 
     private static final String TAG = "CALENDAR";
     private ApiModel api;
@@ -108,7 +107,7 @@ public class CalendarActivity extends MenuActivity implements CalendarAdapter.On
                     }
                     Log.i(TAG, "calendar upon retrieving data " + allUserEvents);
 
-                    calendarAdapter = new CalendarAdapter(userEvents, CalendarActivity.this); // this array list is the dynamic one we will vary based on date selected
+                    calendarAdapter = new CalendarAdapter(userEvents); // this array list is the dynamic one we will vary based on date selected
                     RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
                     recyclerView.setLayoutManager(pLayoutManager);
                     recyclerView.setAdapter(calendarAdapter);
@@ -186,14 +185,4 @@ public class CalendarActivity extends MenuActivity implements CalendarAdapter.On
         return gson.fromJson(json, User.class);
     }
 
-
-    @Override
-    public void onCalendarClick(int position) {
-        Log.d(TAG, "Clicked the Calendar Card");
-        Intent intent = new Intent(this, EventActivity.class);
-        intent.putExtra(SELECTED_EVENT_KEY, userEvents.get(position).getId());
-        startActivity(intent);
-
-
-    }
 }
