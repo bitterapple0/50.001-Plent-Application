@@ -1,7 +1,9 @@
 package com.example.plent.utils;
 
 import android.content.Context;
+import android.media.Image;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
+import com.example.plent.myActivities.ManageEventsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,11 +114,21 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 break;
             case VIEW_TYPE_HORIZONTAL_EVENT:
                 View horizontalEventView = layoutInflater.inflate(R.layout.see_all_card, parent, false );
-                RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
+                //RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
                 // TODO need to find a way to fix the view
-                int horizontalWidth = parent.getMeasuredWidth() / 5;
-                params1.width = horizontalWidth;
+                /*int horizontalWidth = parent.getMeasuredWidth() / 5;
+                params1.width = horizontalWidth;*/
+                /*RecyclerView.LayoutParams params1 = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT);
                 horizontalEventView.setLayoutParams(params1);
+                viewHolder = new SeeAllEventViewHolder(horizontalEventView);*/
+                Log.i("Parent", parent.toString());
+
+                RecyclerView.LayoutParams paramsHori = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
+                int widthHori = parent.getMeasuredWidth() / 5;
+                paramsHori.width = (280);
+                Log.i("WIDTH", String.valueOf(parent.getMeasuredWidth()));
+                paramsHori.height = (440);
+                horizontalEventView.setLayoutParams(paramsHori);
                 viewHolder = new SeeAllEventViewHolder(horizontalEventView);
                 break;
             case VIEW_TYPE_MANAGE_EVENT:
@@ -151,9 +164,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 setSeeAllEventDetails(seeAllEventViewHolder, position);
                 break;
             case VIEW_TYPE_HORIZONTAL_EVENT:
-                SeeAllEventViewHolder HorizontalEventViewHolder;
-                HorizontalEventViewHolder = (SeeAllEventViewHolder) holder;
-                setSeeAllEventDetails(HorizontalEventViewHolder, position);
+                SeeAllEventViewHolder horizontalEventViewHolder;
+                horizontalEventViewHolder = (SeeAllEventViewHolder) holder;
+                setSeeAllEventDetails(horizontalEventViewHolder, position);
                 break;
             case VIEW_TYPE_EMPTY:
                 EmptyViewHolder emptyViewHolder = (EmptyViewHolder) holder;
@@ -311,6 +324,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             timing = itemView.findViewById(R.id.event_time);
             location = itemView.findViewById(R.id.event_location);
         }
+
     }
 
 }

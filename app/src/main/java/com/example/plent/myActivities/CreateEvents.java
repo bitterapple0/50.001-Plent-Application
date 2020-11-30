@@ -72,7 +72,7 @@ public class CreateEvents extends AppCompatActivity {
     EditText telegram_input;
     ImageView uploaded_image;
     ApiModel api;
-    EditText date_picker;
+    TextView date_picker;
     DatePickerDialog picker;
 
 //    Integer month1;
@@ -186,13 +186,16 @@ public class CreateEvents extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("Browse", "CLICKED");
                 try {
                     // check if user has given permission to use external storage (gallery in this case)
                     if (ActivityCompat.checkSelfPermission(CreateEvents.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         // ask for permission if no permission was given
+                        Log.i("Browse", "AskingForPermission");
                         ActivityCompat.requestPermissions(CreateEvents.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_IMAGE_GET);
                     } else {
                         // redirect to gallery to select image
+                        Log.i("Browse", "RedirectinigToGallery");
                         Intent intent = new Intent(Intent.ACTION_PICK);
                         intent.setType("image/*");
                         if (intent.resolveActivity(getPackageManager()) != null) {
@@ -201,6 +204,7 @@ public class CreateEvents extends AppCompatActivity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.i("Browse", e.toString());
                 }
             }
         });
@@ -223,6 +227,7 @@ public class CreateEvents extends AppCompatActivity {
                             eventDate = null;
                         } else {
                             date_picker.setText(String.format("%d / %d / %d", dayOfMonth, monthOfYear + 1, year));
+                            date_picker.setTextAppearance(R.style.Login_Body);
                         }
                         }
                     }, year, month, day);

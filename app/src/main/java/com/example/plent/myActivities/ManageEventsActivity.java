@@ -62,7 +62,7 @@ public class ManageEventsActivity extends MenuActivity {
             }
         });
 
-        organisedEvents.add(e1);
+        /*organisedEvents.add(e1);
         organisedEvents.add(e2);
         organisedEvents.add(e1);
         organisedEvents.add(e2);
@@ -73,7 +73,7 @@ public class ManageEventsActivity extends MenuActivity {
         organisedEvents.add(e1);
         organisedEvents.add(e2);
         organisedEvents.add(e1);
-        organisedEvents.add(e2);
+        organisedEvents.add(e2);*/
 
         Log.i("Event", String.valueOf(organisedEvents));
 
@@ -82,8 +82,12 @@ public class ManageEventsActivity extends MenuActivity {
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
         recyclerView.setAdapter(manageEventRecyclerAdapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        if (!organisedEvents.isEmpty()) {
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+            recyclerView.addItemDecoration(dividerItemDecoration);
+        }
+
 
     }
 
