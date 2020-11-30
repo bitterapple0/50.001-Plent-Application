@@ -191,8 +191,10 @@ public class EventActivity extends MenuActivity {
                             joinTelegramGroupButton.setVisibility(View.INVISIBLE);
                         }
                         // format date
-                        String dateString = DateTimeUtils.getDayOfWeek(event.getDate()) + ", " + DateTimeUtils.formatDate(event.getDate()) + ", "
-                                + DateTimeUtils.formatTime12H(event.getStartTime()) + " - " + DateTimeUtils.formatTime12H(event.getEndTime());
+                        DateTimeFormatter dateFormatObj = DateTimeFormatter.ofPattern("EEEE, MMM d");
+                        DateTimeFormatter timeFormatObj = DateTimeFormatter.ofPattern("hh.mma");
+                        String suffix = event.getDate().getDayOfMonth() == 1 ? "st" : event.getDate().getDayOfMonth() == 2 ? "nd" : event.getDate().getDayOfMonth() == 3 ? "rd" : "th";
+                        String dateString = event.getDate().format(dateFormatObj) + suffix + ", " + event.getStartTime().format(timeFormatObj) + " - " + event.getEndTime().format(timeFormatObj);
 
                         // setting text information
                         eventHeader.setText(event.getTitle());

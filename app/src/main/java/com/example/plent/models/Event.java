@@ -23,7 +23,6 @@ public class Event {
     private ArrayList attendees;
     private ActivityType type;
 
-    // for accessing events everywhere else
     public Event(String title, String date, String startTime, String endTime, String location,
                  String description, String telegram, ActivityType type, String imageUrl) {
     this.title = title;
@@ -37,23 +36,6 @@ public class Event {
     this.imageUrl = imageUrl;
     this.clashString = "";
     this.type = type;
-    }
-
-    // for organisers creating events
-    public Event(String title, String date, String startTime, String endTime, String location,
-                 String description, String telegram, ActivityType type, String imageUrl, String creatorId) {
-        this.title = title;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.location = location;
-        this.description = description;
-        this.telegram = telegram;
-        this.attendees = new ArrayList();
-        this.imageUrl = imageUrl;
-        this.clashString = "";
-        this.type = type;
-        this.creatorId = creatorId;
     }
 
     public String getId() {return id;}

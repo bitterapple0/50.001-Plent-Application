@@ -1,7 +1,6 @@
 package com.example.plent.myActivities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
-import com.example.plent.models.User;
-import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
 import com.example.plent.utils.ParticipantsAdapter;
 import com.example.plent.utils.SearchRecyclerAdapter;
@@ -34,31 +30,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import com.example.plent.models.ApiModel;
-import com.google.gson.Gson;
 
 public class ManageEventsActivity extends MenuActivity {
 
-    private static final String TAG = "MANAGE EVENTS";
     FloatingActionButton fab_add;
     private ApiModel api;
-    private SharedPreferences mPreferences;
-    private User user;
-
     final List<Event> organisedEvents = new ArrayList<>();
     RecyclerView recyclerView;
     SearchRecyclerAdapter manageEventRecyclerAdapter;
+
+    Event e1 = new Event("Project Meeting", "30/11/2020", "8.30am", "8.30pm", "Digital Studio Lab", "Computational Structure Meeting", "no URL", ActivityType.STUDENT_LIFE, "no URL");
+    Event e2 = new Event("Athletics Week 12 Training", "30/11/2020", "6.30pm", "8.30pm", "SUTD Track", "Weekly Training", "no URL", ActivityType.FIFTH_ROW, "no Image");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_event_activity);
-        api = Api.getInstance().apiModel;
-        mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
-        user = getUserFromSharedPref();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,55 +62,34 @@ public class ManageEventsActivity extends MenuActivity {
             }
         });
 
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+        organisedEvents.add(e1);
+        organisedEvents.add(e2);
+
+        Log.i("Event", String.valueOf(organisedEvents));
+
         recyclerView = findViewById(R.id.manageEventRecyclerView);
+        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", this);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
+        recyclerView.setAdapter(manageEventRecyclerAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        Log.i("Event", "manage events " + String.valueOf(organisedEvents));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Call<ArrayList<Event>> call = api.getOrganisedEvents(user.getId());
-        call.enqueue(new Callback<ArrayList<Event>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(ManageEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
-                } else {
-                    if (response.body() == null) {
-                        // user is not an organiser
-                        redirectToFindEvents();
-                        Toast.makeText(ManageEventsActivity.this, "Hm, it seems that you're not an organiser", Toast.LENGTH_LONG).show();
-                    } else {
-                        boolean refreshCards = false;
-                        ArrayList<String> eventIds = new ArrayList<>();
-                        for (Event e: organisedEvents) {
-                            eventIds.add(e.getId());
-                        }
-                        for (Event e: response.body()) {
-                            if (!eventIds.contains(e.getId())) {
-                                refreshCards = true;
-                                organisedEvents.add(e);
-                            }
-                        }
-                        if (refreshCards) {
-                            manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
-                            recyclerView.setAdapter(manageEventRecyclerAdapter);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(ManageEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
 
@@ -142,30 +109,6 @@ public class ManageEventsActivity extends MenuActivity {
         intentToParticipantsActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intentToParticipantsActivity.putExtra(Constants.SELECTED_EVENT_KEY, "5fb937bce230d0e3a9e2f912");
         startActivity(intentToParticipantsActivity);
-    }
-
-    public void redirectToFindEvents() {
-        Intent intentToParticipantsActivity = new Intent(ManageEventsActivity.this, FindEventsActivity.class);
-        intentToParticipantsActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intentToParticipantsActivity);
-        finish();
-    }
-
-    private User getUserFromSharedPref() {
-        Gson gson = new Gson();
-        String json = mPreferences.getString(Constants.USER_KEY, null);
-
-        if (json == null) {
-            Log.i(TAG, "is null");
-            // redirect to login page if no user info stored
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            finish();
-
-            return null;
-        }
-        return gson.fromJson(json, User.class);
     }
 
 }

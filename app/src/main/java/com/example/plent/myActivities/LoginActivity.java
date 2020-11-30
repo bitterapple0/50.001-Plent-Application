@@ -143,8 +143,21 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                 }
                 else {
-                    progressBar.setVisibility(View.VISIBLE);
-                    authenticateAndFetchUser();
+                    if (Constants.SKIP_BACKEND) {
+                        userCred = new User("TestUser", email.getText().toString(), "1001234", password.getText().toString());
+                        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+                        Gson gson = new Gson();
+                        preferencesEditor.putString(Constants.USER_KEY, gson.toJson(userCred));
+                        preferencesEditor.apply();
+
+                        Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        progressBar.setVisibility(View.VISIBLE);
+                        authenticateAndFetchUser();
+                    }
                 }
             }
 

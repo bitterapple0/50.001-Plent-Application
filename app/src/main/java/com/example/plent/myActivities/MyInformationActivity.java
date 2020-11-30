@@ -188,9 +188,9 @@ public class MyInformationActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void buttonStateChange() {
-        changed = (name_CS != null && name_CS != user.getName() && !name_CS.toString().isEmpty()
-                && email_CS != null && email_CS != user.getEmail() && !email_CS.toString().isEmpty())
-                && id_CS != null && id_CS != user.getId() && !id_CS.toString().isEmpty();
+        changed = (name_CS != user.getName() && !name_CS.toString().isEmpty()
+                && email_CS != user.getEmail() && !email_CS.toString().isEmpty())
+                && id_CS != user.getId() && !id_CS.toString().isEmpty();
         if (changed) {
             disabled = false;
             edit.setTextAppearance(R.style.Primary_Button);

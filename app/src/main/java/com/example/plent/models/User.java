@@ -9,8 +9,7 @@ public class User {
     private String password;
     private String id;
     private int permission = 1; // 0 normal, 1 creator
-    private ArrayList<String> events;
-    private ArrayList<String> organisedEvents;
+    private ArrayList events;
 
     public int getPermission() {
         return permission;
@@ -82,13 +81,5 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public ArrayList<String> getOrganisedEvents() {
-        return organisedEvents;
-    }
-
-    public void setOrganisedEvents(ArrayList<String> organisedEvents) {
-        if (this.permission == 1) this.organisedEvents = organisedEvents;
     }
 }
