@@ -29,7 +29,7 @@
             android:layout_margin="14dp"/>
 
         <TextView
-            android:id="@+id/see_all_fr"
+            android:id="@+id/see_all_button"
             style="@style/See_All"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -26,6 +26,8 @@ import com.example.plent.myActivities.ManageEventsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.plent.utils.ImageUtils.*;
+
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private Context context;
@@ -124,10 +126,11 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 Log.i("Parent", parent.toString());
 
                 RecyclerView.LayoutParams paramsHori = (RecyclerView.LayoutParams) horizontalEventView.getLayoutParams();
-                int widthHori = parent.getMeasuredWidth() / 5;
-                paramsHori.width = (280);
+                //int widthHori = parent.getMeasuredWidth() / 5;
+                DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+                paramsHori.width = (dpToPx(100, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)); //280
                 Log.i("WIDTH", String.valueOf(parent.getMeasuredWidth()));
-                paramsHori.height = (440);
+                paramsHori.height = (dpToPx(150, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)); //440
                 horizontalEventView.setLayoutParams(paramsHori);
                 viewHolder = new SeeAllEventViewHolder(horizontalEventView);
                 break;
@@ -192,8 +195,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         Event current_event = eventList.get(position);
         vh.eventTitle.setText(current_event.getTitle());
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int imageHeight = ImageUtils.dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
-        int imageWidth = ImageUtils.dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
+        int imageHeight = dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
+        int imageWidth = dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
     }
 

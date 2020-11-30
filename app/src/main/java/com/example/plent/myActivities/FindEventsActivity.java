@@ -66,6 +66,9 @@ public class FindEventsActivity extends MenuActivity {
     RecyclerView fr_cluster_recyclerView,it_cluster_recyclerView,sl_cluster_recyclerView;
     SearchRecyclerAdapter fr_adapter, it_adapter, sl_adapter;
     DisplayMetrics displayMetrics;
+    CardView parent;
+    TextView fr_button, sl_button, it_button;
+    TextView seeAllfr, seeAllsl, seeAllit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,17 +88,19 @@ public class FindEventsActivity extends MenuActivity {
         header.setText(R.string.fifth_row_activities);
 //        fr_cluster_linear_layout = fifth_row_events_card_view.findViewById(R.id.event_poster_linear_layout);
         fr_cluster_recyclerView = fifth_row_events_card_view.findViewById(R.id.horizontal_recycler_view);
-
+        seeAllfr = fifth_row_events_card_view.findViewById(R.id.see_all_button);
 
         industry_talks_card_view = findViewById(R.id.industry_talks_card_view);
         TextView header1 = industry_talks_card_view.findViewById(R.id.cluster_header);
         header1.setText(R.string.industry_talks);
+        seeAllit = industry_talks_card_view.findViewById(R.id.see_all_button);
 //        it_cluster_linear_layout = industry_talks_card_view.findViewById(R.id.event_poster_linear_layout);
         it_cluster_recyclerView = industry_talks_card_view.findViewById(R.id.horizontal_recycler_view);
 
         student_life_card_view = findViewById(R.id.student_life_card_view);
         TextView header2 = student_life_card_view.findViewById(R.id.cluster_header);
         header2.setText(R.string.student_life);
+        seeAllsl = student_life_card_view.findViewById(R.id.see_all_button);
 //        sl_cluster_linear_layout = student_life_card_view.findViewById(R.id.event_poster_linear_layout);
         sl_cluster_recyclerView = student_life_card_view.findViewById(R.id.horizontal_recycler_view);
 
@@ -138,8 +143,28 @@ public class FindEventsActivity extends MenuActivity {
     }
     
     public void redirectToSeeAll(View view) {
-        Intent intent = new Intent(FindEventsActivity.this, SeeAllActivity.class);
-        startActivity(intent);
+
+        fr_button = findViewById(R.id.fifth_row_events_card_view).findViewById(R.id.see_all_button);
+        sl_button = findViewById(R.id.student_life_card_view).findViewById(R.id.see_all_button);
+        it_button = findViewById(R.id.industry_talks_card_view).findViewById(R.id.see_all_button);
+        //get the id of the view clicked. (in this case button)
+        if (fr_button.equals(view)) { // if its button1
+            Intent intent1 = new Intent(FindEventsActivity.this, SeeAllActivity.class);
+            intent1.putExtra("EventType", ActivityType.FIFTH_ROW.toString());
+            startActivity(intent1);
+        } else if (sl_button.equals(view)) {
+            Intent intent2 = new Intent(FindEventsActivity.this, SeeAllActivity.class);
+            intent2.putExtra("EventType", ActivityType.STUDENT_LIFE.toString());
+            startActivity(intent2);
+        } else if (it_button.equals(view)) {
+            Intent intent3 = new Intent(FindEventsActivity.this, SeeAllActivity.class);
+            intent3.putExtra("EventType", ActivityType.INDUSTRY_TALK.toString());
+            startActivity(intent3);
+        } else {
+            Intent intent = new Intent(FindEventsActivity.this, SeeAllActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     // add a poster to each cluster
