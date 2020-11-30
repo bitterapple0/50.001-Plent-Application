@@ -35,7 +35,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
-import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
 import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
 import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 
