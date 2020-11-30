@@ -49,8 +49,6 @@ import java.util.ArrayList;
 public class FindEventsActivity extends MenuActivity {
 
     final static String TAG = "FIND EVENTS";
-    final static String placeholderImageUrl = "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1606499824/plent/poster_placeholder1_jgh6vd.png";
-    Event testEvent = new Event("Athletics Intro Session", LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "SUTD Track", "hello", "", ActivityType.FIFTH_ROW,"https://abhisekmishra.com/project4_3.jpg");
     Event emptyEvent = new Event("Loading...",LocalDate.of(2020, 11, 29).toString(), LocalTime.of(9, 0).toString(), LocalTime.of(12, 0).toString(), "", "", "", null,""); ;
     ArrayList<Event> events = new ArrayList<>();
     ArrayList<Event> fifthRowEvents = new ArrayList<>();
@@ -61,13 +59,9 @@ public class FindEventsActivity extends MenuActivity {
     CardView fifth_row_events_card_view;
     CardView industry_talks_card_view;
     CardView student_life_card_view;
-    LinearLayout fr_cluster_linear_layout;
-    LinearLayout it_cluster_linear_layout;
-    LinearLayout sl_cluster_linear_layout;
     RecyclerView fr_cluster_recyclerView,it_cluster_recyclerView,sl_cluster_recyclerView;
     SearchRecyclerAdapter fr_adapter, it_adapter, sl_adapter;
     DisplayMetrics displayMetrics;
-    CardView parent;
     TextView fr_button, sl_button, it_button;
     TextView seeAllfr, seeAllsl, seeAllit;
 
@@ -87,7 +81,6 @@ public class FindEventsActivity extends MenuActivity {
         fifth_row_events_card_view = findViewById(R.id.fifth_row_events_card_view);
         TextView header = fifth_row_events_card_view.findViewById(R.id.cluster_header);
         header.setText(R.string.fifth_row_activities);
-//        fr_cluster_linear_layout = fifth_row_events_card_view.findViewById(R.id.event_poster_linear_layout);
         fr_cluster_recyclerView = fifth_row_events_card_view.findViewById(R.id.horizontal_recycler_view);
         seeAllfr = fifth_row_events_card_view.findViewById(R.id.see_all_button);
 
@@ -95,21 +88,18 @@ public class FindEventsActivity extends MenuActivity {
         TextView header1 = industry_talks_card_view.findViewById(R.id.cluster_header);
         header1.setText(R.string.industry_talks);
         seeAllit = industry_talks_card_view.findViewById(R.id.see_all_button);
-//        it_cluster_linear_layout = industry_talks_card_view.findViewById(R.id.event_poster_linear_layout);
         it_cluster_recyclerView = industry_talks_card_view.findViewById(R.id.horizontal_recycler_view);
 
         student_life_card_view = findViewById(R.id.student_life_card_view);
         TextView header2 = student_life_card_view.findViewById(R.id.cluster_header);
         header2.setText(R.string.student_life);
         seeAllsl = student_life_card_view.findViewById(R.id.see_all_button);
-//        sl_cluster_linear_layout = student_life_card_view.findViewById(R.id.event_poster_linear_layout);
         sl_cluster_recyclerView = student_life_card_view.findViewById(R.id.horizontal_recycler_view);
 
         for (int i = 0; i < 6; i++) {
             fifthRowEvents.add(emptyEvent);
             industryTalkEvents.add(emptyEvent);
             studentLifeEvents.add(emptyEvent);
-            //events.add(testEvent);
         }
         fr_adapter = new SearchRecyclerAdapter(fifthRowEvents, ActivityType.FIFTH_ROW, this);
         fr_cluster_recyclerView.setAdapter(fr_adapter);
@@ -117,13 +107,6 @@ public class FindEventsActivity extends MenuActivity {
         it_cluster_recyclerView.setAdapter(it_adapter);
         sl_adapter = new SearchRecyclerAdapter(studentLifeEvents, ActivityType.STUDENT_LIFE, this);
         sl_cluster_recyclerView.setAdapter(sl_adapter);
-
-
-//        for (int i=0; i<4; i++) {
-//            setLoadingCards(ActivityType.FIFTH_ROW, R.drawable.poster_placeholder1);
-//            setLoadingCards(ActivityType.INDUSTRY_TALK, R.drawable.poster_placeholder1);
-//            setLoadingCards(ActivityType.STUDENT_LIFE, R.drawable.poster_placeholder1);
-//        }
     }
 
     @Override
@@ -171,52 +154,6 @@ public class FindEventsActivity extends MenuActivity {
         }
     }
 
-    // add a poster to each cluster
-//    public void createClusterCards(final ActivityType eventType, String imageUrl){
-//        View find_events_poster = View.inflate(this, R.layout.find_events_poster, null);
-//        ImageView poster = find_events_poster.findViewById(R.id.find_events_poster);
-//        int imageHeight = ImageUtils.dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
-//        int imageWidth = ImageUtils.dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
-//        new NetworkImage.NetworkImageBuilder().setImageView(poster).setDimensions(imageHeight, imageWidth).setCallback(new NetworkImageCallback() {
-//            @Override
-//            public void callback(ImageView view) {
-//                ViewGroup parent = eventType == ActivityType.FIFTH_ROW ? fr_cluster_linear_layout : eventType == ActivityType.INDUSTRY_TALK ? it_cluster_linear_layout : sl_cluster_linear_layout;
-//                int index = -1;
-//                ImageView currentView = null;
-//                for (int i=0; i<4; i++) {
-//                    currentView = (ImageView) parent.getChildAt(i);
-//                    if (currentView.getId() == R.id.placeholder_poster) {
-//                        index = i;
-//                        break;
-//                    }
-//                }
-//                if (index > -1) {
-//                    parent.removeView(currentView);
-//                    parent.removeView(view);
-//                    parent.addView(view, index);
-//                } else {
-//                    parent.addView(view, parent.getChildCount());
-//                }
-//            }
-//        }).build().execute(imageUrl);
-//    }
-//
-//    public void setLoadingCards(ActivityType eventType, int image){
-//        View find_events_poster = View.inflate(this, R.layout.placeholder_poster, null);
-//        ImageView poster = find_events_poster.findViewById(R.id.placeholder_poster);
-//        addToCluster(eventType, poster);
-//    }
-//
-//    private void addToCluster(ActivityType eventType, ImageView poster) {
-//        if (eventType == ActivityType.FIFTH_ROW){
-//            fr_cluster_linear_layout.addView(poster, fr_cluster_linear_layout.getChildCount());
-//        } else if (eventType == ActivityType.INDUSTRY_TALK){
-//            it_cluster_linear_layout.addView(poster, it_cluster_linear_layout.getChildCount());
-//        } else if (eventType == ActivityType.STUDENT_LIFE){
-//            sl_cluster_linear_layout.addView(poster, sl_cluster_linear_layout.getChildCount());
-//        }
-//    }
-
     // override to only show search option on this page
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -248,19 +185,22 @@ public class FindEventsActivity extends MenuActivity {
                 if (!response.isSuccessful()) {
                     Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
-//                    ArrayList<String> eventIds = new ArrayList<>();
-//                    for (Event e: events) {
-//                        eventIds.add(e.getId());
-//                    }
-//                    for (Event e: response.body()) {
-//                        if (!eventIds.contains(e.getId())) {
-//                            createClusterCards(e.getType(), e.getImageUrl());
-//                        }
-//                    }
-                    events = response.body();
-                    fr_adapter.refreshEvents(events, ActivityType.FIFTH_ROW, null);
-                    it_adapter.refreshEvents(events, ActivityType.INDUSTRY_TALK, null);
-                    sl_adapter.refreshEvents(events, ActivityType.STUDENT_LIFE, null);
+                    boolean refreshCards = false;
+                    ArrayList<String> eventIds = new ArrayList<>();
+                    for (Event e: events) {
+                        eventIds.add(e.getId());
+                    }
+                    for (Event e: response.body()) {
+                        if (!eventIds.contains(e.getId())) {
+                            refreshCards = true;
+                        }
+                    }
+                    if (refreshCards) {
+                        events = response.body();
+                        fr_adapter.refreshEvents(events, ActivityType.FIFTH_ROW, null);
+                        it_adapter.refreshEvents(events, ActivityType.INDUSTRY_TALK, null);
+                        sl_adapter.refreshEvents(events, ActivityType.STUDENT_LIFE, null);
+                    }
                     Log.i(TAG, "find events " +events.toString());
                 }
             }

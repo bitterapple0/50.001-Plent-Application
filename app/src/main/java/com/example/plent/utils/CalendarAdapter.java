@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -35,21 +37,31 @@ import java.util.List;
 import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
 import static com.example.plent.utils.Constants.CALENDAR_CARD_CONTEXT;
 import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
+import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 
-public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyViewHolder>{
+public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyViewHolder> {
 
     List<Event> calendarEvents;
     List<Event> calendarEventsAll;
     private Activity CalendarActivity;
-    private OnCalendarListener mOnCalendarListener;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    // TODO Comment below for the best parctice method for onCLick
+//    private OnCalendarListener mOnCalendarListener;
+    // TODO Comment below for the best parctice method for onCLick
+//    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView eventTitle, time, location;
         public ImageView indicator;
         public CardView calendarCard;
+        public Button calToEventButton;
 
-        public OnCalendarListener onCalendarListener;
-        public MyViewHolder(View view, OnCalendarListener onCalendarListener){
+        // TODO Comment below for the best parctice method for onCLick
+//         public OnCalendarListener onCalendarListener;
+
+        // TODO Comment below for the best parctice method for onCLick
+//        public MyViewHolder(View view, OnCalendarListener onCalendarListener){
+
+        public MyViewHolder(View view) {
             super(view);
             CALENDAR_CARD_CONTEXT = view.getContext();
             eventTitle = view.findViewById(R.id.calendar_title);
@@ -57,38 +69,54 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
             location = view.findViewById(R.id.calendar_location);
             indicator = view.findViewById(R.id.indicator);
             calendarCard = view.findViewById(R.id.calendar_card);
-            this.onCalendarListener = onCalendarListener;
+            calToEventButton = view.findViewById(R.id.calToEventButton);
+            // TODO Comment below for the best parctice method for onCLick
+//            this.onCalendarListener = onCalendarListener;
 
-            view.setOnClickListener(this);
+            // TODO Comment below for the best parctice method for onCLick
+//            view.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            onCalendarListener.onCalendarClick(getAdapterPosition());
-        }
+        // TODO Comment below for the best parctice method for onCLick
+//        @Override
+//        public void onClick(View v) {
+//            onCalendarListener.onCalendarClick(getAdapterPosition());
+//        }
     }
 
-    public CalendarAdapter(List<Event> calendarEvents, OnCalendarListener onCalendarListener) {
+    // TODO Comment below for the best parctice method for onCLick
+//    public CalendarAdapter(List<Event> calendarEvents, OnCalendarListener onCalendarListener) {
+    public CalendarAdapter(List<Event> calendarEvents) {
         this.calendarEvents = calendarEvents;
         this.calendarEventsAll = new ArrayList<>(calendarEvents);
-        this.mOnCalendarListener = onCalendarListener;
+        // TODO Comment below for the best parctice method for onCLick
+//        this.mOnCalendarListener = onCalendarListener;
     }
 
     @NonNull
     @Override
     public CalendarAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View calendarView = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_card, parent, false);
-        return new CalendarAdapter.MyViewHolder(calendarView, mOnCalendarListener);
+        // TODO Comment below for the best parctice method for onCLick
+//        return new CalendarAdapter.MyViewHolder(calendarView, mOnCalendarListener);
+        return new CalendarAdapter.MyViewHolder(calendarView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CalendarAdapter.MyViewHolder holder, int position) {
         final Event calendarEvent = calendarEvents.get(position);
         holder.eventTitle.setText(calendarEvent.getTitle());
-        DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("HH:mm");
-        holder.time.setText(calendarEvent.getStartTime().format(formatObj) + " - " + calendarEvent.getEndTime().format(formatObj));
+        holder.time.setText(DateTimeUtils.formatTime24H(calendarEvent.getStartTime()) + " - " + DateTimeUtils.formatTime24H(calendarEvent.getEndTime()));
         holder.location.setText(calendarEvent.getLocation());
 
+
+//            public void onClick(View V){
+//                Intent intent = new Intent(CALENDAR_CARD_CONTEXT, EventActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                intent.putExtra(PREVIOUS_ACTIVITY, CAL_EVENT_CLICK);
+//                CALENDAR_CARD_CONTEXT.startActivity(intent);
+//            }
+//        });
 
         if (calendarEvent.getType() == ActivityType.FIFTH_ROW) {
             holder.indicator.setBackgroundColor(Color.parseColor("#EAD620"));
@@ -102,7 +130,19 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
         }
 
 //        TODO: Not the most efficient way - can be removed if the other way works
-//        final String CAL_EVENT_CLICK = calendarEvent.getId();
+        final String CAL_EVENT_CLICK = calendarEvents.get(position).getId();
+
+        holder.calToEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Calendar Adapter", "Button Pressed");
+                Intent intent = new Intent(CALENDAR_CARD_CONTEXT, EventActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                Log.d("Calendar Adapter", "onClick " + CAL_EVENT_CLICK);
+                intent.putExtra(SELECTED_EVENT_KEY, CAL_EVENT_CLICK);
+                CALENDAR_CARD_CONTEXT.startActivity(intent);
+            }
+        });
 
 //        holder.calendarCard.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -115,6 +155,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
 //        });
     }
 
+
     @Override
     public int getItemCount() {
         return calendarEvents.size();
@@ -122,19 +163,22 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
 
     // it edits the calendarEvent array which is what will be displayed in the recycleviewer.
     // calendarEventsAll what we use to remember all the user events.
-    public void filterEvents(Calendar date){
+    public void filterEvents(Calendar date) {
         calendarEvents.clear();
-        LocalDate calendarDate = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH)+1 ,date.get(Calendar.DATE));
+        LocalDate calendarDate = LocalDate.of(date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DATE));
 
-        for(Event e : calendarEventsAll){
-            if (e.getDate().isEqual(calendarDate)){
+        for (Event e : calendarEventsAll) {
+            if (e.getDate().isEqual(calendarDate)) {
                 calendarEvents.add(e);
             }
         }
         notifyDataSetChanged();
     }
 
-    public interface OnCalendarListener {
-        void onCalendarClick(int position);
-    }
+
+    // TODO Comment below for the best parctice method for onCLick
+//    public interface OnCalendarListener {
+//        void onCalendarClick(int position);
+//    }
+
 }

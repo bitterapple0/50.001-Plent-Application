@@ -82,12 +82,16 @@ public class EventActivity extends MenuActivity {
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
             // if no event id is stored, bring them back to find events activity screen
-            backToFindEvents();
+            // TODO Need to uncomment later
+//            backToFindEvents();
+            Toast.makeText(this, "Extras is null", Toast.LENGTH_LONG).show();
         } else {
-            eventId = extras.getString(Constants.SELECTED_EVENT_KEY);
+            eventId = extras.getString(SELECTED_EVENT_KEY);
             if (eventId == null) {
                 // if no event id is stored, bring them back to find events activity screen
-                backToFindEvents();
+                // TODO Need to uncomment later
+//                backToFindEvents();
+                Toast.makeText(this, "Extras is not null, but the event id from the put extras string is null", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -186,16 +190,13 @@ public class EventActivity extends MenuActivity {
                     if (event == null) {
                         backToFindEvents();
                     } else {
-                        if (event.getTelegram().isEmpty()) {
+                        if (event.getTelegram() == null || event.getTelegram().isEmpty()) {
                             // if there is no telegram link provided, no Join Telegram Group Button will be shown
                             joinTelegramGroupButton.setVisibility(View.INVISIBLE);
                         }
                         // format date
-                        DateTimeFormatter dateFormatObj = DateTimeFormatter.ofPattern("EEEE, MMM d");
-                        DateTimeFormatter timeFormatObj = DateTimeFormatter.ofPattern("hh.mma");
-                        String suffix = event.getDate().getDayOfMonth() == 1 ? "st" : event.getDate().getDayOfMonth() == 2 ? "nd" : event.getDate().getDayOfMonth() == 3 ? "rd" : "th";
-                        String dateString = event.getDate().format(dateFormatObj) + suffix + ", " + event.getStartTime().format(timeFormatObj) + " - " + event.getEndTime().format(timeFormatObj);
-
+                        String dateString = DateTimeUtils.getDayOfWeek(event.getDate()) + ", " + DateTimeUtils.formatDate(event.getDate()) + ", "
+                                + DateTimeUtils.formatTime12H(event.getStartTime()) + " - " + DateTimeUtils.formatTime12H(event.getEndTime());
                         // setting text information
                         eventHeader.setText(event.getTitle());
                         location.setText(event.getLocation());

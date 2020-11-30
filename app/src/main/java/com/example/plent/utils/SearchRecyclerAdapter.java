@@ -1,6 +1,7 @@
 package com.example.plent.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
+import com.example.plent.myActivities.EventActivity;
 import com.example.plent.myActivities.ManageEventsActivity;
 
 import java.util.ArrayList;
@@ -196,12 +198,22 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         //TODO set the image via getImageURL
     }
     private void setSeeAllEventDetails (SeeAllEventViewHolder vh, int position) {
-        Event current_event = eventList.get(position);
+        final Event current_event = eventList.get(position);
         vh.eventTitle.setText(current_event.getTitle());
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         int imageHeight = dpToPx(110, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         int imageWidth = dpToPx(80, displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT);
         new NetworkImage.NetworkImageBuilder().setImageView(vh.seeAllPoster).setDimensions(imageHeight, imageWidth).build().execute(current_event.getImageUrl());
+
+        vh.seeAllPoster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EventActivity.class);
+                intent.putExtra(Constants.SELECTED_EVENT_KEY, current_event.getId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                context.startActivity(intent);
+            }
+        });
     }
 
     private void setEmptyEventDetails (EmptyViewHolder vh, int position){
@@ -216,7 +228,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         Event current_event = eventList.get(position);
         vh.title.setText(current_event.getTitle());
         vh.location.setText(current_event.getLocation());
-        //vh.timing.setText(current_event.getStartTime().toString()+" to "+current_event.getEndTime().toString());
+        vh.timing.setText(DateTimeUtils.formatDate(current_event.getDate()) + ", " + DateTimeUtils.formatTime24H(current_event.getStartTime()) + " - " + DateTimeUtils.formatTime24H(current_event.getEndTime()));
     }
 
     /****** Adapter Methods ******/
