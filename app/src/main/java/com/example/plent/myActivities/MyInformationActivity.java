@@ -163,7 +163,7 @@ public class MyInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editedUser.setName(nameInput.getText().toString());
-                editedUser.setId(idInput.getText().toString());
+                editedUser.setStudentId(idInput.getText().toString());
                 editedUser.setEmail(emailInput.getText().toString());
                 editedUser.setId(user.getId());
                 editedUser.setPermission(user.getPermission());
@@ -197,7 +197,7 @@ public class MyInformationActivity extends AppCompatActivity {
                     nameInput.setText(editedUser.getName());
                     idInput.setText(editedUser.getId());
                     emailInput.setText(editedUser.getEmail());
-                    finish();
+                    
                 }
             }
 
