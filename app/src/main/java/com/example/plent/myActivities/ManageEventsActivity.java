@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.plent.R;
 import com.example.plent.models.Event;
 import com.example.plent.models.User;
@@ -42,6 +43,7 @@ public class ManageEventsActivity extends MenuActivity {
     final List<Event> organisedEvents = new ArrayList<>();
     RecyclerView recyclerView;
     SearchRecyclerAdapter manageEventRecyclerAdapter;
+    LottieAnimationView progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,12 +66,15 @@ public class ManageEventsActivity extends MenuActivity {
             }
         });
 
+        progressBar = findViewById(R.id.progressBar);
+
         recyclerView = findViewById(R.id.manageEventRecyclerView);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
-        manageEventRecyclerAdapter = new SearchRecyclerAdapter(null, "1004610", ManageEventsActivity.this);
+        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
         recyclerView.setAdapter(manageEventRecyclerAdapter);
-        manageEventRecyclerAdapter.setShouldStopLoading(false);
+        recyclerView.setVisibility(View.INVISIBLE);
+
 
         Log.i("Event", "manage events " + String.valueOf(organisedEvents));
     }
@@ -86,9 +91,12 @@ public class ManageEventsActivity extends MenuActivity {
                 } else {
                     if (response.body() == null) {
                         // user is not an organiser
+                        progressBar.setVisibility(View.INVISIBLE);
                         redirectToFindEvents();
                         Toast.makeText(ManageEventsActivity.this, "Hm, it seems that you're not an organiser", Toast.LENGTH_LONG).show();
                     } else {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         manageEventRecyclerAdapter.setShouldStopLoading(true);
                         if (response.body().size() == 0) {
                             manageEventRecyclerAdapter.refreshManageEvents(new ArrayList<Event>());
@@ -120,6 +128,7 @@ public class ManageEventsActivity extends MenuActivity {
 
             @Override
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
                 t.printStackTrace();
                 Toast.makeText(ManageEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
             }

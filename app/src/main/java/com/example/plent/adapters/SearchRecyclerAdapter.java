@@ -55,7 +55,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int VIEW_TYPE_SEE_ALL_EVENT = 2;
     private static final int VIEW_TYPE_HORIZONTAL_EVENT = 3;
     private static final int VIEW_TYPE_MANAGE_EVENT = 4;
-    private static final int VIEW_TYPE_LOADING = 5;
+//    private static final int VIEW_TYPE_LOADING = 5;
 
     public SearchRecyclerAdapter(List<Event> eventList, Context context) {
         this.eventList = eventList;
@@ -69,7 +69,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.context = context;
     }
     public SearchRecyclerAdapter(List<Event> eventList, String eventOrganiser, Context context) {
-        Log.i("SEARCH RECYCLER ADAPTER", "created something lols");
         this.eventOrganiser = eventOrganiser;
         this.context = context;
         this.eventList=eventList;
@@ -83,7 +82,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        Log.i("SEARCH RECYCLER ADAPTER", "checking the counttt");
         if (eventList == null || eventList.size() == 0) {
             return 1;
         } else {
@@ -93,9 +91,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        if (eventList == null) {
-            return VIEW_TYPE_LOADING;
-        }
+//        if (eventList == null) {
+//            return VIEW_TYPE_LOADING;
+//        }
         if (eventList.size() == 0){
             return VIEW_TYPE_EMPTY;
         }else if(eventType != null){
@@ -148,10 +146,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder = new ManageEventViewHolder(manageEventView);
                 break;
 
-            case VIEW_TYPE_LOADING:
-                View loadingView = layoutInflater.inflate(R.layout.loading, parent, false);
-                viewHolder = new LoadingViewHolder(loadingView);
-                break;
+//            case VIEW_TYPE_LOADING:
+//                View loadingView = layoutInflater.inflate(R.layout.loading, parent, false);
+//                viewHolder = new LoadingViewHolder(loadingView);
+//                break;
             default:
                 View emptyView = layoutInflater.inflate(R.layout.search_placeholder, parent, false);
                 if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
@@ -192,10 +190,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ManageEventViewHolder manageEventViewHolder = (ManageEventViewHolder) holder;
                 setManageEventDetails(manageEventViewHolder, position);
                 break;
-            case VIEW_TYPE_LOADING:
-                LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
-                setLoading(loadingViewHolder, position);
-                break;
+//            case VIEW_TYPE_LOADING:
+//                LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+//                setLoading(loadingViewHolder, position);
+//                break;
             default:
                 break;
         }
@@ -272,15 +270,15 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         });
     }
 
-    private void setLoading(LoadingViewHolder vh, int position) {
-        if (loading) {
-            vh.progressBar.setVisibility(View.INVISIBLE);
-            Log.i("SEARCH RECYCLER ADAPTER", "setting loading invisible");
-        } else {
-            vh.progressBar.setVisibility(View.VISIBLE);
-            Log.i("SEARCH RECYCLER ADAPTER", "setting loading visible");
-        }
-    }
+//    private void setLoading(LoadingViewHolder vh, int position) {
+////        if (loading) {
+//            vh.progressBar.setVisibility(View.VISIBLE);
+////            Log.i("SEARCH RECYCLER ADAPTER", "setting loading invisible");
+////        } else {
+////            vh.progressBar.setVisibility(View.VISIBLE);
+////            Log.i("SEARCH RECYCLER ADAPTER", "setting loading visible");
+////        }
+//    }
 
     /****** Adapter Methods ******/
     public void refreshEvents(List<Event> new_eventList, ActivityType eventType, String eventOrganiser){
@@ -345,9 +343,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     };
 
     public void setShouldStopLoading(boolean stopLoading) {
-        Log.i("SEARCH RECYCLER ADAPTER", "stopping loading: " + stopLoading);
-        loading = stopLoading;
-        notifyDataSetChanged();
+//        Log.i("SEARCH RECYCLER ADAPTER", "stopping loading: " + stopLoading);
+//        loading = stopLoading;
+//        notifyDataSetChanged();
     }
 
 /****** View Holder Class ******/
