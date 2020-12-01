@@ -1,5 +1,8 @@
 package com.example.plent.myActivities;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +40,7 @@ import com.google.gson.Gson;
 
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 import static com.example.plent.utils.Constants.PREVIOUS_ACTIVITY;
 import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
@@ -50,6 +54,8 @@ public class EventActivity extends MenuActivity {
     private String eventId;
     private static final String TAG = "EVENT";
     ApiModel api;
+    private String creator_email;
+    private User creator;
 
     Button signUpButton;
     Button joinTelegramGroupButton;
@@ -135,11 +141,23 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onClick(View v) {
                 // implicit intent to redirect to Telegram
-                String url = event.getTelegram();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
+                if (event.getTelegram() == null) {
+                    String creatorId = event.getCreatorId();
+                    String creatorEmail = getCreatorEmail(creatorId);
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Event Organiser Email", creatorEmail);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(EventActivity.this, "The email of the organiser has been copied to your clipboard"
+                    , Toast.LENGTH_LONG);
+
+                }
+                else {
+                    String url = event.getTelegram();
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -157,6 +175,38 @@ public class EventActivity extends MenuActivity {
             }
         });
 
+    }
+
+    private String getCreatorEmail(String creatorId) {
+        Call<User> call = api.getCreatorInfo(creatorId);
+
+
+        call.enqueue(new Callback<User>(){
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    creator = response.body();
+                    if (creator == null) {
+                        // May occur if the creator acc is deleted (no way to delete acc) or smt wrong in the database
+                        Toast.makeText(EventActivity.this, "The creator could not be found", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        creator_email = creator.getEmail();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+            }
+        });
+        return(creator_email);
     }
 
     private User getUserFromSharedPref() {
@@ -193,7 +243,8 @@ public class EventActivity extends MenuActivity {
                     } else {
                         if (event.getTelegram() == null || event.getTelegram().isEmpty()) {
                             // if there is no telegram link provided, no Join Telegram Group Button will be shown
-                            joinTelegramGroupButton.setVisibility(View.INVISIBLE);
+//                            joinTelegramGroupButton.setVisibility(View.INVISIBLE);
+                            joinTelegramGroupButton.setText("Contact the Organiser");
                         }
                         // format date
                         String dateString = DateTimeUtils.getDayOfWeek(event.getDate()) + ", " + DateTimeUtils.formatDate(event.getDate()) + ", "
