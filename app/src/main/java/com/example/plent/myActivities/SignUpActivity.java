@@ -23,8 +23,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.plent.R;
 import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
@@ -67,6 +69,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     boolean completed = false;
     boolean disabled = true;
+
+    LottieAnimationView animation;
+    ImageView overlay;
 
 
     private static boolean validateEmail(String emailStr) {
@@ -136,6 +141,9 @@ public class SignUpActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
+
+        animation = findViewById(R.id.animation);
+        overlay = findViewById(R.id.overlay);
 
         fieldIds = new int[]{R.id.nameInput, R.id.emailInput, R.id.idInput, R.id.passwordInput};
 
@@ -221,6 +229,10 @@ public class SignUpActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                overlay.setVisibility(View.VISIBLE);
+                overlay.bringToFront();
+                animation.bringToFront();
+                animation.setVisibility(View.VISIBLE);
                 if (!disabled) {
                     if (validateEmail(email.toString())) {
                         if (validatePassword(password.toString())) {
@@ -229,18 +241,26 @@ public class SignUpActivity extends AppCompatActivity {
                             else {
                                 Toast.makeText(SignUpActivity.this, "Oops, this is not a valid student id",
                                         Toast.LENGTH_LONG).show();
+                                animation.setVisibility(View.INVISIBLE);
+                                overlay.setVisibility(View.INVISIBLE);
                             }
                         }
                         else {
                             Toast.makeText(SignUpActivity.this, "Oops, your password doesn't meet the requirements",
                                     Toast.LENGTH_LONG).show();
+                            animation.setVisibility(View.INVISIBLE);
+                            overlay.setVisibility(View.INVISIBLE);
                         }
 
                     } else {
                         Toast.makeText(SignUpActivity.this, "Oops, that is not a valid email", Toast.LENGTH_LONG).show();
+                        animation.setVisibility(View.INVISIBLE);
+                        overlay.setVisibility(View.INVISIBLE);
                     }
                 } else {
                     Toast.makeText(SignUpActivity.this, "Oops, the form is not completed yet!", Toast.LENGTH_LONG).show();
+                    animation.setVisibility(View.INVISIBLE);
+                    overlay.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -263,6 +283,8 @@ public class SignUpActivity extends AppCompatActivity {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignUpActivity.this, "Authentication failed. Log in instead?",
                                     Toast.LENGTH_SHORT).show();
+                            animation.setVisibility(View.INVISIBLE);
+                            overlay.setVisibility(View.INVISIBLE);
 //                            Toast.makeText(SignUpActivity.this, "Oops, this email has already been used. Log in instead!", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -286,6 +308,8 @@ public class SignUpActivity extends AppCompatActivity {
                         onSubmitSuccess();
                     } else {
                         Toast.makeText(SignUpActivity.this, "Oops, this student id has already been used. Log in instead!", Toast.LENGTH_LONG).show();
+                        animation.setVisibility(View.INVISIBLE);
+                        overlay.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -296,6 +320,8 @@ public class SignUpActivity extends AppCompatActivity {
                 t.printStackTrace();
 
                 Toast.makeText(SignUpActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                animation.setVisibility(View.INVISIBLE);
+                overlay.setVisibility(View.INVISIBLE);
             }
         });
     }

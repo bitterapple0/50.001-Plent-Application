@@ -14,9 +14,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/thiswillwork" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -42,6 +56,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_marginLeft="12dp"
                     android:layout_height="1dp"
+                    android:visibility="invisible"
                     android:background="#E8E8E8"/>
 
                 <ImageView
@@ -91,6 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:visibility="invisible"
                     android:text="@string/sign_up_now" />
 
                 <Button
@@ -99,7 +115,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:visibility="invisible"
                     android:text="@string/join_telegram_group" />
+
+
 
 
             </LinearLayout>

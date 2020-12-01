@@ -147,7 +147,7 @@ FirebaseAuth.getInstance().signOut();
                             Toast.LENGTH_LONG).show();
                 }
                 else {
-                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.playAnimation();
                     firebaseLogin();
 //                    authenticateAndFetchUser();
                 }
@@ -158,7 +158,7 @@ FirebaseAuth.getInstance().signOut();
         createAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(INVISIBLE);
+                progressBar.cancelAnimation();
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
@@ -194,7 +194,7 @@ FirebaseAuth.getInstance().signOut();
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Incorrect credentials",
                                     Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(INVISIBLE);
+                            progressBar.cancelAnimation();
                         }
                     }
                 });
@@ -207,14 +207,14 @@ FirebaseAuth.getInstance().signOut();
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "[1] An error occurred, please try again!", Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(INVISIBLE);
+                    progressBar.cancelAnimation();
                 }
                 else {
                     userCred = response.body();
 
                     if (userCred == null) {
                         Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. Try using another email address or Create a new account", Toast.LENGTH_LONG).show();
-                        progressBar.setVisibility(INVISIBLE);
+                        progressBar.cancelAnimation();
                     } else {
                             SharedPreferences.Editor preferencesEditor = mPreferences.edit();
                             Gson gson = new Gson();
@@ -223,7 +223,7 @@ FirebaseAuth.getInstance().signOut();
 
                             Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                            progressBar.setVisibility(INVISIBLE);
+                            progressBar.cancelAnimation();
                             startActivity(intent);
                             finish();
                     }
@@ -234,7 +234,7 @@ FirebaseAuth.getInstance().signOut();
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(LoginActivity.this, "[2] An error occurred, please try again!", Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(INVISIBLE);
+                progressBar.cancelAnimation();
             }
         });
 
