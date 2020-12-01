@@ -67,7 +67,7 @@
         android:text="Email Address"
         android:layout_marginBottom="5dp" />
 
-    <EditText
+    <TextView
         style="@style/Login_Edittext"
         android:id="@+id/emailInput"
         android:background="@drawable/edit_text_style_selector"
@@ -95,7 +95,7 @@
         android:text="Student ID"
         android:layout_marginBottom="5dp"/>
 
-    <EditText
+    <TextView
         style="@style/Login_Edittext"
         android:id="@+id/idInput"
         android:layout_width="match_parent"
