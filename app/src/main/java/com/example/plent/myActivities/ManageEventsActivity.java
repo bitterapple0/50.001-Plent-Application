@@ -69,6 +69,7 @@ public class ManageEventsActivity extends MenuActivity {
         recyclerView.setLayoutManager(pLayoutManager);
         manageEventRecyclerAdapter = new SearchRecyclerAdapter(null, "1004610", ManageEventsActivity.this);
         recyclerView.setAdapter(manageEventRecyclerAdapter);
+        manageEventRecyclerAdapter.setShouldStopLoading(false);
 
         Log.i("Event", "manage events " + String.valueOf(organisedEvents));
     }
@@ -104,8 +105,10 @@ public class ManageEventsActivity extends MenuActivity {
                             recyclerView.addItemDecoration(dividerItemDecoration);
                         }
                         if (refreshCards) {
+                            manageEventRecyclerAdapter.setShouldStopLoading(true);
                             manageEventRecyclerAdapter.refreshManageEvents(organisedEvents);
                         }
+
                     }
                 }
             }
@@ -116,13 +119,6 @@ public class ManageEventsActivity extends MenuActivity {
                 Toast.makeText(ManageEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    public void redirectToParticipantsActivity(View view) {
-        Intent intentToParticipantsActivity = new Intent(ManageEventsActivity.this, ParticipantsActivity.class);
-        intentToParticipantsActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intentToParticipantsActivity.putExtra(Constants.SELECTED_EVENT_KEY, "5fb937bce230d0e3a9e2f912");
-        startActivity(intentToParticipantsActivity);
     }
 
     public void redirectToFindEvents() {
