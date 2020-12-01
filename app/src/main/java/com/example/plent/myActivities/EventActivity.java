@@ -149,6 +149,7 @@ public class EventActivity extends MenuActivity {
                     clipboard.setPrimaryClip(clip);
                     Toast.makeText(EventActivity.this, "The email of the organiser has been copied to your clipboard"
                     , Toast.LENGTH_LONG);
+                    Toast.makeText(EventActivity.this, "Karla", Toast.LENGTH_LONG);
 
                 }
                 else {
