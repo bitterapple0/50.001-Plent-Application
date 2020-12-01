@@ -19,6 +19,11 @@ public class Event {
     private String description;
     private String imageUrl;
     private String telegram;
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
     private String clashString;
     private ArrayList attendees;
     private ActivityType type;

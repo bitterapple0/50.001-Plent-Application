@@ -42,6 +42,9 @@ public interface ApiModel {
     @GET("organised")
     Call<ArrayList<Event>> getOrganisedEvents(@Query("user_id") String userId);
 
+    @GET("creatorinfo")
+    Call<User> getCreatorInfo(@Query("user_id") String userId);
+
     @GET("participants")
     Call<ArrayList<User>> getParticipants(@Query("event_id") String eventId);
 
