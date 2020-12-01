@@ -211,6 +211,7 @@ FirebaseAuth.getInstance().signOut();
                 }
                 else {
                     userCred = response.body();
+                    Log.i(TAG, "permission: " + userCred.getPermission());
 
                     if (userCred == null) {
                         Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. Try using another email address or Create a new account", Toast.LENGTH_LONG).show();
@@ -219,13 +220,16 @@ FirebaseAuth.getInstance().signOut();
                             SharedPreferences.Editor preferencesEditor = mPreferences.edit();
                             Gson gson = new Gson();
                             preferencesEditor.putString(Constants.USER_KEY, gson.toJson(userCred));
-                            preferencesEditor.apply();
+                            if (preferencesEditor.commit()) {
+                                Log.i(TAG, "user from shared pref: from login activity " + gson.toJson(userCred));
 
-                            Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                            progressBar.cancelAnimation();
-                            startActivity(intent);
-                            finish();
+                                Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                progressBar.cancelAnimation();
+                                startActivity(intent);
+                                finish();
+                            }
+
                     }
                 }
             }

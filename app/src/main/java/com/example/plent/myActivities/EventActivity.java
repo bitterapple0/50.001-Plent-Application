@@ -69,6 +69,7 @@ public class EventActivity extends MenuActivity {
     TextView clashText;
     LinearLayout event_activity_linear_layout;
     LottieAnimationView progressBar;
+    View divider;
 
     int permission = 1; // We need to replace this with the user's permission field
 
@@ -84,6 +85,7 @@ public class EventActivity extends MenuActivity {
         setContentView(R.layout.event_activity);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
+        divider = findViewById(R.id.divider);
 
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
         // get instance of api model
@@ -151,14 +153,13 @@ public class EventActivity extends MenuActivity {
                     Log.d(TAG, "onClick: getTelegram is null");
                     String creatorId = event.getCreatorId();
                     String creatorEmail = getCreatorEmail(creatorId);
-                    Log.d(TAG, "onClick: clipboard gonna crash");
+                    //Log.d(TAG, "onClick: clipboard gonna crash");
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("Event Organiser Email", creatorEmail);
                     clipboard.setPrimaryClip(clip);
-                    Log.d(TAG, "onClick: SIKE it didnt ");
+                    //Log.d(TAG, "onClick: SIKE it didnt ");
                     Toast.makeText(EventActivity.this, "The email of the organiser has been copied to your clipboard"
-                    , Toast.LENGTH_LONG);
-                    Toast.makeText(EventActivity.this, "Karla", Toast.LENGTH_LONG);
+                    , Toast.LENGTH_LONG).show();
 
                 }
                 else {
@@ -242,12 +243,16 @@ public class EventActivity extends MenuActivity {
     }
 
     private void fetchEventOnCreate() {
+        Log.i("Fetch", "Fast");
         progressBar.setVisibility(View.VISIBLE);
+
         Call<Event> call = api.getEvent(eventId, user.getId());
         call.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
+                Log.i("Fetch", "Faster");
                 progressBar.setVisibility(View.INVISIBLE);
+                divider.setVisibility(View.VISIBLE);
                 if (!response.isSuccessful()) {
                     Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
@@ -276,10 +281,15 @@ public class EventActivity extends MenuActivity {
                         clashText.setText(event.getClashString());
                         Log.i(TAG, "event activity " + user.getEvents());
                         // setting image
-                        try {
-                            new NetworkImage.NetworkImageBuilder().setImageView(eventPoster).build().execute(event.getImageUrl());
-                        } catch (Exception e) {
-                            Log.e(TAG, "Could not get poster image");
+                        if (event.getImageUrl() == null || event.getImageUrl().trim().isEmpty()) {
+                            eventPoster.setImageResource(R.drawable.poster_placeholder1);
+                        } else {
+                            try {
+                                new NetworkImage.NetworkImageBuilder().setImageView(eventPoster).build().execute(event.getImageUrl());
+                            } catch (Exception e) {
+                                Log.e(TAG, "Could not get poster image");
+                                eventPoster.setImageResource(R.drawable.poster_placeholder1);
+                            }
                         }
                     }
                 }

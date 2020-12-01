@@ -26,6 +26,7 @@ import android.os.*;
 import android.util.*;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
@@ -87,6 +88,8 @@ public class CreateEvents extends AppCompatActivity {
     String imageFilename;
     String imageUrl;
     ActivityType type;
+    LottieAnimationView progressBar;
+    ImageView overlay;
 
     // exit page
    public void ClosePage(View view) {
@@ -122,6 +125,11 @@ public class CreateEvents extends AppCompatActivity {
         location_input = findViewById(R.id.location_input);
         description_input = findViewById(R.id.description_input);
         telegram_input = findViewById(R.id.telegram_input);
+        progressBar = findViewById(R.id.animation);
+        overlay = findViewById(R.id.overlay);
+
+        // remove loading on create
+        progressBar.setVisibility(View.INVISIBLE);
 
         // setting spinner values
         String[] items = new String[]{"Fifth Row", "Industry Talk", "Student Life"};
@@ -145,11 +153,13 @@ public class CreateEvents extends AppCompatActivity {
                 try {
                     if (isCompleted()) {
                         // if all required fields are filled in (ie. everything except telegram and image)
-                        // toast to let user know event creation is in progress
-                        Toast.makeText(CreateEvents.this, "Creating event...", Toast.LENGTH_LONG).show();
                         // check if an image was uploaded
                         // upload image to Cloudinary if an image is present
                         if (imageFilename != null && !imageFilename.isEmpty()) {
+                            overlay.bringToFront();
+                            progressBar.bringToFront();
+                            overlay.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.VISIBLE);
                             MediaManager.get().upload(imageFilename).unsigned("iybnngkh").callback(new UploadCallback() {
                                 @Override
                                 public void onStart(String requestId) {}
@@ -173,6 +183,8 @@ public class CreateEvents extends AppCompatActivity {
                             }).dispatch();
                         } else {
                             // if no image was uploaded, create event immediately
+                            overlay.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.VISIBLE);
                             createEvent();
                         }
                     } else {
@@ -280,6 +292,8 @@ public class CreateEvents extends AppCompatActivity {
             call.enqueue(new Callback<Event>() {
                 @Override
                 public void onResponse(Call<Event> call, Response<Event> response) {
+                    overlay.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
                     if (!response.isSuccessful()) {
                         Toast.makeText(CreateEvents.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                     } else {
@@ -292,6 +306,8 @@ public class CreateEvents extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Event> call, Throwable t) {
+                    overlay.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
                     t.printStackTrace();
                     Toast.makeText(CreateEvents.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
                 }

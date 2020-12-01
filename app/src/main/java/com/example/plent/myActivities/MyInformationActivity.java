@@ -38,8 +38,8 @@ public class MyInformationActivity extends AppCompatActivity {
     Button edit;
     Button logout;
     EditText nameInput;
-    EditText emailInput;
-    EditText idInput;
+    TextView emailInput;
+    TextView idInput;
     CharSequence name_CS;
     CharSequence email_CS;
     CharSequence id_CS;
@@ -91,6 +91,20 @@ public class MyInformationActivity extends AppCompatActivity {
             idInput.setText(StudentId, TextView.BufferType.EDITABLE);
             emailInput.setText(Email, TextView.BufferType.EDITABLE);
             nameInput.setText(Name, TextView.BufferType.EDITABLE);;
+
+            emailInput.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyInformationActivity.this, "This field cannot be edited", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            idInput.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyInformationActivity.this, "This field cannot be edited", Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
             nameInput.addTextChangedListener(new TextWatcher() {
@@ -146,14 +160,15 @@ public class MyInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-                preferencesEditor.remove(Constants.USER_KEY);
-                preferencesEditor.apply();
+                preferencesEditor.clear();
+                preferencesEditor.commit();
                 try {
                     FirebaseAuth.getInstance().signOut();
                 } catch (Exception e) {}
 
                 Intent intent = new Intent(MyInformationActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -164,6 +179,7 @@ public class MyInformationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 editedUser.setName(nameInput.getText().toString());
                 editedUser.setStudentId(idInput.getText().toString());
+                Log.d(TAG, "onClick: " + editedUser.getStudentId());
                 editedUser.setEmail(emailInput.getText().toString());
                 editedUser.setId(user.getId());
                 editedUser.setPermission(user.getPermission());
@@ -183,7 +199,7 @@ public class MyInformationActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
 
                     nameInput.setText(user.getName());
-                    idInput.setText(user.getId());
+                    idInput.setText(user.getStudentId());
                     emailInput.setText(user.getEmail());
                 } else {
                     Gson gson = new Gson();
@@ -195,7 +211,7 @@ public class MyInformationActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
 
                     nameInput.setText(editedUser.getName());
-                    idInput.setText(editedUser.getId());
+                    idInput.setText(editedUser.getStudentId());
                     emailInput.setText(editedUser.getEmail());
                     
                 }

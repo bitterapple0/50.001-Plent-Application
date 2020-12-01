@@ -23,6 +23,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("MENU", "user from shared pref: on create called in menu");
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
         permission = getUserFromSharedPref().getPermission();
     }
@@ -32,7 +33,6 @@ public class MenuActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-
     }
 
     @Override
@@ -91,6 +91,7 @@ public class MenuActivity extends AppCompatActivity {
     private User getUserFromSharedPref() {
         Gson gson = new Gson();
         String json = mPreferences.getString(Constants.USER_KEY, null);
+        Log.i("MENU", "user from shared pref: " + json);
 
         if (json == null) {
             // redirect to login page if no user info stored

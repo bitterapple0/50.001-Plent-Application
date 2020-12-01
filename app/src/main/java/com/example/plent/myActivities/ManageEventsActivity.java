@@ -55,7 +55,6 @@ public class ManageEventsActivity extends MenuActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
         fab_add = findViewById(R.id.fab_add);
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +67,11 @@ public class ManageEventsActivity extends MenuActivity {
         recyclerView = findViewById(R.id.manageEventRecyclerView);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
-        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
+        manageEventRecyclerAdapter = new SearchRecyclerAdapter(null, "1004610", ManageEventsActivity.this);
         recyclerView.setAdapter(manageEventRecyclerAdapter);
+        manageEventRecyclerAdapter.setShouldStopLoading(false);
 
         Log.i("Event", "manage events " + String.valueOf(organisedEvents));
-
     }
 
     @Override
@@ -90,24 +89,31 @@ public class ManageEventsActivity extends MenuActivity {
                         redirectToFindEvents();
                         Toast.makeText(ManageEventsActivity.this, "Hm, it seems that you're not an organiser", Toast.LENGTH_LONG).show();
                     } else {
-                        boolean refreshCards = false;
-                        ArrayList<String> eventIds = new ArrayList<>();
-                        for (Event e: organisedEvents) {
-                            eventIds.add(e.getId());
-                        }
-                        for (Event e: response.body()) {
-                            if (!eventIds.contains(e.getId())) {
-                                refreshCards = true;
-                                organisedEvents.add(e);
+                        manageEventRecyclerAdapter.setShouldStopLoading(true);
+                        if (response.body().size() == 0) {
+                            manageEventRecyclerAdapter.refreshManageEvents(new ArrayList<Event>());
+                        } else {
+                            boolean refreshCards = false;
+                            ArrayList<String> eventIds = new ArrayList<>();
+                            for (Event e: organisedEvents) {
+                                eventIds.add(e.getId());
+                            }
+                            for (Event e: response.body()) {
+                                if (!eventIds.contains(e.getId())) {
+                                    refreshCards = true;
+                                    organisedEvents.add(e);
+                                }
+                            }
+                            if (!organisedEvents.isEmpty()) {
+                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ManageEventsActivity.this, DividerItemDecoration.VERTICAL);
+                                recyclerView.addItemDecoration(dividerItemDecoration);
+                            }
+                            if (refreshCards) {
+                                manageEventRecyclerAdapter.setShouldStopLoading(true);
+                                manageEventRecyclerAdapter.refreshManageEvents(organisedEvents);
                             }
                         }
-                        if (!organisedEvents.isEmpty()) {
-                            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ManageEventsActivity.this, DividerItemDecoration.VERTICAL);
-                            recyclerView.addItemDecoration(dividerItemDecoration);
-                        }
-                        if (refreshCards) {
-                            manageEventRecyclerAdapter.refreshManageEvents(organisedEvents);
-                        }
+
                     }
                 }
             }
@@ -118,23 +124,6 @@ public class ManageEventsActivity extends MenuActivity {
                 Toast.makeText(ManageEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-
-
-    // Made a few changes to the ManageEventsActivity as it was throwing errors
-    // TODO Check changes
-    /*public void addEvent() {
-        View calendar_card = View.inflate(this, R.layout.manage_event_card, null);
-        Log.i("Message", String.valueOf(linearLayout.getChildCount()));
-        linearLayout.addView(calendar_card, linearLayout.getChildCount());
-    }*/
-
-    public void redirectToParticipantsActivity(View view) {
-        Intent intentToParticipantsActivity = new Intent(ManageEventsActivity.this, ParticipantsActivity.class);
-        intentToParticipantsActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intentToParticipantsActivity.putExtra(Constants.SELECTED_EVENT_KEY, "5fb937bce230d0e3a9e2f912");
-        startActivity(intentToParticipantsActivity);
     }
 
     public void redirectToFindEvents() {

@@ -40,7 +40,6 @@ public class FindEventsActivity extends MenuActivity {
     ArrayList<Event> fifthRowEvents = new ArrayList<>();
     ArrayList<Event> studentLifeEvents = new ArrayList<>();
     ArrayList<Event> industryTalkEvents = new ArrayList<>();
-    int permission = 1; // We need to replace this with the user's permission field
     ApiModel api;
     CardView fifth_row_events_card_view;
     CardView industry_talks_card_view;
@@ -50,6 +49,7 @@ public class FindEventsActivity extends MenuActivity {
     DisplayMetrics displayMetrics;
     TextView fr_button, sl_button, it_button;
     TextView seeAllfr, seeAllsl, seeAllit;
+    TextView noEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,18 +98,8 @@ public class FindEventsActivity extends MenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("HELOOOO" , "On Resume CAlled");
         // retrieve all events from API
         retrieveEvents();
-        Log.i("WHAT IS INSIDE MY EVENTSSSS" , events.toString());
-
-    }
-
-    public void redirectToEventsPage(View view){
-        Intent intent = new Intent(FindEventsActivity.this, EventActivity.class);
-        intent.putExtra(Constants.SELECTED_EVENT_KEY, Constants.SKIP_BACKEND ? "5fb96424fe88a67bb74b4289" : "5fb937bce230d0e3a9e2f912"); // 5fb937bce230d0e3a9e2f912 - actual id in db  // 5fb96424fe88a67bb74b4289 - dummy id
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
     }
     
     public void redirectToSeeAll(View view) {
@@ -157,7 +147,8 @@ public class FindEventsActivity extends MenuActivity {
             Intent intent = new Intent(FindEventsActivity.this, SearchActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
             String jsonString = gson.toJson(events);
-            intent.putExtra("EventList", jsonString);
+            intent.putExtra(Constants.RETRIEVED_EVENTS, jsonString);
+            intent.putExtra(Constants.PAGE_TITLE, "Search All Events");
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -172,6 +163,10 @@ public class FindEventsActivity extends MenuActivity {
                     Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     boolean refreshCards = false;
+//                    if (response.body().size() == 0) {
+//                        noEvents.setVisibility(View.VISIBLE);
+//
+//                    }
                     ArrayList<String> eventIds = new ArrayList<>();
                     for (Event e: events) {
                         eventIds.add(e.getId());

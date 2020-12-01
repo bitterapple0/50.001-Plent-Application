@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.plent.R;
 import com.example.plent.models.Event;
 import com.example.plent.adapters.SearchRecyclerAdapter;
+import com.example.plent.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,8 +27,7 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ImageView placeholderImageView;
-    TextView placeholderTextView;
+    TextView pageTitle;
     SearchRecyclerAdapter searchRecyclerAdapter;
     List<Event> eventList = new ArrayList<Event>();
     @Override
@@ -40,9 +40,12 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         recyclerView = findViewById(R.id.recyclerView);
+        pageTitle = findViewById(R.id.search_event_title);
 
         Bundle bundle = getIntent().getExtras();
-        String jsonString = bundle.getString("EventList");
+        String jsonString = bundle.getString(Constants.RETRIEVED_EVENTS);
+        String title = bundle.getString(Constants.PAGE_TITLE);
+        pageTitle.setText(title);
 
         Gson gson = new Gson();
         Type listOfEventType = new TypeToken<List<Event>>() {}.getType();
@@ -52,12 +55,6 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(searchRecyclerAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
-
-
-
-
-
-
     }
 
     @Override
@@ -66,10 +63,7 @@ public class SearchActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.search_bar, menu);
         MenuItem item = menu.findItem(R.id.search_action);
         SearchView searchView = (SearchView) item.getActionView();
-//        EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-//        ImageView searchBackButton = searchView.findViewById()
-//        searchEditText.setTextColor(getColor(R.color.calendar_fr_yellow_bg));
-//        searchEditText.setHintTextColor(getColor(R.color.calendar_fr_yellow_bg));
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -86,6 +80,4 @@ public class SearchActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-
-
 }
