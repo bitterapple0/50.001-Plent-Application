@@ -211,12 +211,14 @@ FirebaseAuth.getInstance().signOut();
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "[1] An error occurred, please try again!", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(INVISIBLE);
                 }
                 else {
                     userCred = response.body();
 
                     if (userCred == null) {
                         Toast.makeText(LoginActivity.this, "Looks like there is no account related to the entered email. Try using another email address or Create a new account", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(INVISIBLE);
                     } else {
                             SharedPreferences.Editor preferencesEditor = mPreferences.edit();
                             Gson gson = new Gson();
@@ -236,6 +238,7 @@ FirebaseAuth.getInstance().signOut();
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(LoginActivity.this, "[2] An error occurred, please try again!", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(INVISIBLE);
             }
         });
 
