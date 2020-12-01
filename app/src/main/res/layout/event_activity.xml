@@ -46,7 +46,6 @@
                     android:id="@+id/event_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="12dp" />
 
@@ -66,28 +65,24 @@
                     android:layout_height="280dp"
                     android:scaleType="centerCrop"
                     android:layout_gravity="center_horizontal"/>
-    <!--                android:src="@drawable/athleticsposter" />-->
 
                 <TextView
                     style="@style/Post_Location"
                     android:id="@+id/time_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/Post_Location"
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/Post_Body"
                     android:id="@+id/post_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
                     android:layout_gravity="center"
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="24dp"
@@ -98,7 +93,6 @@
                     android:id="@+id/warning1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
                     android:layout_gravity="center"
                     android:layout_marginTop="24dp"
                     android:layout_marginLeft="24dp"

@@ -147,7 +147,7 @@ public class EventActivity extends MenuActivity {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: OnClick started ");
                 // implicit intent to redirect to Telegram
-                if (event.getTelegram() == null | event.getTelegram() == "") {
+                if (event.getTelegram() == null || event.getTelegram() == "") {
                     Log.d(TAG, "onClick: getTelegram is null");
                     String creatorId = event.getCreatorId();
                     String creatorEmail = getCreatorEmail(creatorId);
