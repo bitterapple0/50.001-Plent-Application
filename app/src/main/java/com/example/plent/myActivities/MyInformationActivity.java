@@ -160,14 +160,15 @@ public class MyInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-                preferencesEditor.remove(Constants.USER_KEY);
-                preferencesEditor.apply();
+                preferencesEditor.clear();
+                preferencesEditor.commit();
                 try {
                     FirebaseAuth.getInstance().signOut();
                 } catch (Exception e) {}
 
                 Intent intent = new Intent(MyInformationActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             }
