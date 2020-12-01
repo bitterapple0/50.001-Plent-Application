@@ -26,6 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.ApiModel;
@@ -67,6 +68,7 @@ public class EventActivity extends MenuActivity {
     TextView description;
     TextView clashText;
     LinearLayout event_activity_linear_layout;
+    LottieAnimationView progressBar;
 
     int permission = 1; // We need to replace this with the user's permission field
 
@@ -80,6 +82,9 @@ public class EventActivity extends MenuActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_activity);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
         mPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, MODE_PRIVATE);
         // get instance of api model
         api =  Api.getInstance().apiModel;
@@ -119,6 +124,7 @@ public class EventActivity extends MenuActivity {
         }
         // fetch event info from db and check for clashes with user's events
         fetchEventOnCreate();
+
 
         // on click handler for "Sign Up Now"/"Cancel Sign Up" button
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -230,15 +236,18 @@ public class EventActivity extends MenuActivity {
     }
 
     private void fetchEventOnCreate() {
+        progressBar.setVisibility(View.VISIBLE);
         Call<Event> call = api.getEvent(eventId, user.getId());
-
         call.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
+                progressBar.setVisibility(View.INVISIBLE);
                 if (!response.isSuccessful()) {
                     Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     event = response.body();
+                    signUpButton.setVisibility(View.VISIBLE);
+                    joinTelegramGroupButton.setVisibility(View.VISIBLE);
 
                     if (event == null) {
                         backToFindEvents();
@@ -272,8 +281,10 @@ public class EventActivity extends MenuActivity {
 
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
                 t.printStackTrace();
                 Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                ;
             }
         });
     }
@@ -288,9 +299,11 @@ public class EventActivity extends MenuActivity {
             public void onResponse(Call<HashMap<String, Object>> call, Response<HashMap<String, Object>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.INVISIBLE);
                 } else {
                     // check to make sure write to database was successful
                     if (response.body() != null) {
+                        progressBar.setVisibility(View.INVISIBLE);
                         if (alreadyGoing) {
                             // if user is attempting to cancel sign up, add an alert prompt to seek confirmation
                             AlertDialog.Builder confirmCancel = new AlertDialog.Builder(EventActivity.this, R.style.AlertDialogCustom);
@@ -338,6 +351,7 @@ public class EventActivity extends MenuActivity {
             public void onFailure(Call<HashMap<String, Object>> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
