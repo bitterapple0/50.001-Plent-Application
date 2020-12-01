@@ -21,6 +21,7 @@ import com.example.plent.models.ApiModel;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import okhttp3.ResponseBody;
@@ -67,7 +68,7 @@ public class MyInformationActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.emailInput);
         idInput = findViewById(R.id.idInput);
 
-        editedUser = new User("Place holder", "placeholder@mail.com", "1000000", "Password123*");
+        editedUser = new User("Place holder", "placeholder@mail.com", "1000000");
 
 
         Gson gson = new Gson();
@@ -147,6 +148,9 @@ public class MyInformationActivity extends AppCompatActivity {
                 SharedPreferences.Editor preferencesEditor = mPreferences.edit();
                 preferencesEditor.remove(Constants.USER_KEY);
                 preferencesEditor.apply();
+                try {
+                    FirebaseAuth.getInstance().signOut();
+                } catch (Exception e) {}
 
                 Intent intent = new Intent(MyInformationActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -161,7 +165,6 @@ public class MyInformationActivity extends AppCompatActivity {
                 editedUser.setName(nameInput.getText().toString());
                 editedUser.setId(idInput.getText().toString());
                 editedUser.setEmail(emailInput.getText().toString());
-                editedUser.setPassword(user.getPassword());
                 editedUser.setId(user.getId());
                 editedUser.setPermission(user.getPermission());
                 editedUser.setEvents(user.getEvents());
