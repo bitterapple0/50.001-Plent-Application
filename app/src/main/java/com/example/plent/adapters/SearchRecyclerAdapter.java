@@ -288,6 +288,12 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyDataSetChanged();
     }
 
+    public void refreshManageEvents(List<Event> updatedEvents) {
+        this.eventList = new ArrayList(updatedEvents);
+        this.eventListAll = new ArrayList(updatedEvents);
+        notifyDataSetChanged();
+    }
+
     @Override
     public Filter getFilter() {
         return filter;
