@@ -21,7 +21,7 @@
     <item
         android:id="@+id/my_calender"
         android:orderInCategory="100"
-        android:title="My Calender"
+        android:title="My Calendar"
         app:showAsAction="never" />
 
     <item

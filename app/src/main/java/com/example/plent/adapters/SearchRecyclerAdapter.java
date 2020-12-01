@@ -254,7 +254,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private void setEmptyEventDetails (EmptyViewHolder vh, int position){
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager){
+
             vh.placeholderText.setText("No Events to display :(");
+
         } else if(eventOrganiser != null){
             vh.placeholderText.setText("Looks like you don't have any events to manage :(");
         }
