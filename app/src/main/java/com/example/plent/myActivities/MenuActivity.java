@@ -41,11 +41,11 @@ public class MenuActivity extends AppCompatActivity {
 
         Log.i("Message", "Create Event Clicked");
         if (permission == 0) {
-            create_event.setEnabled(false);
+            create_event.setVisible(false);
             Log.i("Message", "No permission");
         } else {
             Log.i("Message", "success");
-            create_event.setEnabled(true);
+            create_event.setVisible(true);
 
         }
         return true;
