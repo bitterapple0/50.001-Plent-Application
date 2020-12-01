@@ -40,7 +40,6 @@ public class FindEventsActivity extends MenuActivity {
     ArrayList<Event> fifthRowEvents = new ArrayList<>();
     ArrayList<Event> studentLifeEvents = new ArrayList<>();
     ArrayList<Event> industryTalkEvents = new ArrayList<>();
-    int permission = 1; // We need to replace this with the user's permission field
     ApiModel api;
     CardView fifth_row_events_card_view;
     CardView industry_talks_card_view;
@@ -50,6 +49,7 @@ public class FindEventsActivity extends MenuActivity {
     DisplayMetrics displayMetrics;
     TextView fr_button, sl_button, it_button;
     TextView seeAllfr, seeAllsl, seeAllit;
+    TextView noEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +163,10 @@ public class FindEventsActivity extends MenuActivity {
                     Toast.makeText(FindEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     boolean refreshCards = false;
+//                    if (response.body().size() == 0) {
+//                        noEvents.setVisibility(View.VISIBLE);
+//
+//                    }
                     ArrayList<String> eventIds = new ArrayList<>();
                     for (Event e: events) {
                         eventIds.add(e.getId());
