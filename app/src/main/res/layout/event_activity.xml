@@ -14,9 +14,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_marginHorizontal="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:visibility="visible"
+            app:lottie_rawRes="@raw/loadin" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -32,7 +46,6 @@
                     android:id="@+id/event_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Athletics Freshmore Intro Session"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="12dp" />
 
@@ -52,28 +65,24 @@
                     android:layout_height="280dp"
                     android:scaleType="centerCrop"
                     android:layout_gravity="center_horizontal"/>
-    <!--                android:src="@drawable/athleticsposter" />-->
 
                 <TextView
                     style="@style/Post_Location"
                     android:id="@+id/time_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Monday, Oct 12th, 6.30pm - 8.30pm" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/Post_Location"
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SUTD Stadium" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/Post_Body"
                     android:id="@+id/post_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Always had a passion for running or just want to maintain your fitness goals? Athletics club is here for you! Come down to experience what our training would be like and join us for a run to Simpang afterwards for supper after burning those calories!"
                     android:layout_gravity="center"
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="24dp"
@@ -84,7 +93,6 @@
                     android:id="@+id/warning1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="You have “Volleyball Intro Session” at 7pm on Oct 12th "
                     android:layout_gravity="center"
                     android:layout_marginTop="24dp"
                     android:layout_marginLeft="24dp"
@@ -97,6 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:visibility="invisible"
                     android:text="@string/sign_up_now" />
 
                 <Button
@@ -105,7 +114,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:visibility="invisible"
                     android:text="@string/join_telegram_group" />
+
+
 
 
             </LinearLayout>

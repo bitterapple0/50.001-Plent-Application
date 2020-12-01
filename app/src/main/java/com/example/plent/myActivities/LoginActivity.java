@@ -95,10 +95,6 @@ FirebaseAuth.getInstance().signOut();
         if (json == null) {
             Log.i(TAG, "is null");
         } else {
-            // TODO: UNCOMMENT THIS IF YOU DO NOT WANT TO SKIP LOGIN PAGE
-//            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-//            preferencesEditor.remove(Constants.USER_KEY);
-//            preferencesEditor.apply();
             Log.i(TAG, json);
             userCred = gson.fromJson(json, User.class);
             Intent intent = new Intent(LoginActivity.this, FindEventsActivity.class);
