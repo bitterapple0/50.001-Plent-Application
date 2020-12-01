@@ -131,7 +131,6 @@ public class EventActivity extends MenuActivity {
 
                 final boolean alreadyGoing = user.getEvents().contains(eventId);
                 userAndEvent.put("sign_up", !alreadyGoing);
-
                 signUpOnClick(userAndEvent, alreadyGoing);
             }
         });
@@ -140,13 +139,17 @@ public class EventActivity extends MenuActivity {
         joinTelegramGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: OnClick started ");
                 // implicit intent to redirect to Telegram
-                if (event.getTelegram() == null) {
+                if (event.getTelegram() == null | event.getTelegram() == "") {
+                    Log.d(TAG, "onClick: getTelegram is null");
                     String creatorId = event.getCreatorId();
                     String creatorEmail = getCreatorEmail(creatorId);
+                    Log.d(TAG, "onClick: clipboard gonna crash");
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("Event Organiser Email", creatorEmail);
                     clipboard.setPrimaryClip(clip);
+                    Log.d(TAG, "onClick: SIKE it didnt ");
                     Toast.makeText(EventActivity.this, "The email of the organiser has been copied to your clipboard"
                     , Toast.LENGTH_LONG);
                     Toast.makeText(EventActivity.this, "Karla", Toast.LENGTH_LONG);
