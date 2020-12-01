@@ -89,24 +89,29 @@ public class ManageEventsActivity extends MenuActivity {
                         redirectToFindEvents();
                         Toast.makeText(ManageEventsActivity.this, "Hm, it seems that you're not an organiser", Toast.LENGTH_LONG).show();
                     } else {
-                        boolean refreshCards = false;
-                        ArrayList<String> eventIds = new ArrayList<>();
-                        for (Event e: organisedEvents) {
-                            eventIds.add(e.getId());
-                        }
-                        for (Event e: response.body()) {
-                            if (!eventIds.contains(e.getId())) {
-                                refreshCards = true;
-                                organisedEvents.add(e);
+                        manageEventRecyclerAdapter.setShouldStopLoading(true);
+                        if (response.body().size() == 0) {
+                            manageEventRecyclerAdapter.refreshManageEvents(new ArrayList<Event>());
+                        } else {
+                            boolean refreshCards = false;
+                            ArrayList<String> eventIds = new ArrayList<>();
+                            for (Event e: organisedEvents) {
+                                eventIds.add(e.getId());
                             }
-                        }
-                        if (!organisedEvents.isEmpty()) {
-                            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ManageEventsActivity.this, DividerItemDecoration.VERTICAL);
-                            recyclerView.addItemDecoration(dividerItemDecoration);
-                        }
-                        if (refreshCards) {
-                            manageEventRecyclerAdapter.setShouldStopLoading(true);
-                            manageEventRecyclerAdapter.refreshManageEvents(organisedEvents);
+                            for (Event e: response.body()) {
+                                if (!eventIds.contains(e.getId())) {
+                                    refreshCards = true;
+                                    organisedEvents.add(e);
+                                }
+                            }
+                            if (!organisedEvents.isEmpty()) {
+                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ManageEventsActivity.this, DividerItemDecoration.VERTICAL);
+                                recyclerView.addItemDecoration(dividerItemDecoration);
+                            }
+                            if (refreshCards) {
+                                manageEventRecyclerAdapter.setShouldStopLoading(true);
+                                manageEventRecyclerAdapter.refreshManageEvents(organisedEvents);
+                            }
                         }
 
                     }

@@ -345,6 +345,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     };
 
     public void setShouldStopLoading(boolean stopLoading) {
+        Log.i("SEARCH RECYCLER ADAPTER", "stopping loading: " + stopLoading);
         loading = stopLoading;
         notifyDataSetChanged();
     }

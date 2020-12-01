@@ -86,8 +86,10 @@ public class ParticipantsActivity extends MenuActivity {
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.setAdapter(participantsAdapter);
 
-                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ParticipantsActivity.this, DividerItemDecoration.VERTICAL);
-                    recyclerView.addItemDecoration(dividerItemDecoration);
+                    if (!participantsList.isEmpty()) {
+                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ParticipantsActivity.this, DividerItemDecoration.VERTICAL);
+                        recyclerView.addItemDecoration(dividerItemDecoration);
+                    }
 
                     numberOfParticipants.setText("(" + response.body().size() + ")");
                 }
