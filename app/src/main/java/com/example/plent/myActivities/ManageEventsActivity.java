@@ -55,7 +55,6 @@ public class ManageEventsActivity extends MenuActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
         fab_add = findViewById(R.id.fab_add);
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +67,10 @@ public class ManageEventsActivity extends MenuActivity {
         recyclerView = findViewById(R.id.manageEventRecyclerView);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
-        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
+        manageEventRecyclerAdapter = new SearchRecyclerAdapter(null, "1004610", ManageEventsActivity.this);
         recyclerView.setAdapter(manageEventRecyclerAdapter);
 
         Log.i("Event", "manage events " + String.valueOf(organisedEvents));
-
     }
 
     @Override
@@ -119,16 +117,6 @@ public class ManageEventsActivity extends MenuActivity {
             }
         });
     }
-
-
-
-    // Made a few changes to the ManageEventsActivity as it was throwing errors
-    // TODO Check changes
-    /*public void addEvent() {
-        View calendar_card = View.inflate(this, R.layout.manage_event_card, null);
-        Log.i("Message", String.valueOf(linearLayout.getChildCount()));
-        linearLayout.addView(calendar_card, linearLayout.getChildCount());
-    }*/
 
     public void redirectToParticipantsActivity(View view) {
         Intent intentToParticipantsActivity = new Intent(ManageEventsActivity.this, ParticipantsActivity.class);

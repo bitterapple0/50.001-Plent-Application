@@ -88,6 +88,8 @@ public class ParticipantsActivity extends MenuActivity {
 
                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ParticipantsActivity.this, DividerItemDecoration.VERTICAL);
                     recyclerView.addItemDecoration(dividerItemDecoration);
+
+                    numberOfParticipants.setText("(" + response.body().size() + ")");
                 }
             }
 

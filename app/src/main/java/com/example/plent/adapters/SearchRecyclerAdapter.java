@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
@@ -52,8 +53,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int VIEW_TYPE_SEE_ALL_EVENT = 2;
     private static final int VIEW_TYPE_HORIZONTAL_EVENT = 3;
     private static final int VIEW_TYPE_MANAGE_EVENT = 4;
-
-
+    private static final int VIEW_TYPE_LOADING = 5;
 
     public SearchRecyclerAdapter(List<Event> eventList, Context context) {
         this.eventList = eventList;
@@ -80,6 +80,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
+        if (eventList == null) {
+            return 0;
+        }
         if (eventList.size() == 0) {
             return 1;
         } else {
@@ -89,6 +92,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
+        if (eventList == null) {
+            return VIEW_TYPE_LOADING;
+        }
         if (eventList.size() == 0){
             return VIEW_TYPE_EMPTY;
         }else if(eventType != null){
@@ -150,6 +156,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder = new ManageEventViewHolder(manageEventView);
                 break;
 
+            case VIEW_TYPE_LOADING:
+                View loadingView = layoutInflater.inflate(R.layout.loading, parent, false);
+                viewHolder = new LoadingViewHolder(loadingView);
+                break;
             default:
                 View emptyView = layoutInflater.inflate(R.layout.search_placeholder, parent, false);
                 if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
@@ -188,10 +198,13 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             case VIEW_TYPE_MANAGE_EVENT:
                 ManageEventViewHolder manageEventViewHolder = (ManageEventViewHolder) holder;
                 setManageEventDetails(manageEventViewHolder, position);
+                break;
+            case VIEW_TYPE_LOADING:
+                LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+                setLoading(loadingViewHolder, position);
+                break;
             default:
                 break;
-
-
         }
     }
     /***** View Setters ******/
@@ -262,6 +275,10 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 context.startActivity(intent);
             }
         });
+    }
+
+    private void setLoading(LoadingViewHolder vh, int position) {
+        vh.progressBar.setVisibility(View.VISIBLE);
     }
 
     /****** Adapter Methods ******/
@@ -374,6 +391,14 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
             placeholderText = itemView.findViewById(R.id.placeholder_text);
             placeholderImage = itemView.findViewById(R.id.placeholder_image);
+        }
+    }
+
+    class LoadingViewHolder extends RecyclerView.ViewHolder {
+        LottieAnimationView progressBar;
+        public LoadingViewHolder(@NonNull View itemView) {
+            super(itemView);
+            progressBar = itemView.findViewById(R.id.placeholder_text);
         }
     }
 
