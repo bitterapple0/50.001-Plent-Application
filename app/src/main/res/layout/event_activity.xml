@@ -48,33 +48,25 @@
                 <ImageView
                     android:id="@+id/athletics_poster"
                     android:layout_margin="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="240dp"
+                    android:layout_width="200dp"
+                    android:layout_height="280dp"
                     android:scaleType="centerCrop"
                     android:layout_gravity="center_horizontal"/>
     <!--                android:src="@drawable/athleticsposter" />-->
 
                 <TextView
-                    style="@style/Post_Body"
+                    style="@style/Post_Location"
                     android:id="@+id/time_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Monday, Oct 12th, 6.30pm - 8.30pm"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp" />
+                    android:text="Monday, Oct 12th, 6.30pm - 8.30pm" />
 
                 <TextView
-                    style="@style/Post_Body"
+                    style="@style/Post_Location"
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SUTD Stadium"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp" />
+                    android:text="SUTD Stadium" />
 
                 <TextView
                     style="@style/Post_Body"
@@ -94,9 +86,10 @@
                     android:layout_height="wrap_content"
                     android:text="You have “Volleyball Intro Session” at 7pm on Oct 12th "
                     android:layout_gravity="center"
-                    android:layout_marginTop="36dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp" />
+                    android:layout_marginRight="24dp"
+                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/sign_up_button"
@@ -104,8 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/sign_up_now"
-                    android:layout_alignParentBottom="true"/>
+                    android:text="@string/sign_up_now" />
 
                 <Button
                     android:id="@+id/join_telegram_group_button"
@@ -113,8 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/join_telegram_group"
-                    android:layout_alignParentBottom="true"/>
+                    android:text="@string/join_telegram_group" />
 
 
             </LinearLayout>

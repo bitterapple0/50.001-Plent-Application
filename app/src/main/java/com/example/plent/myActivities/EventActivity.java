@@ -189,6 +189,7 @@ public class EventActivity extends MenuActivity {
 
                     if (event == null) {
                         backToFindEvents();
+                        clashText.setVisibility(View.GONE);
                     } else {
                         if (event.getTelegram() == null || event.getTelegram().isEmpty()) {
                             // if there is no telegram link provided, no Join Telegram Group Button will be shown
@@ -202,6 +203,7 @@ public class EventActivity extends MenuActivity {
                         location.setText(event.getLocation());
                         timeDate.setText(dateString);
                         description.setText(event.getDescription());
+                        clashText.setVisibility(View.VISIBLE);
                         clashText.setText(event.getClashString());
                         Log.i(TAG, "event activity " + user.getEvents());
                         // setting image

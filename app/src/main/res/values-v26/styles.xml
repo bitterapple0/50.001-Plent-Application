@@ -37,6 +37,16 @@
         <item name="android:fontFamily">@font/avenirnextcyr_regular</item>
     </style>
 
+    <style name="Post_Location" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#333333</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
+        <item name="android:fontFamily">@font/avenirnextcyr_medium</item>
+    </style>
+
     <style name="Login_Body" parent="TextAppearance.AppCompat">
         <item name="android:textColor">#212121</item>
         <item name="android:textSize">14dp</item>
