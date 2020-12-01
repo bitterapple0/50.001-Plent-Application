@@ -68,6 +68,8 @@ public class ManageEventsActivity extends MenuActivity {
         recyclerView = findViewById(R.id.manageEventRecyclerView);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
+        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
+        recyclerView.setAdapter(manageEventRecyclerAdapter);
 
         Log.i("Event", "manage events " + String.valueOf(organisedEvents));
 
@@ -104,8 +106,7 @@ public class ManageEventsActivity extends MenuActivity {
                             recyclerView.addItemDecoration(dividerItemDecoration);
                         }
                         if (refreshCards) {
-                            manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
-                            recyclerView.setAdapter(manageEventRecyclerAdapter);
+                            manageEventRecyclerAdapter.refreshManageEvents(organisedEvents);
                         }
                     }
                 }
