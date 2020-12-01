@@ -147,7 +147,7 @@ public class EventActivity extends MenuActivity {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: OnClick started ");
                 // implicit intent to redirect to Telegram
-                if (event.getTelegram() == null || event.getTelegram() == "") {
+                if (event.getTelegram() == null || event.getTelegram().trim().equals("")) {
                     Log.d(TAG, "onClick: getTelegram is null");
                     String creatorId = event.getCreatorId();
                     String creatorEmail = getCreatorEmail(creatorId);
@@ -161,10 +161,15 @@ public class EventActivity extends MenuActivity {
 
                 }
                 else {
+                    Log.d(TAG, "onClick: the else loop started");
                     String url = event.getTelegram();
+                    Log.d(TAG, "onClick:  gets tele");
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(url));
+                    Log.d(TAG, "onClick: parse works");
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    Log.d(TAG, "onClick: " + (url==""));
+
                     startActivity(intent);
                 }
             }
