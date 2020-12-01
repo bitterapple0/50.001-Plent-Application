@@ -156,6 +156,8 @@ public class CreateEvents extends AppCompatActivity {
                         // check if an image was uploaded
                         // upload image to Cloudinary if an image is present
                         if (imageFilename != null && !imageFilename.isEmpty()) {
+                            overlay.bringToFront();
+                            progressBar.bringToFront();
                             overlay.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.VISIBLE);
                             MediaManager.get().upload(imageFilename).unsigned("iybnngkh").callback(new UploadCallback() {

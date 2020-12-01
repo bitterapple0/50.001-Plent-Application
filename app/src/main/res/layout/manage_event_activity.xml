@@ -40,7 +40,8 @@
             android:text="Upcoming Events"
             style="@style/Main_Header"
             android:padding="12dp"
-            android:background="#FFFFFF"/>
+            android:background="#FFFFFF"
+            android:layout_marginBottom="8dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/manageEventRecyclerView"
