@@ -65,8 +65,6 @@ public class ParticipantsActivity extends MenuActivity {
         placeholder_participants_text = findViewById(R.id.placeholder_participants_text);
         numberOfParticipants = findViewById(R.id.number_of_participants);
         recyclerView = findViewById(R.id.participantsRecyclerView);
-
-        setListAppearance();
     }
 
     @Override
@@ -90,8 +88,6 @@ public class ParticipantsActivity extends MenuActivity {
 
                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ParticipantsActivity.this, DividerItemDecoration.VERTICAL);
                     recyclerView.addItemDecoration(dividerItemDecoration);
-
-                    setListAppearance();
                 }
             }
 
@@ -109,18 +105,18 @@ public class ParticipantsActivity extends MenuActivity {
     }
 
     private void setListAppearance() {
-        if (participantsList.isEmpty()) {
-            recyclerView.setVisibility(View.GONE);
-            numberOfParticipants.setText("(0)");
-            placeholder_participants.setVisibility(View.VISIBLE);
-            placeholder_participants_text.setVisibility(View.VISIBLE);
-        }
-        else {
-            recyclerView.setVisibility(View.VISIBLE);
-            numberOfParticipants.setText("(" + participantsAdapter.getItemCount() + ")");
-            placeholder_participants.setVisibility(View.GONE);
-            placeholder_participants_text.setVisibility(View.GONE);
-        }
+//        if (participantsList.isEmpty()) {
+//            recyclerView.setVisibility(View.GONE);
+//            numberOfParticipants.setText("(0)");
+//            placeholder_participants.setVisibility(View.VISIBLE);
+//            placeholder_participants_text.setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            recyclerView.setVisibility(View.VISIBLE);
+//            numberOfParticipants.setText("(" + participantsAdapter.getItemCount() + ")");
+//            placeholder_participants.setVisibility(View.GONE);
+//            placeholder_participants_text.setVisibility(View.GONE);
+//        }
 
     }
 }

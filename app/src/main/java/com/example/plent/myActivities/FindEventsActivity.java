@@ -98,18 +98,8 @@ public class FindEventsActivity extends MenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("HELOOOO" , "On Resume CAlled");
         // retrieve all events from API
         retrieveEvents();
-        Log.i("WHAT IS INSIDE MY EVENTSSSS" , events.toString());
-
-    }
-
-    public void redirectToEventsPage(View view){
-        Intent intent = new Intent(FindEventsActivity.this, EventActivity.class);
-        intent.putExtra(Constants.SELECTED_EVENT_KEY, Constants.SKIP_BACKEND ? "5fb96424fe88a67bb74b4289" : "5fb937bce230d0e3a9e2f912"); // 5fb937bce230d0e3a9e2f912 - actual id in db  // 5fb96424fe88a67bb74b4289 - dummy id
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
     }
     
     public void redirectToSeeAll(View view) {
@@ -157,7 +147,8 @@ public class FindEventsActivity extends MenuActivity {
             Intent intent = new Intent(FindEventsActivity.this, SearchActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
             String jsonString = gson.toJson(events);
-            intent.putExtra("EventList", jsonString);
+            intent.putExtra(Constants.RETRIEVED_EVENTS, jsonString);
+            intent.putExtra(Constants.PAGE_TITLE, "Search All Events");
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

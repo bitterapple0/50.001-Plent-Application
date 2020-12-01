@@ -20,7 +20,6 @@
             android:id="@+id/search_event_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search Events"
             android:layout_margin="14dp"
             style="@style/Toolbar_Title"
             app:actionViewClass="androidx.appcompat.widget.SearchView"/>

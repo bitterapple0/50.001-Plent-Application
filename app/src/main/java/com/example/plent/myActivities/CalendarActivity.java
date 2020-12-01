@@ -53,9 +53,7 @@ public class CalendarActivity extends MenuActivity {
 
     final Calendar defaultDate = Calendar.getInstance();
 
-    CalendarEvent c1 = new CalendarEvent(Color.parseColor("#EAD620"), "event");
-    CalendarEvent c2 = new CalendarEvent(Color.parseColor("#81D2AC"), "event");
-    CalendarEvent c3 = new CalendarEvent(Color.parseColor("#81C3D2"), "event");
+    CalendarEvent c1 = new CalendarEvent(Color.parseColor("#ff6160"), "event");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,13 +120,7 @@ public class CalendarActivity extends MenuActivity {
                                     for(Event e: allUserEvents){
                                         Log.i("EventDate", (e.getDate().toString()));
                                         if(e.getDate().isEqual(selectedDay)){
-                                            if (e.getType() == ActivityType.FIFTH_ROW) {
-                                                events.add(c1);
-                                            } else if (e.getType() == ActivityType.STUDENT_LIFE) {
-                                                events.add(c2);
-                                            } else if (e.getType() == ActivityType.INDUSTRY_TALK) {
-                                                events.add(c3);
-                                            }
+                                            events.add(c1);
                                         }
                                     }
                                     return events;
@@ -158,9 +150,12 @@ public class CalendarActivity extends MenuActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CalendarActivity.this, "Calendar card is Pressed ", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(CalendarActivity.this, FindEventsActivity.class);
+                Intent intent = new Intent(CalendarActivity.this, SearchActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                Gson gson = new Gson();
+                String jsonString = gson.toJson(allUserEvents);
+                intent.putExtra(Constants.RETRIEVED_EVENTS, jsonString);
+                intent.putExtra(Constants.PAGE_TITLE, "Search Your Events");
                 startActivity(intent);
             }
         });

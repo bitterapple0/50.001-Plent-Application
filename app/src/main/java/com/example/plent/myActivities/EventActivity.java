@@ -261,10 +261,15 @@ public class EventActivity extends MenuActivity {
                         clashText.setText(event.getClashString());
                         Log.i(TAG, "event activity " + user.getEvents());
                         // setting image
-                        try {
-                            new NetworkImage.NetworkImageBuilder().setImageView(eventPoster).build().execute(event.getImageUrl());
-                        } catch (Exception e) {
-                            Log.e(TAG, "Could not get poster image");
+                        if (event.getImageUrl() == null || event.getImageUrl().trim().isEmpty()) {
+                            eventPoster.setImageResource(R.drawable.poster_placeholder1);
+                        } else {
+                            try {
+                                new NetworkImage.NetworkImageBuilder().setImageView(eventPoster).build().execute(event.getImageUrl());
+                            } catch (Exception e) {
+                                Log.e(TAG, "Could not get poster image");
+                                eventPoster.setImageResource(R.drawable.poster_placeholder1);
+                            }
                         }
                     }
                 }
