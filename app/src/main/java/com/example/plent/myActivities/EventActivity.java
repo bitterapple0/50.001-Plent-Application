@@ -153,11 +153,11 @@ public class EventActivity extends MenuActivity {
                     Log.d(TAG, "onClick: getTelegram is null");
                     String creatorId = event.getCreatorId();
                     String creatorEmail = getCreatorEmail(creatorId);
-                    Log.d(TAG, "onClick: clipboard gonna crash");
+                    //Log.d(TAG, "onClick: clipboard gonna crash");
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("Event Organiser Email", creatorEmail);
                     clipboard.setPrimaryClip(clip);
-                    Log.d(TAG, "onClick: SIKE it didnt ");
+                    //Log.d(TAG, "onClick: SIKE it didnt ");
                     Toast.makeText(EventActivity.this, "The email of the organiser has been copied to your clipboard"
                     , Toast.LENGTH_LONG).show();
 
