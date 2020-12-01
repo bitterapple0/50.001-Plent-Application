@@ -157,7 +157,7 @@ public class EventActivity extends MenuActivity {
                     clipboard.setPrimaryClip(clip);
                     Log.d(TAG, "onClick: SIKE it didnt ");
                     Toast.makeText(EventActivity.this, "The email of the organiser has been copied to your clipboard"
-                    , Toast.LENGTH_LONG);
+                    , Toast.LENGTH_LONG).show();
 
                 }
                 else {
