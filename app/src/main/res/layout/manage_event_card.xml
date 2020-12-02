@@ -66,14 +66,13 @@
 
             </LinearLayout>
 
-            <Button
+            <ImageView
                 android:id="@+id/right_arrow_button"
                 android:layout_width="53dp"
                 android:layout_height="62dp"
                 android:gravity="center_horizontal"
                 android:background="@drawable/right_arrow_stroke_62"
                 android:layout_alignParentEnd="true"
-                android:onClick="redirectToParticipantsActivity"
                 />
 
         </RelativeLayout>
