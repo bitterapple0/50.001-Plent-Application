@@ -60,7 +60,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public SearchRecyclerAdapter(List<Event> eventList, Context context) {
         this.eventList = eventList;
-        this.eventListAll = new ArrayList<>(eventList);
+        this.eventListAll = new ArrayList<Event>(eventList);
         this.context = context;
     }
 
@@ -283,7 +283,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     /****** Adapter Methods ******/
     public void refreshEvents(List<Event> new_eventList, ActivityType eventType, String eventOrganiser){
-        eventListAll= new ArrayList<>(new_eventList);
+        eventListAll= new ArrayList<Event>(new_eventList);
         eventList.clear();
         if (eventType != null){
             for(Event e : eventListAll){
@@ -319,7 +319,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         // runs on background thread
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Event> filteredList = new ArrayList<>();
+            List<Event> filteredList = new ArrayList<Event>();
             if(constraint.toString().isEmpty()){
                 filteredList.addAll(eventListAll);
             }else{

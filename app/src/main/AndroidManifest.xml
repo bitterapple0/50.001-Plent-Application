@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:ignore="AllowBackup">
         <activity android:name=".myActivities.MenuActivity"></activity>
         <activity android:name=".myActivities.MyInformationActivity" />
