@@ -1,5 +1,6 @@
 package com.example.plent.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;

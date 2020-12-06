@@ -188,6 +188,7 @@ public class EventActivity extends MenuActivity {
                 Intent intent = new Intent(EventActivity.this, CalendarActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
+                finish();
             }
         });
 

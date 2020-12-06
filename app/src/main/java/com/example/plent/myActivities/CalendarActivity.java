@@ -151,7 +151,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CalendarActivity.this, SearchActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 Gson gson = new Gson();
                 String jsonString = gson.toJson(allUserEvents);
                 intent.putExtra(Constants.RETRIEVED_EVENTS, jsonString);
