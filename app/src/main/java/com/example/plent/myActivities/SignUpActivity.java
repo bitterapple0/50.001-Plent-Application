@@ -299,7 +299,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(SignUpActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpActivity.this, R.string.backend_error, Toast.LENGTH_LONG).show();
                 } else {
                     if (response.body() != null) {
                         user.setId(response.body().getId());
@@ -319,7 +319,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 t.printStackTrace();
 
-                Toast.makeText(SignUpActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUpActivity.this, R.string.connection_error, Toast.LENGTH_LONG).show();
                 animation.setVisibility(View.INVISIBLE);
                 overlay.setVisibility(View.INVISIBLE);
             }

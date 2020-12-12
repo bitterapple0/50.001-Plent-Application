@@ -160,7 +160,7 @@ public class FindEventsActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(FindEventsActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(FindEventsActivity.this, R.string.backend_error, Toast.LENGTH_LONG).show();
                 } else {
                     boolean refreshCards = false;
 //                    if (response.body().size() == 0) {
@@ -189,7 +189,7 @@ public class FindEventsActivity extends MenuActivity {
             @Override
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(FindEventsActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(FindEventsActivity.this, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
     }

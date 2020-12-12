@@ -206,7 +206,7 @@ FirebaseAuth.getInstance().signOut();
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()){
-                    Toast.makeText(LoginActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, R.string.backend_error, Toast.LENGTH_LONG).show();
                     progressBar.cancelAnimation();
                 }
                 else {
@@ -237,7 +237,7 @@ FirebaseAuth.getInstance().signOut();
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(LoginActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, R.string.connection_error, Toast.LENGTH_LONG).show();
                 progressBar.cancelAnimation();
             }
         });

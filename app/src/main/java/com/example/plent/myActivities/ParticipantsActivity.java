@@ -76,7 +76,7 @@ public class ParticipantsActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ParticipantsActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ParticipantsActivity.this, R.string.backend_error, Toast.LENGTH_LONG).show();
                 } else {
                     participantsList = response.body();
 
@@ -98,7 +98,7 @@ public class ParticipantsActivity extends MenuActivity {
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(ParticipantsActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(ParticipantsActivity.this, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
     }

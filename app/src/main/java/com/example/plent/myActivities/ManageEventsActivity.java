@@ -87,7 +87,7 @@ public class ManageEventsActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ManageEventsActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ManageEventsActivity.this, R.string.backend_error, Toast.LENGTH_LONG).show();
                 } else {
                     if (response.body() == null) {
                         // user is not an organiser
@@ -130,7 +130,7 @@ public class ManageEventsActivity extends MenuActivity {
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 t.printStackTrace();
-                Toast.makeText(ManageEventsActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(ManageEventsActivity.this, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
     }

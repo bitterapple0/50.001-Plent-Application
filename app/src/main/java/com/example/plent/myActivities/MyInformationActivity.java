@@ -119,7 +119,6 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     name_CS = s;
-                    // buttonStateChange();
                 }
             });
 
@@ -135,7 +134,6 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     email_CS = s;
-                    // buttonStateChange();
                 }
             });
 
@@ -151,7 +149,6 @@ public class MyInformationActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     id_CS = s;
-                    // buttonStateChange();
                 }
             });
         }
@@ -195,7 +192,7 @@ public class MyInformationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(MyInformationActivity.this, "Oops the data could not be fetched, please try again!",
+                    Toast.makeText(MyInformationActivity.this, R.string.backend_error,
                             Toast.LENGTH_LONG).show();
 
                     nameInput.setText(user.getName());
@@ -220,30 +217,9 @@ public class MyInformationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(MyInformationActivity.this, "Error: please check your connection",
+                Toast.makeText(MyInformationActivity.this, R.string.connection_error,
                         Toast.LENGTH_LONG).show();
             }
         });
-
-
-
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void buttonStateChange() {
-        changed = (name_CS != Name && !name_CS.toString().isEmpty()
-                && email_CS != Email && !email_CS.toString().isEmpty())
-                && id_CS != StudentId && !id_CS.toString().isEmpty();
-        if (changed) {
-            disabled = false;
-            edit.setTextAppearance(R.style.Primary_Button);
-            edit.setBackgroundResource(R.drawable.primary_button);
-        } else {
-            // else if (!completed){
-            disabled = true;
-            edit.setTextAppearance(R.style.Disabled_Button);
-            edit.setBackgroundResource(R.drawable.disabled_button);
-        }
-    }
-
 }

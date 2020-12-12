@@ -12,4 +12,6 @@
     <string name="find_events_activity">Find Events and Activity</string>
     <string name="see_all">See All</string>
     <string name="manage_events">Manage Events</string>
+    <string name="backend_error">Oops the data could not be fetched, please try again!</string>
+    <string name="connection_error">Error: please check your connection</string>
 </resources>

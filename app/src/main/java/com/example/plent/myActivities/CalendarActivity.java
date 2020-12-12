@@ -91,7 +91,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(CalendarActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CalendarActivity.this, R.string.backend_error, Toast.LENGTH_LONG).show();
                 } else {
                     for (Event e: response.body()) {
                         allUserEvents.add(e);
@@ -141,7 +141,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(CalendarActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
+                Toast.makeText(CalendarActivity.this, R.string.connection_error, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -152,8 +152,15 @@ public class CalendarActivity extends MenuActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(CalendarActivity.this, SearchActivity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                LocalDate today = LocalDate.now();
+                ArrayList<Event> upcomingEvents = new ArrayList<>();
+                for (Event e: allUserEvents) {
+                    if (e.getDate().isEqual(today) || e.getDate().isAfter(today)) {
+                        upcomingEvents.add(e);
+                    }
+                }
                 Gson gson = new Gson();
-                String jsonString = gson.toJson(allUserEvents);
+                String jsonString = gson.toJson(upcomingEvents);
                 intent.putExtra(Constants.RETRIEVED_EVENTS, jsonString);
                 intent.putExtra(Constants.PAGE_TITLE, "Search Your Events");
                 startActivity(intent);
