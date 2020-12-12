@@ -94,8 +94,4 @@ public class Event {
     }
     public ActivityType getType() { return type; }
 
-//    public String toString() {
-//        return "{}";
-//
-//    }
 }

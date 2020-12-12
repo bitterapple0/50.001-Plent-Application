@@ -36,8 +36,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-// TODO Comment below for the best parctice method for onCLick
-//public class CalendarActivity extends MenuActivity implements CalendarAdapter.OnCalendarListener {
 public class CalendarActivity extends MenuActivity {
 
     private static final String TAG = "CALENDAR";
@@ -75,11 +73,11 @@ public class CalendarActivity extends MenuActivity {
             Log.i(TAG, "calendar " + test.getString("DATE"));
         }
 
-        /* starts before 1 month from now */
+        // starts before 1 month from now
         final Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
 
-        /* ends after 1 month from now */
+        // ends after 1 month from now
         final Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
@@ -106,7 +104,7 @@ public class CalendarActivity extends MenuActivity {
 
                     calendarAdapter.filterEvents(defaultDate);
                     //Log.i(TAG, defaultDate.toString());
-                    /***Setting up the dots on each date, use allUserEvents Array***/
+                    //Setting up the dots on each date, use allUserEvents Array
                     HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(CalendarActivity.this, R.id.calendarView).range(startDate, endDate)
                             .datesNumberOnScreen(5)
                             .defaultSelectedDate(defaultDate)
@@ -126,7 +124,7 @@ public class CalendarActivity extends MenuActivity {
                                 }
                             })
                             .build();
-                    /***Listener to refresh events displayed based on date selected***/
+                    //Listener to refresh events displayed based on date selected
                     horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
                         @Override
                         public void onDateSelected(Calendar date, int position) {
