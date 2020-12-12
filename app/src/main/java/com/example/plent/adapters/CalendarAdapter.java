@@ -178,7 +178,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             public void onClick(View v) {
                 Log.d("Calendar Adapter", "Button Pressed");
                 Intent intent = new Intent(CALENDAR_CARD_CONTEXT, EventActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 Log.d("Calendar Adapter", "onClick " + CAL_EVENT_CLICK);
                 intent.putExtra(SELECTED_EVENT_KEY, CAL_EVENT_CLICK);
                 CALENDAR_CARD_CONTEXT.startActivity(intent);

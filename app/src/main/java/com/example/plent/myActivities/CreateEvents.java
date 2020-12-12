@@ -295,7 +295,7 @@ public class CreateEvents extends AppCompatActivity {
                     overlay.setVisibility(View.INVISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
                     if (!response.isSuccessful()) {
-                        Toast.makeText(CreateEvents.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(CreateEvents.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                     } else {
                         // redirect back to Manage Events page upon successful creation
                         Toast.makeText(CreateEvents.this, "Event created!", Toast.LENGTH_LONG).show();
@@ -309,7 +309,7 @@ public class CreateEvents extends AppCompatActivity {
                     overlay.setVisibility(View.INVISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
                     t.printStackTrace();
-                    Toast.makeText(CreateEvents.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreateEvents.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
                 }
             });
         }

@@ -91,7 +91,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(CalendarActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CalendarActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     for (Event e: response.body()) {
                         allUserEvents.add(e);
@@ -140,7 +140,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(CalendarActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(CalendarActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -150,7 +150,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CalendarActivity.this, SearchActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 Gson gson = new Gson();
                 String jsonString = gson.toJson(allUserEvents);
                 intent.putExtra(Constants.RETRIEVED_EVENTS, jsonString);
