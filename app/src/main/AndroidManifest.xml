@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         tools:ignore="AllowBackup">
-        <activity android:name=".myActivities.MenuActivity"></activity>
+        <activity android:name=".myActivities.MenuActivity"/>
         <activity android:name=".myActivities.MyInformationActivity" />
         <activity android:name=".myActivities.SearchActivity" />
         <activity android:name=".myActivities.LoginActivity">
@@ -31,33 +31,29 @@
         <activity
             android:name=".myActivities.EventActivity"
             android:label="Event Description"
-            android:parentActivityName=".myActivities.EventActivity">
-
-            <!--
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-
-        </activity>
+            android:parentActivityName=".myActivities.EventActivity"/>
         <activity
             android:name=".myActivities.FindEventsActivity"
             android:label="@string/find_events_activity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".myActivities.EventActivity" />
         <activity
             android:name=".myActivities.CalendarActivity"
             android:label="Calendar"
+            android:screenOrientation="portrait"
             android:parentActivityName=".myActivities.EventActivity" />
         <activity
             android:name=".myActivities.SignUpActivity"
-            android:label="Sign Up">
-        </activity>
-        <activity android:name=".myActivities.ManageEventsActivity" />
+            android:screenOrientation="portrait"
+            android:label="Sign Up"/>
+        <activity
+            android:name=".myActivities.ManageEventsActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".myActivities.CreateEvents" />
         <activity
             android:name=".myActivities.ParticipantsActivity"
             android:label="Participants Activity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".myActivities.ManageEventsActivity" />
         <activity android:name=".myActivities.SeeAllActivity" />
 
