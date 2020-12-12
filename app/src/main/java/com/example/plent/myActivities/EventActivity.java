@@ -202,7 +202,7 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EventActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 }
                 else {
                     creator = response.body();
@@ -220,7 +220,7 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EventActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
             }
         });
         return(creator_email);
@@ -255,7 +255,7 @@ public class EventActivity extends MenuActivity {
                 progressBar.setVisibility(View.INVISIBLE);
                 divider.setVisibility(View.VISIBLE);
                 if (!response.isSuccessful()) {
-                    Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EventActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     event = response.body();
                     signUpButton.setVisibility(View.VISIBLE);
@@ -300,7 +300,7 @@ public class EventActivity extends MenuActivity {
             public void onFailure(Call<Event> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 t.printStackTrace();
-                Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EventActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
                 ;
             }
         });
@@ -315,7 +315,7 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onResponse(Call<HashMap<String, Object>> call, Response<HashMap<String, Object>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EventActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {
                     // check to make sure write to database was successful
@@ -367,7 +367,7 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onFailure(Call<HashMap<String, Object>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EventActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });

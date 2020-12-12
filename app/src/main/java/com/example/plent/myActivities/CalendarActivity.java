@@ -91,7 +91,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(CalendarActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CalendarActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     for (Event e: response.body()) {
                         allUserEvents.add(e);
@@ -141,7 +141,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(CalendarActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(CalendarActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
             }
         });
 
