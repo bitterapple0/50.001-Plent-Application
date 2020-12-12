@@ -12,4 +12,4 @@
     android:scaleY="1"
     app:lottie_autoPlay="true"
     app:lottie_loop="true"
-    app:lottie_rawRes="@raw/thiswillwork" />
+    app:lottie_rawRes="@raw/loading_animation" />
