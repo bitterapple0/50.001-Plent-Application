@@ -71,7 +71,7 @@ public class EventActivity extends MenuActivity {
     LottieAnimationView progressBar;
     View divider;
 
-    int permission = 1; // We need to replace this with the user's permission field
+    int permission = 1; // replace this with the user's permission field
 
     void backToFindEvents() {
         setTheme(R.style.CalendarTheme);
@@ -95,14 +95,12 @@ public class EventActivity extends MenuActivity {
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
             // if no event id is stored, bring them back to find events activity screen
-            // TODO Need to uncomment later
             backToFindEvents();
             Toast.makeText(this, "Extras is null", Toast.LENGTH_LONG).show();
         } else {
             eventId = extras.getString(SELECTED_EVENT_KEY);
             if (eventId == null) {
                 // if no event id is stored, bring them back to find events activity screen
-                // TODO Need to uncomment later
                 backToFindEvents();
                 Toast.makeText(this, "Extras is not null, but the event id from the put extras string is null", Toast.LENGTH_LONG).show();
             }
@@ -202,7 +200,7 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EventActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 }
                 else {
                     creator = response.body();
@@ -220,7 +218,7 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EventActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
             }
         });
         return(creator_email);
@@ -255,7 +253,7 @@ public class EventActivity extends MenuActivity {
                 progressBar.setVisibility(View.INVISIBLE);
                 divider.setVisibility(View.VISIBLE);
                 if (!response.isSuccessful()) {
-                    Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EventActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     event = response.body();
                     signUpButton.setVisibility(View.VISIBLE);
@@ -300,7 +298,7 @@ public class EventActivity extends MenuActivity {
             public void onFailure(Call<Event> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 t.printStackTrace();
-                Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EventActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
                 ;
             }
         });
@@ -315,7 +313,7 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onResponse(Call<HashMap<String, Object>> call, Response<HashMap<String, Object>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(EventActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EventActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {
                     // check to make sure write to database was successful
@@ -367,7 +365,7 @@ public class EventActivity extends MenuActivity {
             @Override
             public void onFailure(Call<HashMap<String, Object>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(EventActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(EventActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });

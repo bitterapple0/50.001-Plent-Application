@@ -195,7 +195,7 @@ public class MyInformationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
+                    Toast.makeText(MyInformationActivity.this, "Oops the data could not be fetched, please try again!",
                             Toast.LENGTH_LONG).show();
 
                     nameInput.setText(user.getName());
@@ -220,7 +220,7 @@ public class MyInformationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(MyInformationActivity.this, "An error occurred, please try again!",
+                Toast.makeText(MyInformationActivity.this, "Error: please check your connection",
                         Toast.LENGTH_LONG).show();
             }
         });
