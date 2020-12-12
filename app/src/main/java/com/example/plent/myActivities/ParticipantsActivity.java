@@ -76,7 +76,7 @@ public class ParticipantsActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ParticipantsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ParticipantsActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     participantsList = response.body();
 
@@ -98,7 +98,7 @@ public class ParticipantsActivity extends MenuActivity {
             @Override
             public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(ParticipantsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(ParticipantsActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -106,21 +106,5 @@ public class ParticipantsActivity extends MenuActivity {
     private void backToManageEvents() {
         Toast.makeText(this, "Oops, this event could not be fetched!", Toast.LENGTH_LONG).show();
         finish();
-    }
-
-    private void setListAppearance() {
-//        if (participantsList.isEmpty()) {
-//            recyclerView.setVisibility(View.GONE);
-//            numberOfParticipants.setText("(0)");
-//            placeholder_participants.setVisibility(View.VISIBLE);
-//            placeholder_participants_text.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            recyclerView.setVisibility(View.VISIBLE);
-//            numberOfParticipants.setText("(" + participantsAdapter.getItemCount() + ")");
-//            placeholder_participants.setVisibility(View.GONE);
-//            placeholder_participants_text.setVisibility(View.GONE);
-//        }
-
     }
 }

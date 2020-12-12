@@ -19,7 +19,7 @@ import com.example.plent.models.Event;
 import com.example.plent.models.User;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
-import com.example.plent.adapters.SearchRecyclerAdapter;
+import com.example.plent.adapters.EventAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ManageEventsActivity extends MenuActivity {
 
     final List<Event> organisedEvents = new ArrayList<>();
     RecyclerView recyclerView;
-    SearchRecyclerAdapter manageEventRecyclerAdapter;
+    EventAdapter manageEventAdapter;
     LottieAnimationView progressBar;
 
     @Override
@@ -71,8 +71,8 @@ public class ManageEventsActivity extends MenuActivity {
         recyclerView = findViewById(R.id.manageEventRecyclerView);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(pLayoutManager);
-        manageEventRecyclerAdapter = new SearchRecyclerAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
-        recyclerView.setAdapter(manageEventRecyclerAdapter);
+        manageEventAdapter = EventAdapter.manageEventAdapter(organisedEvents, "1004610", ManageEventsActivity.this);
+        recyclerView.setAdapter(manageEventAdapter);
         recyclerView.setVisibility(View.INVISIBLE);
 
 
@@ -87,7 +87,7 @@ public class ManageEventsActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(ManageEventsActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ManageEventsActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     if (response.body() == null) {
                         // user is not an organiser
@@ -97,9 +97,9 @@ public class ManageEventsActivity extends MenuActivity {
                     } else {
                         progressBar.setVisibility(View.INVISIBLE);
                         recyclerView.setVisibility(View.VISIBLE);
-                        manageEventRecyclerAdapter.setShouldStopLoading(true);
+                        manageEventAdapter.setShouldStopLoading(true);
                         if (response.body().size() == 0) {
-                            manageEventRecyclerAdapter.refreshManageEvents(new ArrayList<Event>());
+                            manageEventAdapter.refreshEvents(new ArrayList<Event>());
                         } else {
                             boolean refreshCards = false;
                             ArrayList<String> eventIds = new ArrayList<>();
@@ -117,8 +117,8 @@ public class ManageEventsActivity extends MenuActivity {
                                 recyclerView.addItemDecoration(dividerItemDecoration);
                             }
                             if (refreshCards) {
-                                manageEventRecyclerAdapter.setShouldStopLoading(true);
-                                manageEventRecyclerAdapter.refreshManageEvents(organisedEvents);
+                                manageEventAdapter.setShouldStopLoading(true);
+                                manageEventAdapter.refreshEvents(organisedEvents);
                             }
                         }
 
@@ -130,7 +130,7 @@ public class ManageEventsActivity extends MenuActivity {
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 t.printStackTrace();
-                Toast.makeText(ManageEventsActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(ManageEventsActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
             }
         });
     }

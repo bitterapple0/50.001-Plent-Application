@@ -73,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
             login.setTextAppearance(R.style.Primary_Button);
             login.setBackgroundResource(R.drawable.primary_button);
         } else {
-        // else if (!completed){
             disabled = true;
             login.setTextAppearance(R.style.Disabled_Button);
             login.setBackgroundResource(R.drawable.disabled_button);
@@ -206,7 +205,7 @@ FirebaseAuth.getInstance().signOut();
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (!response.isSuccessful()){
-                    Toast.makeText(LoginActivity.this, "[1] An error occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                     progressBar.cancelAnimation();
                 }
                 else {
@@ -237,7 +236,7 @@ FirebaseAuth.getInstance().signOut();
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(LoginActivity.this, "[2] An error occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
                 progressBar.cancelAnimation();
             }
         });

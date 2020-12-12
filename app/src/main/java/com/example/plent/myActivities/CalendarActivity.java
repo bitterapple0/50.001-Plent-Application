@@ -36,8 +36,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-// TODO Comment below for the best parctice method for onCLick
-//public class CalendarActivity extends MenuActivity implements CalendarAdapter.OnCalendarListener {
 public class CalendarActivity extends MenuActivity {
 
     private static final String TAG = "CALENDAR";
@@ -75,11 +73,11 @@ public class CalendarActivity extends MenuActivity {
             Log.i(TAG, "calendar " + test.getString("DATE"));
         }
 
-        /* starts before 1 month from now */
+        // starts before 1 month from now
         final Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
 
-        /* ends after 1 month from now */
+        // ends after 1 month from now
         final Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
@@ -91,23 +89,22 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(CalendarActivity.this, "An error1 occurred, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CalendarActivity.this, "Oops the data could not be fetched, please try again!", Toast.LENGTH_LONG).show();
                 } else {
                     for (Event e: response.body()) {
                         allUserEvents.add(e);
                         userEvents.add(e);
                     }
-                    Log.i(TAG, "calendar upon retrieving data " + allUserEvents);
+                    //Log.i(TAG, "calendar upon retrieving data " + allUserEvents);
 
                     calendarAdapter = new CalendarAdapter(userEvents); // this array list is the dynamic one we will vary based on date selected
-                    // TODO Comment below for the best parctice method for onCLick
-//                    calendarAdapter = new CalendarAdapter(userEvents,CalendarActivity.this); // this array list is the dynamic one we will vary based on date selected
                     RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getApplicationContext());
                     recyclerView.setLayoutManager(pLayoutManager);
                     recyclerView.setAdapter(calendarAdapter);
 
                     calendarAdapter.filterEvents(defaultDate);
-                    Log.i(TAG, defaultDate.toString());
+                    //Log.i(TAG, defaultDate.toString());
+                    //Setting up the dots on each date, use allUserEvents Array
                     HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(CalendarActivity.this, R.id.calendarView).range(startDate, endDate)
                             .datesNumberOnScreen(5)
                             .defaultSelectedDate(defaultDate)
@@ -127,7 +124,7 @@ public class CalendarActivity extends MenuActivity {
                                 }
                             })
                             .build();
-
+                    //Listener to refresh events displayed based on date selected
                     horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
                         @Override
                         public void onDateSelected(Calendar date, int position) {
@@ -141,7 +138,7 @@ public class CalendarActivity extends MenuActivity {
             @Override
             public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(CalendarActivity.this, "An error2 occurred, please try again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(CalendarActivity.this, "Error: please check your connection", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -189,27 +186,6 @@ public class CalendarActivity extends MenuActivity {
         }
         return gson.fromJson(json, User.class);
     }
-
-    // TODO Comment below for the best parctice method for onCLick
-//    @Override
-//    public void onCalendarClick(int position) {
-//        Log.d(TAG, "Clicked the Calendar Card");
-//        Intent intent = new Intent(this, EventActivity.class);
-//        intent.putExtra(SELECTED_EVENT_KEY, userEvents.get(position).getId());
-//        startActivity(intent); }
-
-//    private void setListAppearance() {
-//        if (UserEvent.isEmpty()) {
-//            recyclerView.setVisibility(View.GONE);
-//            numberOfParticipants.setText("(0)");
-//            placeholder_participants.setVisibility(View.VISIBLE);
-//            placeholder_participants_text.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            calendar_placeholder.setVisibility(View.VISIBLE);
-//        }
-//
-//    }
 
 
     }
