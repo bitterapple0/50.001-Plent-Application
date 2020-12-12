@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
-import com.example.plent.adapters.SearchRecyclerAdapter;
+import com.example.plent.adapters.EventAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,7 +23,7 @@ public class SeeAllActivity extends AppCompatActivity {
 
     private List<Event> eventList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private SearchRecyclerAdapter seeAllAdapter;
+    private EventAdapter seeAllAdapter;
     TextView seeAllHeading;
 
     final static String placeholderImageUrl = "https://res.cloudinary.com/dyaxu5mb4/image/upload/v1606499824/plent/poster_placeholder1_jgh6vd.png";
@@ -45,7 +45,7 @@ public class SeeAllActivity extends AppCompatActivity {
         ActivityType eventType = eventList.get(0).getType();
 
 
-        seeAllAdapter = new SearchRecyclerAdapter(eventList, eventType , this);
+        seeAllAdapter = EventAdapter.singleTypeEventAdapter(eventList, eventType , this);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(seeAllAdapter);
 

@@ -24,7 +24,7 @@ import com.example.plent.models.ApiModel;
 import com.example.plent.models.Event;
 import com.example.plent.utils.Api;
 import com.example.plent.utils.Constants;
-import com.example.plent.adapters.SearchRecyclerAdapter;
+import com.example.plent.adapters.EventAdapter;
 import com.google.gson.Gson;
 
 
@@ -45,11 +45,11 @@ public class FindEventsActivity extends MenuActivity {
     CardView industry_talks_card_view;
     CardView student_life_card_view;
     RecyclerView fr_cluster_recyclerView,it_cluster_recyclerView,sl_cluster_recyclerView;
-    SearchRecyclerAdapter fr_adapter, it_adapter, sl_adapter;
+    EventAdapter fr_adapter, it_adapter, sl_adapter;
     DisplayMetrics displayMetrics;
     TextView fr_button, sl_button, it_button;
     TextView seeAllfr, seeAllsl, seeAllit;
-    TextView noEvents;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +87,11 @@ public class FindEventsActivity extends MenuActivity {
             industryTalkEvents.add(emptyEvent);
             studentLifeEvents.add(emptyEvent);
         }
-        fr_adapter = new SearchRecyclerAdapter(fifthRowEvents, ActivityType.FIFTH_ROW, this);
+        fr_adapter = EventAdapter.singleTypeEventAdapter(fifthRowEvents, ActivityType.FIFTH_ROW, this);
         fr_cluster_recyclerView.setAdapter(fr_adapter);
-        it_adapter = new SearchRecyclerAdapter(industryTalkEvents, ActivityType.INDUSTRY_TALK, this);
+        it_adapter = EventAdapter.singleTypeEventAdapter(industryTalkEvents, ActivityType.INDUSTRY_TALK, this);
         it_cluster_recyclerView.setAdapter(it_adapter);
-        sl_adapter = new SearchRecyclerAdapter(studentLifeEvents, ActivityType.STUDENT_LIFE, this);
+        sl_adapter = EventAdapter.singleTypeEventAdapter(studentLifeEvents, ActivityType.STUDENT_LIFE, this);
         sl_cluster_recyclerView.setAdapter(sl_adapter);
     }
 
@@ -178,9 +178,9 @@ public class FindEventsActivity extends MenuActivity {
                     }
                     if (refreshCards) {
                         events = response.body();
-                        fr_adapter.refreshEvents(events, ActivityType.FIFTH_ROW, null);
-                        it_adapter.refreshEvents(events, ActivityType.INDUSTRY_TALK, null);
-                        sl_adapter.refreshEvents(events, ActivityType.STUDENT_LIFE, null);
+                        fr_adapter.refreshSingleTypeEvents(events, ActivityType.FIFTH_ROW);
+                        it_adapter.refreshSingleTypeEvents(events, ActivityType.INDUSTRY_TALK);
+                        sl_adapter.refreshSingleTypeEvents(events, ActivityType.STUDENT_LIFE);
                     }
                     Log.i(TAG, "find events " +events.toString());
                 }
