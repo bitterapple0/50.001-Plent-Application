@@ -93,6 +93,4 @@ public class Event {
         this.attendees.remove(userId);
     }
     public ActivityType getType() { return type; }
-
-
 }

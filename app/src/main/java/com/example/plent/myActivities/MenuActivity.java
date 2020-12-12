@@ -10,13 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.plent.R;
-import com.example.plent.adapters.SearchRecyclerAdapter;
+import com.example.plent.adapters.EventAdapter;
 import com.example.plent.models.User;
 import com.example.plent.utils.Constants;
 import com.google.gson.Gson;
 
 public class MenuActivity extends AppCompatActivity {
-    SearchRecyclerAdapter searchRecyclerAdapter;
     SharedPreferences mPreferences;
     int permission;
 

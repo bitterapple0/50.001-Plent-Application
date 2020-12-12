@@ -79,9 +79,6 @@ public class CreateEvents extends AppCompatActivity {
     TextView date_picker;
     DatePickerDialog picker;
 
-//    Integer month1;
-//    Integer day1;
-//    Integer year1;
     LocalDate eventDate;
     Event event;
     Bitmap posterBit;
@@ -144,7 +141,6 @@ public class CreateEvents extends AppCompatActivity {
         start_time.setIs24HourView(true);
         end_time.setIs24HourView(true);
 
-        // button: next (submission of event information)
         // on click handler for submit button
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {

@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.plent.R;
 import com.example.plent.models.Event;
-import com.example.plent.adapters.SearchRecyclerAdapter;
+import com.example.plent.adapters.EventAdapter;
 import com.example.plent.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,7 +26,7 @@ public class SearchActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     TextView pageTitle;
-    SearchRecyclerAdapter searchRecyclerAdapter;
+    EventAdapter allEventAdapter;
     List<Event> eventList = new ArrayList<Event>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +49,8 @@ public class SearchActivity extends AppCompatActivity {
         Type listOfEventType = new TypeToken<List<Event>>() {}.getType();
         eventList = gson.fromJson(jsonString, listOfEventType);
 
-        searchRecyclerAdapter = new SearchRecyclerAdapter(eventList, this);
-        recyclerView.setAdapter(searchRecyclerAdapter);
+        allEventAdapter = EventAdapter.allTypeEventAdapter(eventList, this);
+        recyclerView.setAdapter(allEventAdapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
@@ -67,13 +65,12 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //searchRecyclerAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchRecyclerAdapter.getFilter().filter(newText);
+                allEventAdapter.getFilter().filter(newText);
                 return false;
             }
         });

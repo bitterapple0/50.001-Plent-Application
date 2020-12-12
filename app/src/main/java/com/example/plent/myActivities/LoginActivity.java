@@ -73,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
             login.setTextAppearance(R.style.Primary_Button);
             login.setBackgroundResource(R.drawable.primary_button);
         } else {
-        // else if (!completed){
             disabled = true;
             login.setTextAppearance(R.style.Disabled_Button);
             login.setBackgroundResource(R.drawable.disabled_button);

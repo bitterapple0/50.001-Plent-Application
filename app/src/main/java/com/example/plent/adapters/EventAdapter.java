@@ -3,7 +3,6 @@ package com.example.plent.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,20 +14,16 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.example.plent.R;
 import com.example.plent.models.ActivityType;
 import com.example.plent.models.Event;
 import com.example.plent.myActivities.EventActivity;
-import com.example.plent.myActivities.FindEventsActivity;
-import com.example.plent.myActivities.ManageEventsActivity;
 import com.example.plent.myActivities.ParticipantsActivity;
 import com.example.plent.utils.Constants;
 import com.example.plent.utils.DateTimeUtils;
@@ -42,7 +37,7 @@ import static com.example.plent.utils.Constants.SEARCH_CONTEXT;
 import static com.example.plent.utils.Constants.SELECTED_EVENT_KEY;
 import static com.example.plent.utils.ImageUtils.*;
 
-public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
+public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private Context context;
     private List<Event> eventList;
@@ -50,29 +45,28 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private RecyclerView recyclerView;
     private ActivityType eventType = null;
     private String eventOrganiser = null;
-    private boolean loading = false;
     private static final int VIEW_TYPE_EMPTY = 0;
     private static final int VIEW_TYPE_SEARCH_EVENT = 1;
     private static final int VIEW_TYPE_SEE_ALL_EVENT = 2;
     private static final int VIEW_TYPE_HORIZONTAL_EVENT = 3;
     private static final int VIEW_TYPE_MANAGE_EVENT = 4;
-//    private static final int VIEW_TYPE_LOADING = 5;
 
-    public SearchRecyclerAdapter(List<Event> eventList, Context context) {
+    private EventAdapter(List<Event> eventList, Context context , String eventOrganiser, ActivityType eventType) {
         this.eventList = eventList;
-        this.eventListAll = new ArrayList<Event>(eventList);
-        this.context = context;
-    }
-
-    public SearchRecyclerAdapter(List<Event> eventList, ActivityType eventType, Context context) {
         this.eventType = eventType;
-        this.eventList= eventList;
-        this.context = context;
-    }
-    public SearchRecyclerAdapter(List<Event> eventList, String eventOrganiser, Context context) {
         this.eventOrganiser = eventOrganiser;
         this.context = context;
-        this.eventList=eventList;
+        this.eventListAll = new ArrayList<Event>(eventList);
+    }
+
+    public static EventAdapter manageEventAdapter(List<Event> eventList, String eventOrganiser, Context context){
+        return new EventAdapter(eventList, context, eventOrganiser, null);
+    }
+    public static EventAdapter singleTypeEventAdapter(List<Event> eventList, ActivityType eventType, Context context){
+        return new EventAdapter(eventList, context, null, eventType);
+    }
+    public static EventAdapter allTypeEventAdapter(List<Event> eventList, Context context){
+        return new EventAdapter(eventList, context, null, null);
     }
 
     @Override
@@ -92,9 +86,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-//        if (eventList == null) {
-//            return VIEW_TYPE_LOADING;
-//        }
         if (eventList.size() == 0){
             return VIEW_TYPE_EMPTY;
         }else if(eventType != null){
@@ -146,11 +137,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View manageEventView = layoutInflater.inflate(R.layout.manage_event_card, parent, false);
                 viewHolder = new ManageEventViewHolder(manageEventView);
                 break;
-
-//            case VIEW_TYPE_LOADING:
-//                View loadingView = layoutInflater.inflate(R.layout.loading, parent, false);
-//                viewHolder = new LoadingViewHolder(loadingView);
-//                break;
             default:
                 View emptyView = layoutInflater.inflate(R.layout.search_placeholder, parent, false);
                 if(recyclerView.getLayoutManager() instanceof GridLayoutManager){
@@ -164,7 +150,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return viewHolder;
     }
 
-    //TRYING SOMETHING HERE
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -191,10 +176,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ManageEventViewHolder manageEventViewHolder = (ManageEventViewHolder) holder;
                 setManageEventDetails(manageEventViewHolder, position);
                 break;
-//            case VIEW_TYPE_LOADING:
-//                LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
-//                setLoading(loadingViewHolder, position);
-//                break;
             default:
                 break;
         }
@@ -271,41 +252,19 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         });
     }
 
-//    private void setLoading(LoadingViewHolder vh, int position) {
-////        if (loading) {
-//            vh.progressBar.setVisibility(View.VISIBLE);
-////            Log.i("SEARCH RECYCLER ADAPTER", "setting loading invisible");
-////        } else {
-////            vh.progressBar.setVisibility(View.VISIBLE);
-////            Log.i("SEARCH RECYCLER ADAPTER", "setting loading visible");
-////        }
-//    }
-
     /****** Adapter Methods ******/
-    public void refreshEvents(List<Event> new_eventList, ActivityType eventType, String eventOrganiser){
-        eventListAll= new ArrayList<Event>(new_eventList);
+    public void refreshSingleTypeEvents(List<Event> new_eventList, ActivityType eventType) {
+        eventListAll = new ArrayList<Event>(new_eventList);
         eventList.clear();
-        if (eventType != null){
-            for(Event e : eventListAll){
-                if(e.getType() == eventType){
-                    this.eventList.add(e);
-                }
+        for (Event e : eventListAll) {
+            if (e.getType() == eventType) {
+                this.eventList.add(e);
             }
-        }else if (eventOrganiser != null){
-            for(Event e : eventListAll){
-//            TODO manage event view
-//            Need to implement the getter for the organiser
-//            if(e.getOrganiser() == eventOrganiser){
-//                this.eventList.add(e);
-//            }
-            }
-        }else{
-            this.eventList = new_eventList;
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
-    public void refreshManageEvents(List<Event> updatedEvents) {
+    public void refreshEvents(List<Event> updatedEvents) {
         this.eventList = new ArrayList(updatedEvents);
         this.eventListAll = new ArrayList(updatedEvents);
         notifyDataSetChanged();
@@ -349,8 +308,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 //        notifyDataSetChanged();
     }
 
-/****** View Holder Class ******/
-    class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    /****** View Holder Class ******/
+    class EventViewHolder extends RecyclerView.ViewHolder{
             ImageView poster;
             TextView name;
             TextView time;
@@ -367,14 +326,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             button = itemView.findViewById(R.id.search_event_button);
 
             SEARCH_CONTEXT = itemView.getContext();
-        }
-        //TODO fix this onclick to direct to an intent
-        @Override
-        public void onClick(View v) {
-//            Intent intent = new Intent(v.getContext(), EventActivity.class);
-//            intent.putExtra(Constants.SELECTED_EVENT_KEY, Constants.SKIP_BACKEND ? "5fb96424fe88a67bb74b4289" : "5fb937bce230d0e3a9e2f912"); // 5fb937bce230d0e3a9e2f912 - actual id in db  // 5fb96424fe88a67bb74b4289 - dummy id
-//            v.getContext().startActivity(intent);
-            Toast.makeText(v.getContext(),"Hello", Toast.LENGTH_LONG ).show();
         }
     }
 
@@ -396,14 +347,6 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
             placeholderText = itemView.findViewById(R.id.placeholder_text);
             placeholderImage = itemView.findViewById(R.id.placeholder_image);
-        }
-    }
-
-    class LoadingViewHolder extends RecyclerView.ViewHolder {
-        LottieAnimationView progressBar;
-        public LoadingViewHolder(@NonNull View itemView) {
-            super(itemView);
-            progressBar = itemView.findViewById(R.id.progressBar);
         }
     }
 

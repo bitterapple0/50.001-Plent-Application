@@ -71,7 +71,7 @@ public class EventActivity extends MenuActivity {
     LottieAnimationView progressBar;
     View divider;
 
-    int permission = 1; // We need to replace this with the user's permission field
+    int permission = 1; // replace this with the user's permission field
 
     void backToFindEvents() {
         setTheme(R.style.CalendarTheme);
@@ -95,14 +95,12 @@ public class EventActivity extends MenuActivity {
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
             // if no event id is stored, bring them back to find events activity screen
-            // TODO Need to uncomment later
             backToFindEvents();
             Toast.makeText(this, "Extras is null", Toast.LENGTH_LONG).show();
         } else {
             eventId = extras.getString(SELECTED_EVENT_KEY);
             if (eventId == null) {
                 // if no event id is stored, bring them back to find events activity screen
-                // TODO Need to uncomment later
                 backToFindEvents();
                 Toast.makeText(this, "Extras is not null, but the event id from the put extras string is null", Toast.LENGTH_LONG).show();
             }

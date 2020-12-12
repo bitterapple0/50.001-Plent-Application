@@ -26,8 +26,7 @@ public class Api {
             // To make thread safe
             synchronized (Api.class)
             {
-                // check again as multiple threads
-                // can reach above step
+
                 if (api==null)
                     api = new Api();
             }
