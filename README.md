@@ -10,6 +10,8 @@ Naomi Kong-Vega <br>
 ## Description
 PLENT is your one stop school events app for students and organisers. Events are an integral part of maintaining the vibrant student life here in SUTD. They range from fifth row introductory sessions, performances, workshops and talks. However, filtering through these event advertisements on numerous platforms coupled with the repetitive signup process can be a pain. Organisers have more work cut out due to Covid-19 measures as well, such as keeping track of a participants capacity.
 
+Click [here](https://youtu.be/8L8xmo6JUxs) to see a preview!
+
 #### PLENT solves all of those problems for you:
 - It condenses all event information in scrollable categories
 - Quicker sign up as your account information (eg. name, student ID, email)  will be automatically sent to the organizers when you just click the “SIGN UP” button. 
@@ -27,4 +29,21 @@ When an event is clicked, the user will be redirected to the specific event page
 Users can also view their events all compiled onto one convenient calendar via the calendar view page, that they can either access through the menu button on the top right or the floating red button on the events page. Events are colour coded based on the category for easy identification. Users can toggle back to the events page easily by clicking on the floating red button as well.| <img src="/Plent%20Screenshots/Event%20Calendar.png" width="1500" > 
 Organizers can create new events here, by inputting their event’s title, type (i.e. category), date, time, location, description, poster picture (uploaded from their phone) and telegram group link (optional). Once the form is filled, they can submit it via the button on the top right corner, and the new event will be immediately uploaded to the database so all the users can access| <img src="/Plent%20Screenshots/Create%20Event.png" width="1500" > 
 Organizers are able to view all the events they have created here, as well as the participants’ information (i.e. name, student ID, email) when they click on the specific events.| <img src="/Plent%20Screenshots/Participants.png" width="1500" > 
+
+## External Applications 
+
+### Firebase 
+Our team used Firebase to store the credentials of the users. During sign up, once the required fields are checked for certain criteria, the email and the password are used to create a user. If the task is successful, we then get the current user from Firebase and then pass over the other details to be stored in the MongoDB database.
+
+### MongoDB
+Our team used MongoDB to store information of both events and users. To connect our Java application with MongoDB, we created a Flask backend to process, retrieve and store data for our app.
+
+### Flask
+To connect our Java application to MongoDB, our team created an API using Flask. Our API included POST requests to create new users and events (eg. Sign Up page, Create Events page), GET requests to retrieve information about both users and events (eg. Find Events page, Calendar page, Login page) and PUT requests to edit information about users and events (eg. when users sign up or cancel attendance for events). 
+
+### Retrofit 2
+In order to make calls to the backend, our team used the Retrofit library which makes it easy to retrieve and upload JSON (or other structured data). In Retrofit we configured a GSon converter for data serialisation. We created model classes such as “Event” and “User” which are used as a JSON model and also defined an interface containing the various methods that were used to fetch and push data to the backend.
+
+
+
 
